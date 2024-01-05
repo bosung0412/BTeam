@@ -1,4 +1,6 @@
+
 <template>
+  
     <div>
       <!-- 네비게이션 바 시작 -->
       <nav class="navbar navbar-expand-lg navbar-light sticky-top">
@@ -63,4 +65,6 @@
       <!-- 맨 위로 가기 버튼 -->
       <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
+    
   </template>
+  
