@@ -580,7 +580,8 @@ width: 50%;
    background-color: #42B883;
 }
 .mainline{
-    /* border-bottom: 2px solid #dee2e6 !important; */
+
+    border-bottom: 2px solid #dee2e6 !important;
     margin-bottom: 20px;
     padding-bottom: 10px;
 }
@@ -648,3 +649,4 @@ background-color: #ffffff;
   border: 2px solid #000; /* 선의 두께와 색상 설정 */
   border-radius: 8px; /* 모서리를 둥글게 만들기 위한 값 설정 */
 }
+

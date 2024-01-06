@@ -1,10 +1,12 @@
 <template>
+
+  <router-view/>
+</template>
+
   <!-- <nav>
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
   </nav> -->
-  <router-view/>
-</template>
 
 <!-- <style>
 #app {
@@ -33,3 +35,4 @@ nav a.router-link-exact-active {
 @import "./assets/css/nicepage.css";
 @import "./assets/css/style.css";
 </style>
+
