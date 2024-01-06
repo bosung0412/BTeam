@@ -1,13 +1,15 @@
 <template>
     <div>
-     
-  
-      <!-- 페이지 헤더 시작 -->
-      <div class="container-fluid page-header py-4 mb-2 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container text-center py-5">
-          <h1 class="display-5 text-white mb-4 animated slideInDown">식재료 추가</h1>
-          <nav aria-label="breadcrumb animated slideInDown">
+      <Navbar/>
+  <!-- 페이지 헤더 시작 -->
+  <div class="container-fluid page-header py-4 mb-2 wow fadeIn" :data-wow-delay="'0.1s'">
+    <div class="container text-center py-3">
+      <h3 class="display-5 text-white mb-2 animated slideInDown">식재료 추가</h3>
+      <nav aria-label="breadcrumb animated slideInDown">
+            <!-- Breadcrumb (경로) -->
           </nav>
+    </div>
+  </div>
            <!-- 프로젝트 시작 -->
       <div class="container-xxl py-5">
         <div class="container mt-5">
@@ -17,7 +19,7 @@
                 <div id="webcamContainer" style="position: relative;">
                   <video id="webcam" width="100%" height="auto" autoplay style="border: 2px solid #ccc; border-radius: 8px;"></video>
                 </div>
-                <button id="captureBtn" class="btn btn-primary mt-2 d-block mx-auto btnall">촬영하기</button>
+                <button id="captureBtn" class="btn btn-success mt-2 d-block mx-auto btnall">촬영하기</button>
                 <input type="file" class="form-control mt-2" id="foodImage" name="foodImage" accept="image/*">
                 <img src="" alt="주의사항 이미지" class="img-fluid mt-2">
                 <img src="" alt="주의사항 이미지" class="img-fluid mt-2">
@@ -44,8 +46,8 @@
                   <input type="number" class="form-control" id="calories" name="calories">
   
                   <div class="d-flex justify-content-center mt-3">
-                    <button onclick="window.location.href='refrigeratorcheck.html'" type="button" class="btn btn-primary mx-2 btnall">저장하기</button>
-                    <button onclick="window.location.href='feature.html'" type="button" class="btn btn-primary mx-2 btnall">취소하기</button>
+                    <button onclick="window.location.href='refrigeratorcheck.html'" type="button" class="btn btn-success mx-2 btnall">저장하기</button>
+                    <button onclick="window.location.href='feature.html'" type="button" class="btn btn-success mx-2 btnall">취소하기</button>
                   </div>
                 </div>
               </form>
@@ -54,26 +56,10 @@
         </div>
       </div>
       <!-- 프로젝트 끝 -->
-  
-        </div>
-        
-      </div>
       <!-- 페이지 헤더 끝 -->
-  
-     
-      <!-- 저작권 정보 시작 -->
-      <div class="container-fluid copyright py-4">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-              &copy; <a class="border-bottom" href="#">냉장고든램지</a>, All Right Reserved.
-            </div>
-            <div class="col-md-6 text-center text-md-end">
-              <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-            </div>
-          </div>
-        </div>
-      </div>
+     <!-- 저작권 시작 -->
+     <Footer/>
+      <!-- 저작권 끝 -->
       <!-- 저작권 정보 끝 -->
   
       <!-- 페이지 상단으로 이동하기 버튼 -->
@@ -83,4 +69,20 @@
     </div>
   </template>
   
+  <script>
+    
+  import Navbar from '@/components/Navbar/Navbar.vue';
+  import Footer from '../../components/Footer/Footer.vue';
   
+    export default {
+      components:{
+          Navbar,
+          Footer,
+      },
+      data(){
+        return{
+
+        }
+      }
+    }
+  </script>

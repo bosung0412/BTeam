@@ -3,7 +3,7 @@
     <!-- 네비게이션 바 시작 -->
     <nav class="navbar navbar-expand-lg navbar-light sticky-top">
       <router-link to="/" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-        <img src="img/samplelogo.png" style="width: 70px; height: 70px; top: 0; left: 10px;" />
+        <img src="../../assets/img/samplelogo.png" style="width: 70px; height: 70px; top: 0; left: 10px;" />
       </router-link>
       <button type="button" class="navbar-toggler me-4" @click="toggleNavbar">
         <span class="navbar-toggler-icon"></span>
@@ -25,7 +25,7 @@
       <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img class="w-100" src="img/background.jpg" alt="Image">
+            <img class="w-100" src="../../assets/img/background.jpg" alt="Image">
             <div class="carousel-caption">
               <div class="container">
                 <div class="row justify-content-center">
@@ -104,10 +104,12 @@ export default {
     },
     redirectToJoin() {
       // 회원가입 페이지로 이동하는 로직 추가
+      this.$router.push('/join');
       console.log('회원가입 페이지로 이동');
     },
     redirectToFindAccount() {
       // 아이디 또는 비밀번호 찾기 페이지로 이동하는 로직 추가
+      this.$router.push('/findaccount');
       console.log('아이디 또는 비밀번호 찾기 페이지로 이동');
     },
   },
