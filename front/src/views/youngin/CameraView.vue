@@ -1,5 +1,5 @@
 <template>
-    <div>
+<div>
     <!-- Navbar Start -->
 	<Navbar/>
 
@@ -12,6 +12,7 @@
 	<!-- Page Header End -->
     <div class="container-xxl py-5">
 		<div class="container mt-5">
+			<!-- 첫번째 행 시작 -->
 			<div class="row g-5 align-items-stretch maincol pb-4">
 				<div class="col-lg-3 col-md-5 wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s">
 					주의사항 이미지가 여기 들어감
@@ -58,14 +59,13 @@
 					</div>
 					<div class="row">
 						<div class="d-flex justify-content-center align-items-center">
+							
 							<a class="btn btn-success mx-2 btnall" href="calender.html">업로드</a>
 						</div>
 						<!-- 파일 업로드를 위한 input 추가 -->
 						<input type="file" class="form-control mt-2" id="foodImage" name="foodImage" accept="image/*">
 					</div>
-
 				</div>
-
 				<div class="col-lg-3 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
 					<div class="row g-5">
 						<div class="col-12 col-sm-6 col-lg-12">
@@ -85,7 +85,10 @@
 						</div>
 					</div>
 				</div>
-
+			</div>
+			<!-- 첫번째 행 끝 -->
+			<!-- 아침, 점심, 저녁 공간 시작-->
+			<div class="row g-5 align-items-stretch maincol mt-4 mb-5 pb-5" style="box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);">
 				<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
 					<div class="service-item rounded d-flex h-100">
 						<div class="service-text rounded p-5">
@@ -129,12 +132,12 @@
 					</div>
 				</div>
 			</div>
+			<!-- 아침, 점심, 저녁 공간 끝-->
 		</div>
 	</div>
 	<!-- Footer Start -->
 	<Footer /> 
 </div>
-	<!-- Copyright End -->
 </template>
 
 <script>

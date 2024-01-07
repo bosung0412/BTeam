@@ -1,14 +1,29 @@
 <template>
     <div>
-        <Navbar /> 메인에서 메뉴가 안뜬다
+            <!-- 네비게이션 바 시작 -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+      <router-link to="/" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+        <img src="../../assets/img/samplelogo.png" style="width: 70px; height: 70px; top: 0; left: 10px;" />
+      </router-link>
+      
+      <div class="collapse navbar-collapse" :class="{ 'show': isNavbarOpen }">
+        <div class="navbar-nav ms-auto p-4 p-lg-0">
+            <router-link to="/calendar" class="nav-item nav-link">캘린더</router-link>
+            <router-link to="/camera" class="nav-item nav-link">식단관리</router-link>
+            <!-- <router-link to="/foodbuy" class="nav-item nav-link">식재료구매</router-link> -->
+          <router-link to="/board" class="nav-item nav-link">게시판</router-link>
+        </div>
+      </div>
+    </nav>
+    <!-- 네비게이션 바 끝 -->
         <div class="container-fluid pt-4" style="width: 80%;">
             <div class="row g-4">
                 <div class="col-sm-6 col-xl-3">
                     <div class="maintopcol rounded d-flex align-items-center justify-content-between p-4">
-                        <img src="img/pork.jpg" class="img-fluid rounded-circle"
+                        <img src="../../assets/img/pork.jpg" class="img-fluid rounded-circle"
                             style="width: 90px;height: 90px;/* border: 3px solid #d7d7d7; */">
                         <div class="ms-3">
-                            <p class="mb-2">이달의 BMI 랭킹이나 뭐 할거 있나</p>
+                            <p class="mb-2">이달의 BMI 랭킹?</p>
                             <h6 class="mb-0">닉네임</h6>
                         </div>
                     </div>
@@ -65,12 +80,13 @@
                             <p class="mb-2 maintext">1.추천식단</p>
                             <div class="mt-2 mx-5 d-flex align-items-center"
                                 style="border: 2px solid #d7d7d7;border-radius: 8px;">
-                               추천식단 이미지 들어가야됨
+                                <img src="../../assets/img/food3.png" class="img-fluid"
+                                style="margin: 0 auto;width: 100px;height: 100px;">
                             </div>
                         </div>
                     </div>
-                    <div style="text-align: center">
-                        <div class="d-flex flex-column ">
+                    <div>
+                        <div class="d-flex flex-column align-items-center ">
                             <h4 class="mb-3 maintext">나만의 냉장고</h4>
                             <button @click="refriGo" type="button" class="btnmain">냉장고 확인</button>
                             <button @click="ingrePlusGo" type="button" class="btnmain">식재료 추가</button>
@@ -84,16 +100,15 @@
                 </div>
                 <!--메인 컨텐츠 가운데 start-->
                 <div class="col-lg-5 fadeInUp border-customend mainevent" data-wow-delay="0.3s">
-                    <div class="row">
-                        <h4 class="mb-3 maintext"></h4>
+                <div class="row">
                         <div id="datepicker">
-                           캘린더 들어가야됨
+                            <img src="../../assets/img/calex.png" class="img-fluid"
+                            style="width: 90%;box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);" />
                         </div>
-
                     </div>
                     <div class="row">
-                        <div style="text-align: center">
-                            <div class="mt-3 d-flex flex-column ">
+                        <div>
+                            <div class="mt-3 d-flex flex-column align-items-center ">
                                 <!--<i class="fa fa-users fa-3x text-primary mb-3"></i>-->
                                 <p class="mb-2">kcal</p>
                                 <p class="mb-2">남은 칼로리</p>
@@ -111,7 +126,7 @@
                     <div class="border-custom g-5 mt-2">
                         <div class="col-12 col-sm-6 col-lg-12">
                             <div class="ps-4 pb-3 d-flex align-items-center">
-                                <img src="img/pork.jpg" class="img-fluid rounded-circle me-3"
+                                <img src="../../assets/img/pork.jpg" class="img-fluid rounded-circle me-3"
                                     style="width: 90px;height: 90px;/* border: 3px solid #d7d7d7; */">
                                 <div class="d-flex justify-content-center align-items-center">
                                     <h4 class="maintext mb-0 me-4">히히히</h4>
@@ -132,13 +147,13 @@
                         <div class="col-12 col-sm-6 col-lg-12">
                             <div class="mb-4 d-flex flex-column">
                                 <h4 class="mb-3 maintext" style="text-align: left;">Weight</h4>
-                              weight 그래프 들어가야됨
+                                <img src="../../assets/img/graex1.png" class="img-fluid">
                             </div>
                         </div>
                         <div class="col-12 col-sm-6 col-lg-12">
                             <div class="mb-4 d-flex flex-column">
                                 <h4 class="mb-3 maintext" style="text-align: left;">Kcal</h4>
-                                Kcal 그래프 들어가야됨
+                                <img src="../../assets/img/graex2.png" class="img-fluid">
                             </div>
                         </div>
                     </div>
@@ -147,7 +162,17 @@
             </div>
         </div>
         <!-- 메인 컨텐츠  End -->
-        <Footer /> 
+        <div class="container-fluid copyright py-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+            &copy; <a class="border-bottom" href="#">냉장고든램지</a>, All Right Reserved.
+          </div>
+          <div class="col-md-6 text-center text-md-end">
+          </div>
+        </div>
+      </div>
+    </div>
     </div>
 </template>
 <script>

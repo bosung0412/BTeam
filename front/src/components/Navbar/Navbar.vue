@@ -8,10 +8,11 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav ms-auto p-4 p-lg-0">
-          <router-link to="/mypage" class="nav-item nav-link">마이페이지</router-link>
-          <router-link to="/calender" class="nav-item nav-link">캘린더</router-link>
+          <!-- <router-link to="/mypage" class="nav-item nav-link">마이페이지</router-link> -->
+          <router-link to="/calendar" class="nav-item nav-link">캘린더</router-link>
+          <router-link to="/camera" class="nav-item nav-link">식단관리</router-link>
+          <!-- <router-link to="/foodbuy" class="nav-item nav-link">식재료구매</router-link> -->
           <router-link to="/board" class="nav-item nav-link">게시판</router-link>
-        <router-link to="/camera_main" class="nav-item nav-link">칼로리 분석</router-link>
         </div>
       </div>
     </nav>
