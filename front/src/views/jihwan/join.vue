@@ -157,7 +157,7 @@
         this.showCheckboxContainer = inputValue.includes("배");
       },
       submitRegistration() {
-        console.log('회원가입 정보를 서버로 전송');
+        console.log('회원가입중 입니다.');
         this.$router.push('/login');
       },
       cancel() {
