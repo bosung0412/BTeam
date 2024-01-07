@@ -3,87 +3,78 @@
     <!-- 네비게이션 바 시작 -->
     <nav class="navbar navbar-expand-lg navbar-light sticky-top">
       <router-link to="/" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-        <img src="../../assets/img/samplelogo.png" style="width: 70px; height: 70px; top: 0; left: 10px;" />
+        <img src="img/samplelogo.png" style="width: 70px; height: 70px; top: 0; left: 10px;" />
       </router-link>
       <button type="button" class="navbar-toggler me-4" @click="toggleNavbar">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" :class="{ 'show': isNavbarOpen }">
         <div class="navbar-nav ms-auto p-4 p-lg-0">
-          <!-- 네비게이션 링크 추가 -->
-          <!-- <router-link to="/mypage" class="nav-item nav-link">마이페이지</router-link>
-          <router-link to="/calendar" class="nav-item nav-link">캘린더</router-link>
-          <router-link to="/board" class="nav-item nav-link">게시판</router-link>
-          <router-link to="/calorie-analysis" class="nav-item nav-link">칼로리 분석</router-link> -->
+          <!-- 네비게이션 링크 생략 -->
         </div>
       </div>
     </nav>
     <!-- 네비게이션 바 끝 -->
 
-    <!-- 캐러셀 시작 -->
-    <div class="container-fluid p-0 wow fadeIn" data-wow-delay="0.1s">
-      <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img class="w-100" src="../../assets/img/background.jpg" alt="Image">
-            <div class="carousel-caption">
-              <div class="container">
-                <div class="row justify-content-center">
-                  <div class="col-lg-8">
-                    <h1 class="display-1 text-white mb-5 animated slideInDown">로그인</h1>
-                    <!-- 로그인 입력창 추가 -->
-                    <div class="container mt-5">
-                      <div class="row justify-content-center">
-                        <div class="col-lg-6">
-                          <form>
-                            <div class="mb-4">
-                              <label for="inputEmail" class="form-label">ID</label>
-                              <input type="text" class="form-control" id="inputEmail" placeholder="Enter your ID" style="border-radius: 8px;">
-                            </div>
-                            <div class="mb-4">
-                              <label for="inputPassword" class="form-label">Password</label>
-                              <input type="password" class="form-control" id="inputPassword" placeholder="Enter your password" style="border-radius: 8px;">
-                            </div>
-                            <div class="row">
-                              <div class="col-6 pe-2">
-                                <button @click="login" type="button" class="btn btnmain w-100">로그인</button>
-                              </div>
-                              <div class="col-6 ps-2">
-                                <button @click="redirectToJoin" type="button" class="btn btnmain w-100">회원가입</button>
-                              </div>
-                            </div>
-                            <button @click="redirectToFindAccount" type="button" class="btn btnmain w-100 mt-2">아이디 or 비밀번호찾기</button>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+    <!-- 페이지 헤더 시작 -->
+    <div class="container-fluid page-header py-4 mb-2 wow fadeIn" data-wow-delay="0.1s">
+      <div class="container text-center py-5">
+        <h1 class="display-5 text-white mb-4 animated slideInDown">로그인</h1>
+        <nav aria-label="breadcrumb animated slideInDown"></nav>
+      </div>
+    </div>
+    <!-- 페이지 헤더 끝 -->
+
+    <!-- 로그인 폼 시작 -->
+    <div class="container-fluid py-5">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-7">
+          <div class="rounded p-4 p-sm-5 wow fadeInUp maincol" data-wow-delay="0.1s">
+            <form>
+              <!-- 첫 번째 줄: 아이디 입력칸 -->
+              <div class="row mb-3">
+                <div class="col-sm-12">
+                  <label for="id" class="form-label">아이디</label>
+                  <input type="text" class="form-control" id="id" name="id" placeholder="아이디를 입력해주세요!">
                 </div>
               </div>
-            </div>
+
+              <!-- 두 번째 줄: 비밀번호 입력칸 -->
+              <div class="row mb-3">
+                <div class="col-sm-12">
+                  <label for="password" class="form-label">비밀번호</label>
+                  <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호를 입력해주세요!">
+                </div>
+              </div>
+
+              <!-- 네 번째 줄: 로그인 버튼 -->
+              <div class="row">
+              <div class="col-sm-12">
+                  <button @click="submitLogin" type="button" class="btn btn-primary btnall w-100">로그인</button>
+                </div>
+              </div>
+
+              <!-- 세 번째 줄: 회원가입, 아이디/비밀번호 찾기 버튼 -->
+              <div class="row mb-3">
+                <div class="col-sm-6">
+                  <button @click="redirectToJoin" type="button" class="btn btn-primary btnall w-100">회원가입</button>
+                </div>
+
+                <div class="col-sm-6">
+                  <button @click="redirectToFindAccount" type="button" class="btn btn-primary btnall w-100">아이디 or 비밀번호 찾기</button>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
-    <!-- 캐러셀 끝 -->
+  </div>
+    <!-- 로그인 폼 끝 -->
 
-    <!-- 저작권 표시 시작 -->
-    <div class="container-fluid copyright py-4">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-            &copy; <a class="border-bottom" href="#">냉장고든램지</a>, All Right Reserved.
-          </div>
-          <div class="col-md-6 text-center text-md-end">
-            <!-- ... (저작권 표시 내용) ... -->
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- 저작권 표시 끝 -->
+    <!-- ... (이전 코드) ... -->
 
-    <!-- 맨 위로 가기 버튼 -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
   </div>
 </template>
 
@@ -98,24 +89,20 @@ export default {
     toggleNavbar() {
       this.isNavbarOpen = !this.isNavbarOpen;
     },
-    login() {
-      // 로그인 로직 추가
-      console.log('로그인 시도');
+    submitLogin() {
+      console.log('로그인 중입니다.');
+      this.$router.push('/Homeview');
     },
     redirectToJoin() {
-      // 회원가입 페이지로 이동하는 로직 추가
-      this.$router.push('/join');
-      console.log('회원가입 페이지로 이동');
+      this.$router.push('/join'); 
     },
     redirectToFindAccount() {
-      // 아이디 또는 비밀번호 찾기 페이지로 이동하는 로직 추가
       this.$router.push('/findaccount');
-      console.log('아이디 또는 비밀번호 찾기 페이지로 이동');
     },
   },
 };
 </script>
 
-<style scoped>
-/* 컴포넌트에 특정한 스타일 추가 */
+<style>
+
 </style>
