@@ -38,6 +38,9 @@
                   <p class="mb-2"><strong>입력한 이름:</strong>  </p>
                   <p class="mb-2"><strong>찾은 아이디:</strong>  </p>
                 </div>
+                <div class="col-sm-12">
+                  <button type="button" class="btn btn-primary btnall w-100" @click="goToLogin">로그인 하러가기</button>
+                </div>
               </div>
             </div>
           </div>
@@ -63,3 +66,13 @@
     <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
   </div>
 </template>
+<script>
+export default {
+  methods: {
+    goToLogin() {
+      // 라우터를 이용하여 login 페이지로 이동
+      this.$router.push({ name: 'login' })
+    }
+  }
+}
+</script>
