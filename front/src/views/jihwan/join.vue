@@ -5,9 +5,7 @@
         <router-link to="/" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
           <img src="img/samplelogo.png" style="width: 70px; height: 70px; top: 0; left: 10px;" />
         </router-link>
-        <button type="button" class="navbar-toggler me-4" @click="toggleNavbar">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+        
         <div class="collapse navbar-collapse" :class="{ 'show': isNavbarOpen }">
           <div class="navbar-nav ms-auto p-4 p-lg-0">
             <!-- 네비게이션 링크 추가 -->
@@ -46,22 +44,22 @@
                         </div>
                       </div>
   
-                      <label for="password" class="form-label">비밀번호</label>
+                      <label for="password" class="form-label mt-2">비밀번호</label>
                       <input type="text" class="form-control" id="password" name="password">
   
-                      <label for="passwordchk" class="form-label">비밀번호 확인</label>
+                      <label for="passwordchk" class="form-label mt-2">비밀번호 확인</label>
                       <input type="text" class="form-control" id="passwordchk" name="passwordchk">
   
-                      <label for="name" class="form-label">이름</label>
+                      <label for="name" class="form-label mt-2">이름</label>
                       <input type="text" class="form-control" id="name" name="name">
   
-                      <label for="address" class="form-label">주소</label>
+                      <label for="address" class="form-label mt-2">주소</label>
                       <input type="text" class="form-control" id="address" name="address">
   
-                      <label for="phoneNumber" class="form-label">휴대전화</label>
+                      <label for="phoneNumber" class="form-label mt-2">휴대전화</label>
                       <input type="text" class="form-control" id="phoneNumber" maxlength="13" @input="formatPhoneNumber">
   
-                      <label for="email" class="form-label mt-3">이메일</label>
+                      <label for="email" class="form-label mt-2">이메일</label>
                       <div class="input-group">
                         <input type="text" class="form-control" id="email" name="email">
                         <div class="input-group-append">
@@ -70,7 +68,7 @@
                       </div>
                     </div>
   
-                    <p class="fs-5 fw-bold text-primary">추가 정보</p>
+                    <p class="fs-5 fw-bold" style="color: rgb(77, 183, 91);">추가 정보</p>
                     <div class="field gender">
                       <b>성별</b>
                       <div class="d-flex">
@@ -85,19 +83,19 @@
                       </div>
                     </div>
                     <div class="col-sm-6">
-                      <label for="allergy" class="form-label">질병</label>
+                      <label for="allergy" class="form-label mt-2">질병</label>
                       <input type="text" class="form-control border" id="allergy" name="allergy" @input="updateCheckboxVisibility">
                       <div v-show="showCheckboxContainer" id="checkboxContainer">
-                        <input type="checkbox" id="checkbox"> 배탈, 복통
                       </div>
-                      <label for="height" class="form-label">키(cm)</label>
+                      <label for="height" class="form-label mt-2">키(cm)</label>
                       <input type="text" class="form-control border" id="height" name="height">
-                      <label for="weight" class="form-label">몸무게(kg)</label>
+                      <label for="weight" class="form-label mt-2">몸무게(kg)</label>
                       <input type="text" class="form-control border" id="weight" name="weight">
+
                     </div>
-                    <div class="col-12 text-center">
+                    <div class="col-12 text-center mt-4">
                       <button @click="submitRegistration" type="button" class="btn btn-primary mx-2 btnall">회원가입</button>
-                      <button type="button" class="btn btn-primary mx-2 btnall">취소</button>
+                      <button @click="cancel" type="button" class="btn btn-primary mx-2 btnall">취소</button>
                     </div>
                   </form>
                 </div>
@@ -159,8 +157,11 @@
         this.showCheckboxContainer = inputValue.includes("배");
       },
       submitRegistration() {
-        // 회원가입 제출 로직 추가
-        console.log('회원가입 정보를 서버로 전송');
+        console.log('회원가입중 입니다.');
+        this.$router.push('/login');
+      },
+      cancel() {
+        this.$router.push('/Homeview');
       },
     },
   };
