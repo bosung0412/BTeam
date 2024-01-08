@@ -1,6 +1,6 @@
 <template>
   <div>
-   
+      <Navbar /> 
 
     <!-- 페이지 헤더 시작 -->
     <div class="container-fluid page-header py-4 mb-2 wow fadeIn" data-wow-delay="0.1s">
@@ -62,18 +62,7 @@
 
    
     <!-- 저작권 정보 시작 -->
-    <div class="container-fluid copyright py-4">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-            &copy; <a class="border-bottom" href="#">냉장고든램지</a>, All Right Reserved.
-          </div>
-          <div class="col-md-6 text-center text-md-end">
-            <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-          </div>
-        </div>
-      </div>
-    </div>
+    <Footer />
     <!-- 저작권 정보 끝 -->
 
     <!-- 페이지 상단으로 이동하기 버튼 -->
@@ -82,4 +71,13 @@
     </a>
   </div>
 </template>
-
+<script>
+import Navbar from '@/components/Navbar/Navbar.vue';
+import Footer from '@/components/Footer/Footer.vue';
+export default {
+  components: {
+    Navbar,
+    Footer,
+  }
+};
+  </script>

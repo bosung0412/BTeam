@@ -1,19 +1,7 @@
 <template>
   <div>
     <!-- 네비게이션 바 시작 -->
-    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
-      <router-link to="/" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-        <img src="img/samplelogo.png" style="width: 70px; height: 70px; top: 0; left: 10px;" />
-      </router-link>
-      <button type="button" class="navbar-toggler me-4" @click="toggleNavbar">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" :class="{ 'show': isNavbarOpen }">
-        <div class="navbar-nav ms-auto p-4 p-lg-0">
-          <!-- 네비게이션 링크 생략 -->
-        </div>
-      </div>
-    </nav>
+      <Navbar /> 
     <!-- 네비게이션 바 끝 -->
 
     <!-- 페이지 헤더 시작 -->
@@ -72,13 +60,13 @@
     </div>
   </div>
     <!-- 로그인 폼 끝 -->
-
-    <!-- ... (이전 코드) ... -->
-
+    <Footer />
   </div>
 </template>
 
 <script>
+import Navbar from '@/components/Navbar/Navbar.vue';
+import Footer from '@/components/Footer/Footer.vue';
 export default {
   data() {
     return {
@@ -100,9 +88,11 @@ export default {
       this.$router.push('/findaccount');
     },
   },
+  components: {
+    Navbar,
+    Footer,
+  }
 };
 </script>
 
-<style>
-</style>
 

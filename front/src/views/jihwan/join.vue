@@ -1,21 +1,7 @@
 <template>
     <div>
       <!-- 네비게이션 바 시작 -->
-      <nav class="navbar navbar-expand-lg navbar-light sticky-top">
-        <router-link to="/" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-          <img src="img/samplelogo.png" style="width: 70px; height: 70px; top: 0; left: 10px;" />
-        </router-link>
-        
-        <div class="collapse navbar-collapse" :class="{ 'show': isNavbarOpen }">
-          <div class="navbar-nav ms-auto p-4 p-lg-0">
-            <!-- 네비게이션 링크 추가 -->
-            <!-- <router-link to="/mypage" class="nav-item nav-link">마이페이지</router-link>
-            <router-link to="/calendar" class="nav-item nav-link">캘린더</router-link>
-            <router-link to="/board" class="nav-item nav-link">게시판</router-link>
-            <router-link to="/calorie-analysis" class="nav-item nav-link">칼로리 분석</router-link> -->
-          </div>
-        </div>
-      </nav>
+      <Navbar /> 
       <!-- 네비게이션 바 끝 -->
   
       <!-- 페이지 헤더 시작 -->
@@ -107,26 +93,15 @@
       <!-- 인용구 끝 -->
   
       <!-- 저작권 표시 시작 -->
-      <div class="container-fluid copyright py-4">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-              &copy; <a class="border-bottom" href="#">냉장고든램지</a>, All Right Reserved.
-            </div>
-            <div class="col-md-6 text-center text-md-end">
-              <!-- 저작권 표시 -->
-            </div>
-          </div>
-        </div>
-      </div>
+      <Footer />
       <!-- 저작권 표시 끝 -->
   
-      <!-- 최상단으로 이동 버튼 -->
-      <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
   </template>
   
   <script>
+  import Navbar from '@/components/Navbar/Navbar.vue';
+import Footer from '@/components/Footer/Footer.vue';
   export default {
     data() {
       return {
@@ -164,10 +139,11 @@
         this.$router.push('/Homeview');
       },
     },
+    components: {
+    Navbar,
+    Footer,
+  }
   };
   </script>
   
-  <style scoped>
-  /* 컴포넌트에 특정한 스타일 추가 */
-  </style>
   
