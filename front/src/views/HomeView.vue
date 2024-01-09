@@ -15,18 +15,19 @@
 						</div>
 		</div>
 	</div>
-	<!-- Copyright End -->
     
-    </section>
+    <Footer />
+	</section>
 </template>
 
 <script>
+import Footer from '@/components/Footer/Footer.vue';
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
 	components:{
-    
+    	Footer,
     },
   data(){
 	return{
@@ -36,7 +37,7 @@ export default {
   methods:{
 	NextGo(){
 		//버튼 클릭 시 메인 페이지로 이동
-		this.$router.push('/main');
+		this.$router.push('/login');
 	}
   }
 }
