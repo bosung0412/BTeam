@@ -1,11 +1,7 @@
 <template>
-
-  <router-view/>
+<router-view/>
 </template>
 
-<script>
-  import axios from "axios";
-</script>
 
   <!-- <nav>
     <router-link to="/">Home</router-link> |

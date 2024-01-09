@@ -59,7 +59,7 @@ export default {
     },
   },
   // 컴포넌트가 마운트된 후 호출
-  mounted() {
+  created() {
     this.getDataForm();
   },
   // 버튼 클릭 이벤트
