@@ -10,114 +10,72 @@ const routes = [
   {
     path: '/about',
     name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    component: () => import('../views/AboutView.vue')
   },
   {
     path: '/findid',
     name: 'findid',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/bosung/findid.vue')
+    component: () => import('../views/bosung/findid.vue')
   },
   {
     path: '/login',
     name: 'login',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/jihwan/login.vue')
+    component: () => import('../views/jihwan/login.vue')
   },
   {
     path: '/join',
     name: 'join',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/jihwan/join.vue')
+    component: () => import('../views/jihwan/join.vue')
   },
   {
     path: '/ingredientsplus',
     name: 'ingredientsplus',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/jihwan/ingredientsplus.vue')
+    component: () => import('../views/jihwan/ingredientsplus.vue')
   },
   {
     path: '/refrigeratorcheck',
     name: 'refrigeratorcheck',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/jihwan/refrigeratorcheck.vue')
+    component: () => import('../views/jihwan/refrigeratorcheck.vue')
   },
   {
     path: '/findpassword',
     name: 'findpassword',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/bosung/findpassword.vue')
+    component: () => import('../views/bosung/findpassword.vue')
   },
   {
     path: '/resultfindid',
     name: 'resultfindid',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/bosung/resultfindid.vue')
+    component: () => import('../views/bosung/resultfindid.vue')
   },
   {
     path: '/resultpassword',
     name: 'resultpassword',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/bosung/resultpassword.vue')
+    component: () => import('../views/bosung/resultpassword.vue')
   },
   {
     path: '/camera',
     name: 'camera',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/youngin/CameraView.vue')
+    component: () => import('../views/youngin/CameraView.vue')
   },
   {
     path: '/main',
     name: 'main',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/youngin/MainView.vue')
+    component: () => import('../views/youngin/MainView.vue')
   },
   {
     path: '/foodbuy',
     name: 'foodbuy',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/youngin/FoodBuyView.vue')
+    component: () => import('../views/youngin/FoodBuyView.vue')
   },
   {
     path: '/achievable',
     name: 'achievable',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/sangmin/achievable.vue')
+    component: () => import('../views/sangmin/achievable.vue')
   },
   {
     path: '/memberupdate',
     name: 'memberupdate',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/sangmin/memberupdate.vue')
+    component: () => import('../views/sangmin/memberupdate.vue')
   },
   {
     path: '/findaccount',
@@ -128,6 +86,31 @@ const routes = [
     path: '/memberupdate',
     name: 'memberupdate',
     component: () => import('../views/sangmin/memberupdate.vue')
+  },
+  {
+    path: '/boardList',
+    name: 'boardList',
+    component: () => import('../views/kyoungjin/Board_list.vue')
+  },
+  {
+    path: '/boardDetail',
+    name: 'boardDetail',
+    component: () => import('../views/kyoungjin/Board_detail.vue')
+  },
+  {
+    path: '/boardwrite',
+    name: 'boardwrite',
+    component: () => import('../views/kyoungjin/Board_write.vue')
+  },
+  {
+    path: '/boardModify',
+    name: 'boardModify',
+    component: () => import('../views/kyoungjin/Board_modify.vue')
+  },
+  {
+    path: '/calendar',
+    name: 'calendar',
+    component: () => import('../views/kyoungjin/Calendar.vue')
   }
 ]
 

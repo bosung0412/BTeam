@@ -12,7 +12,7 @@
           <router-link to="/calendar" class="nav-item nav-link">캘린더</router-link>
           <router-link to="/camera" class="nav-item nav-link">식단관리</router-link>
           <!-- <router-link to="/foodbuy" class="nav-item nav-link">식재료구매</router-link> -->
-          <router-link to="/board" class="nav-item nav-link">게시판</router-link>
+          <router-link to="/boardList" class="nav-item nav-link">게시판</router-link>
         </div>
       </div>
     </nav>
