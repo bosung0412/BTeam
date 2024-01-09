@@ -1,0 +1,36 @@
+CREATE TABLE weight_chk(
+  id VARCHAR2(20),
+  currentweight NUMBER,
+  futureweight NUMBER,
+  wdate DATE DEFAULT SYSDATE NOT NULL
+);
+
+CREATE TABLE members (
+  id VARCHAR2(20) PRIMARY KEY,
+  name VARCHAR2(50),
+  password VARCHAR2(50),
+  birth DATE,
+  address VARCHAR2(100),
+  find_question VARCHAR2(100),
+  find_answer VARCHAR2(100),
+  phoneno VARCHAR2(20),
+  email VARCHAR2(50),
+  gender VARCHAR2(10),
+  disease VARCHAR2(100),
+  height NUMBER,
+  weight NUMBER
+);
+
+ALTER TABLE weight_chk
+ADD CONSTRAINT weight_chk_fk
+FOREIGN KEY (id) REFERENCES members(id);
+
+create sequence weight_seq
+increment by 1 start with 1;
+
+INSERT INTO members (id, name, password, birth, address, find_question, find_answer, phoneno, email, gender, disease, height, weight)
+VALUES('a', '홍길동', 'a', TO_DATE('1990-01-01', 'YYYY-MM-DD'), '서울', '무슨색?', '빨간색', '010-7111-1111', 'example@naver.com', 'man', '없음', '180', '50');
+
+
+INSERT INTO weight_chk (id, currentweight, futureweight)
+VALUES('g', '50', '60');

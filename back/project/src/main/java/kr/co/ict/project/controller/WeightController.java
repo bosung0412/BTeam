@@ -14,7 +14,7 @@ public class WeightController {
     @Autowired
     private WeightService service;
 
-    @GetMapping("/weightList")
+    @GetMapping("/weightlist")
     public List<WeightVO> listweight() {
         return service.find();
     }
