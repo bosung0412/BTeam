@@ -16,4 +16,8 @@ public class WeightService {
     public List<WeightVO> find() {
         return dao.find();
     }
+
+    public int insertWeight(WeightVO vo) {
+        return dao.addWeight(vo);
+    }
 }
