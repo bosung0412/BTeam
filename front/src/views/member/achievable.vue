@@ -35,40 +35,64 @@
 </template>
 
 <script>
-  
 import Navbar from '@/components/Navbar/Navbar.vue';
 import Footer from '../../components/Footer/Footer.vue';
+import axios from 'axios';
 
 export default {
-  components:{
-      Navbar,
-      Footer,
+  components: {
+    Navbar,
+    Footer,
   },
+  // 컴포넌트 데이터 속성 정의 및 초기화
   data() {
     return {
-      // 바꿀거임 더미임
-      currentWeight: 75.0,
-      futureWeight: 70.0,
-      username : "빵빵이"
+      currentWeight: '',
+      futureWeight: '',
+      username: '',
     };
   },
-  //  동적 데이터 업데이트
+  // 동적 데이터 업데이트
   computed: {
     weightDifference() {
       return this.futureWeight - this.currentWeight;
-    }
+    },
   },
-  // button 클릭 이벤트
+  // 컴포넌트가 마운트된 후 호출
+  mounted() {
+    this.getDataForm();
+  },
+  // 버튼 클릭 이벤트
   methods: {
     Save() {
-      console.log('저장하기 버튼이 클릭되었습니다. 목표 몸무게:', this.futureWeight);
+      axios.post('/weightAdd', {
+        currentWeight: this.currentWeight,
+        futureWeight: this.futureWeight,
+      })
+      .then(response => {
+        console.log('데이터 저장 성공:', response.data);
+      })
+      .catch(error => {
+        console.error('데이터 저장 실패:', error);
+      });
     },
     Cancel() {
       console.log('취소 버튼이 클릭되었습니다.');
     },
+    getDataForm() {
+      axios.get('/weightAdd')
+      .then(response => {
+        this.currentWeight = response.data.currentWeight;
+        this.futureWeight = response.data.futureWeight;
+        this.username = response.data.username;
+      })
+      .catch(error => {
+        console.error('데이터 가져오기 실패:', error);
+      });
+    },
   },
 };
-</script> 
+</script>
 
 <style scoped>
 .green-text {

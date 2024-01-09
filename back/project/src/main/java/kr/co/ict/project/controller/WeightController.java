@@ -20,7 +20,7 @@ public class WeightController {
         return service.find();
     }
 
-    @GetMapping("/weightaad")
+    @GetMapping("/weightAdd")
     public int addWeight(@RequestBody WeightVO vo) {
         int res = service.insertWeight(vo);
         return res;
