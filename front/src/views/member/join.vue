@@ -3,14 +3,18 @@
       <!-- 네비게이션 바 시작 -->
       <Navbar /> 
       <!-- 네비게이션 바 끝 -->
-  
-      <!-- 페이지 헤더 시작 -->
       <div class="container-fluid page-header py-4 mb-2 wow fadeIn" data-wow-delay="0.1s">
+		<div class="container text-center py-3">
+			<h3 class="display-5 text-white mb-2 animated slideInDown">회원가입</h3>
+		</div>
+	</div>
+        <!-- 페이지 헤더 시작 -->
+        <!-- <div class="container-fluid page-header py-4 mb-2 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center py-5">
           <h1 class="display-5 text-white mb-4 animated slideInDown">회원가입</h1>
           <nav aria-label="breadcrumb animated slideInDown"></nav>
         </div>
-      </div>
+      </div> -->
       <!-- 페이지 헤더 끝 -->
   
       <!-- 인용구 시작 -->
@@ -26,7 +30,7 @@
                       <div class="input-group">
                         <input type="text" class="form-control" id="id" name="id">
                         <div class="input-group-append">
-                          <button type="button" class="btn btn-primary btnall" style="margin-bottom: 0px;">중복확인</button>
+                          <button type="button" class="btn btn-success btnall" style="margin-bottom: 0px;">중복확인</button>
                         </div>
                       </div>
   
@@ -38,6 +42,9 @@
   
                       <label for="name" class="form-label mt-2">이름</label>
                       <input type="text" class="form-control" id="name" name="name">
+
+                      <label for="birth" class="form-label mt-2">생년월일</label>
+                      <input type="text" class="form-control" id="birth" name="birth">
   
                       <label for="address" class="form-label mt-2">주소</label>
                       <input type="text" class="form-control" id="address" name="address">
@@ -49,9 +56,14 @@
                       <div class="input-group">
                         <input type="text" class="form-control" id="email" name="email">
                         <div class="input-group-append">
-                          <button type="button" class="btn btn-primary btnall" style="margin-bottom: 0px;">중복확인</button>
+                          <button type="button" class="btn btn-success btnall" style="margin-bottom: 0px;">중복확인</button>
                         </div>
                       </div>
+                      <label for="question" class="form-label mt-2">비밀번호찾기 질문</label>
+                      <input type="text" class="form-control" id="question" name="question">
+  
+                      <label for="answer" class="form-label mt-2">비밀번호찾기 답변</label>
+                      <input type="text" class="form-control" id="answer" name="answer">
                     </div>
   
                     <p class="fs-5 fw-bold" style="color: rgb(77, 183, 91);">추가 정보</p>
@@ -80,7 +92,7 @@
 
                     </div>
                     <div class="col-12 text-center mt-4">
-                      <button @click="submitRegistration" type="button" class="btn btn-primary mx-2 btnall">회원가입</button>
+                      <button @click="submitRegistration" type="button" class="btn btn-success mx-2 btnall">회원가입</button>
                       <button @click="cancel" type="button" class="btn btn-primary mx-2 btnall">취소</button>
                     </div>
                   </form>
@@ -100,9 +112,13 @@
   </template>
   
   <script>
-  import Navbar from '@/components/Navbar/Navbar.vue';
-import Footer from '@/components/Footer/Footer.vue';
+import Navbar from '@/components/Navbar/Navbar.vue';
+import Footer from '../../components/Footer/Footer.vue';
   export default {
+    components: {
+    Navbar,
+    Footer,
+  },
     data() {
       return {
         isNavbarOpen: false,
@@ -123,7 +139,6 @@ import Footer from '@/components/Footer/Footer.vue';
         } else if (phoneNumber.length > 6) {
           phoneNumber = phoneNumber.replace(/(\d{3})(\d{4})(\d{1,4})/, '$1-$2-$3');
         }
-  
         input.value = phoneNumber;
       },
       updateCheckboxVisibility() {
@@ -136,13 +151,10 @@ import Footer from '@/components/Footer/Footer.vue';
         this.$router.push('/login');
       },
       cancel() {
-        this.$router.push('/Homeview');
+        this.$router.push('/');
       },
     },
-    components: {
-    Navbar,
-    Footer,
-  }
+
   };
   </script>
   

@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="top:0px">
       <router-link to="/main" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
         <img src="../../assets/img/samplelogo.png" style="width: 70px; height: 70px; top: 0; left: 10px;" />
       </router-link>
@@ -23,3 +23,10 @@ export default {
   name: 'Navbar',
 };
 </script>
+<!-- <style>
+.sticky {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+}
+</style> -->
