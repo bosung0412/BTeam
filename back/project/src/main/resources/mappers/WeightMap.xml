@@ -5,7 +5,7 @@
 
     <!-- 나중에 지울거임 확인용 -->
     <select id="find" resultType="wvo">
-        SELECT * FROM Weight_chk
+        SELECT * FROM Weight_chk where id = #{id}
     </select>
 
     <!-- 저장 -->

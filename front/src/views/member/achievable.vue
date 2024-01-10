@@ -49,7 +49,7 @@ export default {
     return {
       currentWeight: '',
       futureWeight: '',
-      id: '',
+      id: 'a',
     };
   },
   // 동적 데이터 업데이트
