@@ -20,14 +20,13 @@ public class WeightController {
     public List<WeightVO> listweight() {
         return service.find(); 
     }
-
-    @PostMapping("/weightAdd")
-    public int addWeight(@RequestBody WeightVO vo) {
-        System.out.println("============여기 오냐야야");
-        int res = service.insertWeight(vo);
-        System.out.println("===============weightcontrolelr res: "+res);
-        return res;
-    }
+    // @PostMapping("/weightAdd")
+    // public int addWeight(@RequestBody WeightVO vo) {
+    //     System.out.println("============여기 오냐야야");
+    //     int res = service.insertWeight(vo);
+    //     System.out.println("===============weightcontrolelr res: "+res);
+    //     return res;
+    // }
 
     @PostMapping("/upweight")
     public String updateWeight(@RequestBody WeightVO vo) {

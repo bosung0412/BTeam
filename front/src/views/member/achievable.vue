@@ -59,13 +59,13 @@ export default {
     },
   },
   // 컴포넌트가 마운트된 후 호출
-  created() {
+  mounted() {
     this.getDataForm();
   },
   // 버튼 클릭 이벤트
   methods: {
     Save() {
-      axios.post('/upweight', {
+      axios.post('http://192.168.0.230/project/upweight', {
         currentWeight: this.currentWeight,
         futureWeight: this.futureWeight,
       })
@@ -80,7 +80,7 @@ export default {
       console.log('취소 버튼이 클릭되었습니다.');
     },
     getDataForm() {
-      axios.get('/upweight')
+      axios.get('http://192.168.0.230/project/weightlist')
       .then(response => {
         this.currentWeight = response.data.currentWeight;
         this.futureWeight = response.data.futureWeight;
