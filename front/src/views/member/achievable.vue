@@ -59,18 +59,20 @@ export default {
     },
   },
   // 컴포넌트가 마운트된 후 호출
-  mounted() {
+  created() {
     this.getDataForm();
   },
   // 버튼 클릭 이벤트
   methods: {
     Save() {
-      axios.post('http://192.168.0.230/project/upweight', {
+      axios.post('http://192.168.0.88/project/upweight', {
         currentWeight: this.currentWeight,
         futureWeight: this.futureWeight,
       })
-      .then(response => {
-        console.log('데이터 저장 성공:', response.data);
+      .then((res) => {
+        console.log('데이터 저장 성공:', res.data);
+        this.currentWeight = res.data.currentWeight
+        this.futureWeight = res.data.futureWeight
       })
       .catch(error => {
         console.error('데이터 저장 실패:', error);
@@ -80,11 +82,11 @@ export default {
       console.log('취소 버튼이 클릭되었습니다.');
     },
     getDataForm() {
-      axios.get('http://192.168.0.230/project/weightlist')
-      .then(response => {
-        this.currentWeight = response.data.currentWeight;
-        this.futureWeight = response.data.futureWeight;
-        this.id = response.data.id;
+      axios.get('http://192.168.0.88/project/weightlist')
+      .then((res) => {
+        this.currentWeight = res.data.currentWeight;
+        this.futureWeight = res.data.futureWeight;
+        this.id = res.data.id;
       })
       .catch(error => {
         console.error('데이터 가져오기 실패:', error);
