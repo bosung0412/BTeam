@@ -22,7 +22,8 @@ const routes = [
   {path: '/boardDetail',name: 'boardDetail',component: () => import('../views/board/Board_detail.vue')},
   {path: '/boardwrite',name: 'boardwrite',component: () => import('../views/board/Board_write.vue')},
   {path: '/boardModify',name: 'boardModify',component: () => import('../views/board/Board_modify.vue')},
-  {path: '/calendar',name: 'calendar',component: () => import('../views/Calendar/Calendar.vue')}
+  {path: '/calendar',name: 'calendar',component: () => import('../views/Calendar/Calendar.vue')},
+  {path: '/recommendeddiet',name: 'recommendeddiet',component: () => import('../views/recommendeddiet/Recommendeddiet.vue')}
 ]
 
 const router = createRouter({
