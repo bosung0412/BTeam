@@ -22,7 +22,7 @@ public class ProjectApplication {
 			public void addCorsMappings(CorsRegistry registry) {
 				System.out.println("Test==========");
 				registry.addMapping("/**")
-						.allowedOrigins("http://192.168.0.73:8080/", "http://localhost:8080/")
+						.allowedOrigins("http://192.168.0.88:8080/", "http://localhost:8080/")
 						.allowedHeaders("*")
 						.allowedMethods("*").maxAge(3600);
 			}

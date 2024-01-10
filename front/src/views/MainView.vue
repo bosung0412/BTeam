@@ -61,10 +61,10 @@
                     <div style="text-align: center">
                         <div class="d-flex flex-column mainline">
 
-                            <h4 class="mb-3 maintext">추천 식단 정보</h4>
-                            <p class="mb-2 maintext">1.추천식단</p>
-                            <p class="mb-2 maintext">1.추천식단</p>
-                            <p class="mb-2 maintext">1.추천식단</p>
+                            <h4 @click="recommendeddietGO" class="mb-3 maintext">추천 식단 정보</h4>
+                            <p  class="mb-2 maintext">1.추천식단</p>
+                            <p class="mb-2 maintext">2.추천식단</p>
+                            <p class="mb-2 maintext">3.추천식단</p>
                             <div class="mt-2 mx-5 d-flex align-items-center"
                                 style="border: 2px solid #d7d7d7;border-radius: 8px;">
                                 <img src="../assets/img/food3.png" class="img-fluid"
@@ -195,6 +195,10 @@ export default {
         //게시판 페이지로 이동
         boardGo(){
             this.$router.push('');
+        },
+        //추천식단 페이지로 이동
+        recommendeddietGO(){
+            this.$router.push('/recommendeddiet');
         }
     },
 }
