@@ -19,7 +19,7 @@ public class WebConfig implements WebMvcConfigurer{
             registry.addMapping("/**")
                   .allowedOriginPatterns("*")
                   .exposedHeaders("Authorization","RefreshToken")
-                  .allowedOrigins("http://192.168.0.88:8080/", "http://localhost:8080/")
+                  .allowedOrigins("http://192.168.0.230:8080/", "http://localhost:8080/")
                   .allowedHeaders("*")
                   .allowedMethods("*").maxAge(3600);
          }
