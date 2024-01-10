@@ -20,6 +20,7 @@ public class WeightController {
     public List<WeightVO> listweight() {
         return service.find(); 
     }
+
     // @PostMapping("/weightAdd")
     // public int addWeight(@RequestBody WeightVO vo) {
     //     System.out.println("============여기 오냐야야");

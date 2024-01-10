@@ -47,9 +47,9 @@ export default {
   // 컴포넌트 데이터 속성 정의 및 초기화
   data() {
     return {
-      currentWeight: '',
-      futureWeight: '',
-      id: '',
+      currentWeight: '50',
+      futureWeight: '60',
+      id: 'a',
     };
   },
   // 동적 데이터 업데이트
