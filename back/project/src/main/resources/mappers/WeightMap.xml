@@ -15,6 +15,6 @@
     </insert>
 
     <update id="upWeight" parameterType="wvo">
-        UPDATE weight_chk SET currentweight = #{currentweight}, futureweight = #{futureweight} WHERE id = #{id}
+        UPDATE weight_chk SET currentweight = #{currentweight}, futureweight = #{futureweight}  WHERE id = #{id}
     </update>
 </mapper>

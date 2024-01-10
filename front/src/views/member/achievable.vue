@@ -3,7 +3,7 @@
   <Navbar /> 
   <div class="container-fluid page-header py-4 mb-2 wow fadeIn" :data-wow-delay="'0.1s'">
   <div class="container text-center py-3">
-    <h3 class="display-5 text-white mb-2 animated slideInDown">{{ username }}님의 목표 설정</h3>
+    <h3 class="display-5 text-white mb-2 animated slideInDown">{{ id }}님의 목표 설정</h3>
   </div>
 </div>
   <div class="container-xxl py-5">
@@ -49,7 +49,7 @@ export default {
     return {
       currentWeight: '',
       futureWeight: '',
-      username: '',
+      id: '',
     };
   },
   // 동적 데이터 업데이트
@@ -65,7 +65,7 @@ export default {
   // 버튼 클릭 이벤트
   methods: {
     Save() {
-      axios.post('/weightAdd', {
+      axios.post('/upweight', {
         currentWeight: this.currentWeight,
         futureWeight: this.futureWeight,
       })
@@ -80,11 +80,11 @@ export default {
       console.log('취소 버튼이 클릭되었습니다.');
     },
     getDataForm() {
-      axios.get('/weightAdd')
+      axios.get('/upweight')
       .then(response => {
         this.currentWeight = response.data.currentWeight;
         this.futureWeight = response.data.futureWeight;
-        this.username = response.data.username;
+        this.id = response.data.id;
       })
       .catch(error => {
         console.error('데이터 가져오기 실패:', error);
