@@ -1,7 +1,7 @@
 <template>
-
-  <router-view/>
+<router-view/>
 </template>
+
 
   <!-- <nav>
     <router-link to="/">Home</router-link> |

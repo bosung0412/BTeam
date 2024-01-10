@@ -3,20 +3,25 @@
   <Navbar /> 
   <div class="container-fluid page-header py-4 mb-2 wow fadeIn" :data-wow-delay="'0.1s'">
   <div class="container text-center py-3">
-    <h3 class="display-5 text-white mb-2 animated slideInDown">빵빵이님의 목표 설정</h3>
+    <h3 class="display-5 text-white mb-2 animated slideInDown">{{ username }}님의 목표 설정</h3>
   </div>
 </div>
   <div class="container-xxl py-5">
     <div class="container mt-5 d-flex justify-content-center">
       <div class="row g-5 align-items-stretch maincol pb-4 col-5 d-flex justify-content-center">
         <div class="col-12 text-center">
-          <img src="../../assets/img/icon/achieset.png" class="img-fluid mb-3" />
+          <div>
+            <p>현재 몸무게: {{ currentWeight }} kg</p>
+            <p>목표 몸무게: {{ futureWeight }} kg</p>
+            <p :class="{ 'green-text': weightDifference >= 0, 'red-text': weightDifference < 0 }">
+              목표까지 : {{ weightDifference }} kg
+              <span v-if="weightDifference !== 0" class="arrow">{{ weightDifference > 0 ? '↑' : '↓' }}</span>
+            </p>
+          </div>
           <div class="d-flex align-items-center mb-3">
             <div class="input-group">
               <input v-model="targetWeight" type="number" class="form-control" placeholder="월 목표 몸무게(kg)">
-              <div class="input-group-append">
-                <button @click="Change" type="button" class="btnall" style="margin-bottom: 0px;">변경</button>
-              </div>
+              <input v-model="targetWeight" type="number" class="form-control" placeholder="현재 몸무게(kg)">
             </div>
           </div>
           <button @click="Save" type="submit" class="btn btn-primary mx-2 btnall">저장하기</button>
@@ -30,30 +35,76 @@
 </template>
 
 <script>
-  
 import Navbar from '@/components/Navbar/Navbar.vue';
 import Footer from '../../components/Footer/Footer.vue';
+import axios from 'axios';
 
 export default {
-  components:{
-      Navbar,
-      Footer,
+  components: {
+    Navbar,
+    Footer,
   },
+  // 컴포넌트 데이터 속성 정의 및 초기화
   data() {
     return {
-      targetWeight: null,
+      currentWeight: '',
+      futureWeight: '',
+      username: '',
     };
   },
+  // 동적 데이터 업데이트
+  computed: {
+    weightDifference() {
+      return this.futureWeight - this.currentWeight;
+    },
+  },
+  // 컴포넌트가 마운트된 후 호출
+  created() {
+    this.getDataForm();
+  },
+  // 버튼 클릭 이벤트
   methods: {
     Save() {
-      console.log('저장하기 버튼이 클릭되었습니다. 목표 몸무게:', this.targetWeight);
+      axios.post('/weightAdd', {
+        currentWeight: this.currentWeight,
+        futureWeight: this.futureWeight,
+      })
+      .then(response => {
+        console.log('데이터 저장 성공:', response.data);
+      })
+      .catch(error => {
+        console.error('데이터 저장 실패:', error);
+      });
     },
     Cancel() {
       console.log('취소 버튼이 클릭되었습니다.');
     },
-    Change() {
-      console.log('변경 버튼이 클릭되었습니다. 목표 몸무게:', this.targetWeight);
-},
+    getDataForm() {
+      axios.get('/weightAdd')
+      .then(response => {
+        this.currentWeight = response.data.currentWeight;
+        this.futureWeight = response.data.futureWeight;
+        this.username = response.data.username;
+      })
+      .catch(error => {
+        console.error('데이터 가져오기 실패:', error);
+      });
+    },
   },
 };
 </script>
+
+<style scoped>
+.green-text {
+    color: green;
+  }
+  
+  .red-text {
+    color: red;
+  }
+
+  .arrow {
+  font-size: 0.8em;
+  margin-left: 5px;
+}
+</style>
