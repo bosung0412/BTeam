@@ -22,11 +22,12 @@ public class ProjectApplication {
 			public void addCorsMappings(CorsRegistry registry) {
 				System.out.println("Test==========");
 				registry.addMapping("/**")
-						.allowedOrigins("http://192.168.0.73:8080/", "http://localhost:8080/")
+						// .allowedOriginPatterns("*")
+						// .exposedHeaders("Authorization","RefreshToken")
+						.allowedOrigins("http://192.168.0.74:8081", "http://localhost:8081/")
 						.allowedHeaders("*")
 						.allowedMethods("*").maxAge(3600);
 			}
-
 		};
 	}
 

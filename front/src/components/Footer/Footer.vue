@@ -19,7 +19,7 @@
   </script>
   <style>
   .myfooter{
-    position:fixed;
+    position: absolute;
     bottom:0;
   }
 

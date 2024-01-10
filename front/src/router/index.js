@@ -19,7 +19,8 @@ const routes = [
   {path: '/findaccount',name: 'findaccount',component: () => import('../views/member/findaccount.vue')},
   {path: '/memberupdate',name: 'memberupdate',component: () => import('../views/member/memberupdate.vue')},
   {path: '/boardList',name: 'boardList',component: () => import('../views/board/Board_list.vue')},
-  {path: '/boardDetail',name: 'boardDetail',component: () => import('../views/board/Board_detail.vue')},
+  {path: '/boardList/boardDetail/:ono/:id/:oname/:ocontent/:oregdate/:ocategory',
+    name: 'boardDetail',component: () => import('../views/board/Board_detail.vue')},
   {path: '/boardwrite',name: 'boardwrite',component: () => import('../views/board/Board_write.vue')},
   {path: '/boardModify',name: 'boardModify',component: () => import('../views/board/Board_modify.vue')},
   {path: '/calendar',name: 'calendar',component: () => import('../views/Calendar/Calendar.vue')}
