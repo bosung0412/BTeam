@@ -3,18 +3,18 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.ict.project.dao.WeightDao">
 
-    <!-- 나중에 지울거임 확인용 -->
+    <!-- 불러오기-->
     <select id="find" resultType="wvo">
         SELECT * FROM Weight_chk where id = #{id}
     </select>
 
-    <!-- 저장 -->
+    <!-- 나중에 삭제예정 -->
     <insert id="addweight" parameterType="wvo">
         INSERT INTO weight_chk (id, currentweight, futureweight, wdate)
         VALUES (#{id}, #{currentweight}, #{futureweight}, SYSDATE)
     </insert>
 
     <update id="upWeight" parameterType="wvo">
-        UPDATE weight_chk SET currentweight = #{currentweight}, futureweight = #{futureweight}  WHERE id = #{id}
+        UPDATE weight_chk SET currentweight = #{currentweight}, futureweight = #{futureweight} WHERE id = #{id}
     </update>
 </mapper>
