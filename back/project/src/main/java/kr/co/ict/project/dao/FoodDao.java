@@ -8,7 +8,7 @@ import kr.co.ict.project.vo.FoodVO;
 
 @Mapper
 public interface FoodDao {
-    public List<FoodVO> find();
+    public List<FoodVO> selectList();
 
     public int addFood(FoodVO vo);
 }
