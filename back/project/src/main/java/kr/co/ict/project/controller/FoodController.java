@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,11 +17,11 @@ public class FoodController {
     private FoodService service;
 
     @GetMapping("/foodlist")
-    public List<FoodVO> listweight() {
-        return service.find();
+    public List<FoodVO> listfood() {
+        return service.selectFoodList();
     }
 
-    @GetMapping("/foodAdd")
+    @PostMapping("/foodAdd")
     public int addFood(@RequestBody FoodVO vo) {
         int res = service.insertFood(vo);
         return res;

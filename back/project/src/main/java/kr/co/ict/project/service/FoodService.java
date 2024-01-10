@@ -14,8 +14,8 @@ public class FoodService {
     @Autowired
     private FoodDao dao;
 
-    public List<FoodVO> find() {
-        return dao.find();
+    public List<FoodVO> selectFoodList() {
+        return dao.selectList();
     }
 
     public int insertFood(FoodVO vo) {
