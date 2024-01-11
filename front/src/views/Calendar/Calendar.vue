@@ -1,89 +1,35 @@
-<style scoped>
-  .cal {display: flex; flex-direction: row; height: 300%; padding-left: 10%; padding-right: 10%;}
-  body {background-color: #F5F6FA;}
-
-  .plan {margin: 5%; border: 3px solid #A5D299; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); border-radius: 5px; overflow: hidden; width: 50%; text-align: center; float: left; background-color: #FFFFFF;}
-  h3 {color: #333;}
-  .calendar {display: grid; grid-template-columns: repeat(7, 1fr); margin: 10px; border: 2px solid #A5D299; border-radius: 5px; overflow: hidden;}
-  .day {padding: 15px; text-align: left; cursor: pointer; height: 130px; border: 1px solid #A5D299; border-bottom: 1px solid #A5D299; overflow: hidden;}
-  .day:last-child {border-right: 2.5px solid #A5D299;}
-  .fixed-day {background-color: #A5D299; font-weight: bold; text-align: center; height: 40px;}
-  .event-list {margin-top: 10px; list-style: none; padding: 0;}
-  .event-list li {margin-bottom: 5px;}
-  .event-val {overflow: hidden;}
-  button {background-color: white; color: #A5D299; border: none; padding: 5px 10px; text-align: center; text-decoration: none; display: inline-block; font-size: 20px; margin: 3px 20px; cursor: pointer; border-radius: 5px;}
-  button:hover {border: 2px solid #A5D299;}
-  #eventInput {padding: 10px; margin: 5px; border-radius: 5px; border: 1px solid #ccc;}
-
-  .detail {position: relative; width: 35%; height: 350px; margin-top: 6%; border: 1px solid gray; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); display: flex; flex-direction: column; background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url(../../assets/img/foodimg1.png) center/cover; color: black;}
-  #diet_date {width: 90%; border: none; border-bottom: 1px solid gray; font-size: 1rem; font-weight: bold; text-align: center; margin-bottom: 3%; margin-left: 5%; background-color: transparent; display:flex;}
-  #foodimg {margin-top: 10%; border: 3px solid #f0768b; width: 75%; margin-left: 5%;}
-  .diet_ {width: 50%; float: left; height: 280px;}
-  #foodname, #calorie {border: none; width: 10rem; font-size: 20px; background-color: transparent; text-align: center;}
-  #foodinfo {font-size: 1rem; width: 40%; overflow: scroll; word-wrap: break-word; background-color: transparent; border: none;}
-
-  .chart {height: 650px; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); margin-top: 10%; margin-bottom: 30%; padding-top: 1%; background-color: white;}
-  #activityChart, #weightChart {margin: 7%; width: 85%; border: 2px solid silver; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); background-color: #fff5f6;}
-  h5 {margin: 3%;}
-  .chartbtn button {background-color: transparent; font-size: 15px; color: gray; margin: 0; float: right;}
-  .chartbtn button:hover {text-decoration: underline; border: none;}
-  @media(max-width: 768px){.container-fluid{flex-direction: column;} .plan{width: 100%;} .detail{width: 100%;}}
-</style>
-
 <template>
   <div>
-    <Navbar />
-    <!-- Navbar End -->
+    <!-- Navbar Start -->
+    <Navbar/>
 
     <!-- Page Header Start -->
-    <div class="container-fluid page-header py-4 mb-2 wow fadeIn" :data-wow-delay="'0.1s'">
-        <div class="container text-center py-3">
-          <h3 class="display-5 text-white mb-2 animated slideInDown">캘린더</h3>
-        </div>
+    <div class="container-fluid page-header py-4 mb-2 wow fadeIn" data-wow-delay="0.1s">
+      <div class="container text-center py-3">
+        <h3 class="display-5 text-white mb-2 animated slideInDown">게시글 상세보기</h3>
+      </div>
     </div>
     <!-- Page Header End -->
 
-    <!-- Calendar Start -->
     <div class="container-fluid cal">
-      <div class="plan">
-        <h3 style="margin-top: 20px;">식단을 확인하세요!</h3>
-        <div style="height:5%">
-          <button @click="changeMonth(-1)">이전</button>
-            {{ currentMonth.format('MMMM YYYY') }}
-          <button @click="changeMonth(1)">다음</button>
-        </div>
-        <div class="calendar">
-          <div v-for="weekday in weekdays" :key="weekday" class="day fixed-day">{{ weekday }}</div>
-          <div v-for="day in calendar" :key="day.dateKey" class="day" @click="showEventModal(day.date)">
-            {{ day.date ? day.date.date() : '' }}
-            <ul class="event-list">
-              <li class="event-val" v-for="event in day.events" :key="event" 
-                :style="{ backgroundColor: event.color }">{{ event.event }}</li>
-            </ul>
-          </div>
-        </div>
-        <div v-if="isEventModalOpen">
-          <h5>{{ selectedDate.format('YYYY-MM-DD') }} 식단 추가</h5>
-          <ul class="event-list">
-            <li v-for="event in getEventsForDate(selectedDate)" :key="event">{{ event }}</li>
-          </ul>
-          <label for="eventInput">Add Event:</label>
-          <input ref="eventInput" type="text" v-model="newEvent" id="eventInput">
-          <button @click="addEvent">Add</button>
-          <button @click="closeEventModal">Close</button>
-        </div>
+      <!-- calendar start -->
+      <div id="wrap">
+        <FullCalendar :options="calendarOptions"></FullCalendar>
+        <div style="clear:both"></div>
       </div>
-      <!-- Calendar End -->
-    
+      <!-- calendar end -->
+
       <!-- diet Detail Start -->
       <div class="detail">
-        <h4 style="margin: 3%">음식 정보</h4>
-        <div>
+        
+        <div class="detail_diet">
+          <h4 style="margin: 3%">음식 정보</h4>
           <div class="diet_">
             <input type="text" id="diet_date" value="2023-12-29 breakfast">
             <img id="foodimg" src="../../assets/img/chicken.png">
           </div>
           <div class="diet_">
+            이벤트<input type="text" id="foodinfo"><br>
             닭가슴살 <input type="text" id="foodinfo" value="245.9 kcal"><br>
             지방 <input type="text" id="foodinfo" value="12g"><br>
             포화지방 <input type="text" id="foodinfo" value="3.3g"><br>
@@ -97,182 +43,184 @@
         </div>
         <div>
           <div class="chart">
+<<<<<<< HEAD
 	          <div id="chart_1">
 	            <h5>월별 식단 성공/실패율을 확인하세요!</h5>
+=======
+            <div id="chart_1">
+              <h5>월별 성공/실패율을 확인하세요!</h5>
+>>>>>>> fbec075c7c3450cf2c8d810d707fcf5ac06875da
               <canvas id="activityChart"></canvas>
-	          </div>
-	          <hr>
-	          <div>
-	            <h5>몸무게가 어떻게 변화 되었는지 확인하세요!</h5>
-	            <div class="chartbtn">
-	              <button id="w_year">연별</button>
-	              <button id="w_month">월별</button>
+            </div>
+            <hr>
+            <div>
+              <h5>몸무게가 어떻게 변화 되었는지 확인하세요!</h5>
+              <div class="chartbtn">
+                <button id="w_year">연별</button>
+                <button id="w_month">월별</button>
                 <button id="w_day">일별</button>
-	            </div>
-	            <canvas id="weightChart"></canvas>
-	          </div>
+              </div>
+              <canvas id="weightChart"></canvas>
+            </div>
           </div>
         </div>
       </div>
-      <!-- diet Detail End -->
+        <!-- diet Detail End -->
     </div>
     <!-- Footer Start -->
     <Footer />
   </div>
 </template>
-
+  
 <script>
-import Navbar from '@/components/Navbar/Navbar.vue';
-import Footer from '../../components/Footer/Footer.vue';
-  export default({      
-    data() {
-      return{
-        currentMonth: moment(), // 현재 표시되는 월
-        calendar: [], // 월별 달력 데이터 저장
-        newEvent: '', // 추가되는 이벤트 저장
-        selectedDate: null, // 선택한 날짜
-        isEventModalOpen: false, // 이벤트 모달창 오픈 여부
-        events: [], // 모든 이벤트 목록 저장
-        weekdays: moment.weekdaysShort(), // 요일 이름 배열
-      }
+  import { ref } from 'vue';
+  import FullCalendar from '@fullcalendar/vue3';
+  import dayGridPlugin from '@fullcalendar/daygrid';
+  import timeGridPlugin from '@fullcalendar/timegrid';
+  import listPlugin from '@fullcalendar/list';
+  import Navbar from '@/components/Navbar/Navbar.vue';
+  import Footer from '../../components/Footer/Footer.vue';
+
+  export default {
+    name: 'calendar',
+    components: {
+      Navbar,
+      Footer,
+      FullCalendar,
     },
-    components:{
-        Navbar,
-        Footer,
-    },
-    methods: {
-      generateCalendar() { // 현재 월의 각 날짜 배열
-        const startOfMonth = this.currentMonth.clone().startOf('month');
-        const endOfMonth = this.currentMonth.clone().endOf('month');
-        const firstDayOfWeek = startOfMonth.day();
-
-        const daysInMonth = endOfMonth.date();
-
-        let calendar = [];
-
-        for (let i = 1; i <= daysInMonth; i++) {
-          const currentDate = moment([this.currentMonth.year(), this.currentMonth.month(), i]);
-          calendar.push({ date: currentDate, dateKey: currentDate.format('YYYY-MM-DD'), events: this.getEventsForDate(currentDate) });
-        }
-
-        for (let i = 0; i < firstDayOfWeek; i++) {
-          calendar.unshift({ date: null, dateKey: `empty-${i}`, events: [] });
-        }
-
-        this.calendar = calendar;
-      },
-
-      changeMonth(step) { // 월 변경
-        if (!this.isEventModalOpen) {
-          this.currentMonth = this.currentMonth.clone().add(step, 'month');
-          this.generateCalendar();
-        }
-      },
-
-      showEventModal(date) { // 선택한 날짜의 이벤트 모달 오픈
-        this.selectedDate = date;
-        this.isEventModalOpen = true;
-        this.$nextTick(() => {
-          this.$refs.eventInput.focus();
-        });
-      },
-
-      closeEventModal() { // 이벤트 모달 닫기
-        this.isEventModalOpen = false;
-        this.selectedDate = null;
-        this.newEvent = '';
-      },
-
-      addEvent() { // 해당 날짜, 목록에 이벤트 추가
-        const eventColors = {
-          event1: '#FED2B5',
-          event2: '#ADDCC8',
-          event3: '#ADCDFF',
-        }
-        if (this.selectedDate) {
-          const selectedDay = this.calendar.find(day => day.date && day.date.isSame(this.selectedDate, 'day'));
-
-          if (selectedDay) {
-            const eventId = `event${selectedDay.events.length + 1}`;
-            const eventColor = eventColors[eventId] || '#CCCCCC';
-
-            selectedDay.events.push({ event: this.newEvent, color: eventColor });
-
-            this.events.push({ date: this.selectedDate, event: this.newEvent, color: eventColor });
+    setup() {
+      const y = new Date().getFullYear(); // 현재 년도
+      const m = new Date().getMonth(); // 현재 월
+      const d = new Date().getDay(); // 현재 일
+      const calendarOptions = ref({
+        plugins: [dayGridPlugin, timeGridPlugin, listPlugin],
+        headerToolbar: {
+          left: 'title',
+          center: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth',
+          right: 'prev,next today',
+        },
+        editable: true,
+        firstDay: 1,
+        selectable: true,
+        defaultView: 'month',
+        axisFormat: 'h:mm',
+        columnFormat: {
+          month: 'ddd',
+          week: 'ddd d',
+          day: 'dddd M/d',
+          agendaDay: 'dddd d',
+        },
+        titleFormat: {
+          month: 'long',
+          year: 'numeric',
+        },
+        allDaySlot: false,
+        selectHelper: true,
+        select: (start, end, allDay) => {
+          const title = prompt('Event Title:');
+          if (title) {
+            // 여기서 FullCalendar 객체의 `addEvent` 메소드를 사용해 이벤트를 추가합니다.
+            calendarOptions.value.events.push({
+              title: title,
+              start: start,
+              end: end,
+              allDay: allDay,
+            });
           }
-        }
-        this.newEvent = '';
-        this.closeEventModal();
-      },
-
-      getEventsForDate(date) { // 이벤트 목록 반환
-        return this.events
-        .filter(event => event.date.isSame(date, 'day'))
-        .map(event => event.event);
-      },
-    },
-
-    computed: {
-      selectedDateEvents() { // 현재 선택된 날짜의 이벤트 목록 반환
-        return this.getEventsForDate(this.selectedDate);
-      },
-    },
-
-    mounted() { // 달력 생성
-      this.generateCalendar();
-    },
-});
-  // activity Chart
-  document.addEventListener('DOMContentLoaded', function () {
-    var ctx = document.getElementById('activityChart').getContext('2d');
-
-    var chartData = {
-      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-      datasets: [{
-        label: 'Activity Data',
-        borderColor: 'rgba(255, 105, 180, 1)',
-        borderWidth: 2,
-        data: [65, 59, 80, 81, 56, 55, 40, 30, 20, 50, 70, 60],
-      }]
-    };
-
-    var activityChart = new Chart(ctx, {
-      type: 'line',
-      data: chartData,
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    });
-  });
-  // weight Chart
-  document.addEventListener('DOMContentLoaded', function () {
-    var ctx = document.getElementById('weightChart').getContext('2d');
-
-    var chartData = {
-      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-      datasets: [{
-        label: 'weight Data',
-        borderColor: 'rgba(55, 105, 180, 1)',
-        borderWidth: 2,
-        data: [67, 63, 59, 59, 60, 55, 53, 52, 54, 51, 52, 52],
-      }]
-    };
-
-    var weightChart = new Chart(ctx, {
-      type: 'line',
-      data: chartData,
-      options: {
-        scales: {
-          y: {
-            beginAtZero: false,
-	          min: 40
-          }
-        }
-      }
-    });
-  });
+        },
+        droppable: true,
+        drop: (info) => {
+          // 드래그 앤 드롭 로직 추가
+        },
+        
+        events: [
+          {
+            title: 'All Day Event',
+            start: new Date(y, m, 1),
+          },
+          {
+            id: 999,
+            title: "Repeating Event",
+            start: new Date(y, m, d - 3, 16, 0),
+            allDay: false,
+            className: "info",
+          },
+          {
+            id: 999,
+            title: 'Repeating Event',
+            start: new Date(y, m, d + 4, 16, 0),
+            allDay: false,
+            className: 'info',
+          },
+          {
+            title: 'Meeting',
+            start: new Date(y, m, d, 10, 30),
+            allDay: false,
+            className: 'important',
+          },
+          {
+            title: 'Lunch',
+            start: new Date(y, m, d, 12, 0),
+            end: new Date(y, m, d, 14, 0),
+            allDay: false,
+            className: 'important',
+          },
+          {
+            title: 'happy',
+            start: new Date(y, m, d, 12, 0),
+            allDay: true,
+            className: 'important',
+          },
+          {
+            title: 'Birthday Party',
+            start: new Date(y, m, d + 1, 19, 0),
+            end: new Date(y, m, d + 1, 22, 30),
+            allDay: false,
+          },
+          {
+            title: 'Click for Google',
+            start: new Date(y, m, 28),
+            end: new Date(y, m, 29),
+            url: 'http://google.com/',
+            className: 'success',
+          },
+        ]
+      });
+      return { 
+        calendarOptions,
+      };
+    }
+  };
 </script>
+    
+<style>
+  body {text-align: center; font-size: 14px;}
+  .cal {display: flex; padding: 70px; height: auto;}
+
+  #wrap {margin: 0 5% 0 5%; width: 55%; height: 100%; border: 1px solid white; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); padding: 1%; border-radius: 10px;}
+  .fc-day {margin: 0 auto; width: 90px; background-color: #FFFFFF;}
+  .fc .fc-button-primary {background-color: #A5D299; border: none;}
+  .fc .fc-button-primary:not(:disabled).fc-button-active{background-color: #397329; color: white;}
+  .fc-toolbar-title {width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+  .u-overlap.u-overlap-transparent:not(.u-overlap-contrast) .u-header :not(.u-nav-item) > a, 
+      .u-gradient > .u-container-layout > a, .u-image:not(.u-shading) > 
+      .u-container-layout > a, a {color: black;}
+  .fc .fc-daygrid-day-number {float: left;}
+  .fc-dayGridMonth-view {border: 3px solid #A5D299;}
+
+  .detail {position: relative; width: 30%;  margin-bottom: 100%;  border-radius: 5px;  display: flex; flex-direction: column; }
+  #diet_date {width: 90%; border: none; border-bottom: 1px solid gray; font-size: 1rem; font-weight: bold; text-align: center; margin: 0 0 3% 5%; background-color: transparent; display:flex;}
+  #foodimg {border: 3px solid #f0768b; width: 70%; margin: 1% 5% 5% 0;}
+  .detail_diet {height: 80%; border: 1px solid gray; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); border-radius: 5px; background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url(../../assets/img/foodimg1.png) center/cover; color: black;}
+  .diet_ {width: 50%; float: left;}
+  #foodname, #calorie {border: none; width: 10rem; font-size: 20px; background-color: transparent; text-align: center;}
+  #foodinfo {font-size: 1rem; width: 43%; overflow: scroll; word-wrap: break-word; background-color: transparent; border: none;}
+
+  .chart {height: 80%; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); margin: 10% 0 30% 0; padding-top: 1%; background-color: white;}
+  #activityChart, #weightChart {margin: 7%; width: 85%; border: 2px solid silver; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); background-color: #fff5f6;}
+  h5 {margin: 3%;}
+  .chartbtn button {background-color: transparent; font-size: 15px; color: gray; margin: 0; float: right; border: none;}
+  .chartbtn button:hover {text-decoration: underline;}
+  @media(max-width: 768px){.container-fluid{flex-direction: column; padding: 0;} #wrap{width: 100%;} .detail{width: 100%;} .chart{width: 100%;}}
+</style>
+    

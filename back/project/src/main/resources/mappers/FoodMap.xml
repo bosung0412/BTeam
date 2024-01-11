@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace ="kr.co.ict.project.dao.FoodDao">
+    <select id="FoodList" resultType = "Fvo">
+    select * from FOODS
+    </select>
+    <insert id="addFood" parameterType="Fvo">
+      INSERT  INTO  FOODS (FNO,FIMAGE,FNAME,FPROVINCE,FFPROVINCE,FCHOLESTEROL,FSALT,FPOTASIUM,FCARBOHYDRATE,FDIETARYFIBER,FPROTEIN) VALUES 
+    (FOODS_SEQ.nextVal,#{FIMAGE},#{FNAME},#{FPROVINCE},#{FFPROVINCE},#{FCHOLESTEROL},#{FSALT},#{FPOTASIUM},#{FCARBOHYDRATE},#{FDIETARYFIBER},#{FPROTEIN})
+    </insert>
+</mapper>
