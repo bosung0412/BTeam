@@ -43,8 +43,13 @@
         </div>
         <div>
           <div class="chart">
+<<<<<<< HEAD
+	          <div id="chart_1">
+	            <h5>월별 식단 성공/실패율을 확인하세요!</h5>
+=======
             <div id="chart_1">
               <h5>월별 성공/실패율을 확인하세요!</h5>
+>>>>>>> fbec075c7c3450cf2c8d810d707fcf5ac06875da
               <canvas id="activityChart"></canvas>
             </div>
             <hr>
