@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class FoodVO {
-    private Integer FNO;                // 음식 번호
+    private Integer FNO;            // 음식 번호
     private String FIMAGE;          // 음식 사진
     private String FNAME;           // 음식 이름
     private String FPROVINCE;       // 지방

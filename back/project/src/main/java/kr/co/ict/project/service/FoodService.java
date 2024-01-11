@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import kr.co.ict.project.dao.FoodDao;
 import kr.co.ict.project.vo.FoodVO;
 
-
 @Service
 public class FoodService {
     @Autowired
