@@ -62,7 +62,7 @@
 					<div class="row mb-3">
 						<div class="col">
 							<div class="form-check">
-								<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
+								<input class="form-check-input" type="checkbox" value="" id="breakfast">
 								<label class="form-check-label" for="flexCheckDefault1">
 									아침
 								</label>
@@ -70,7 +70,7 @@
 						</div>
 						<div class="col">
 							<div class="form-check">
-								<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+								<input class="form-check-input" type="checkbox" value="" id="lunch" checked>
 								<label class="form-check-label" for="flexCheckChecked">
 									점심
 								</label>
@@ -78,7 +78,7 @@
 						</div>
 						<div class="col">
 							<div class="form-check">
-								<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked2">
+								<input class="form-check-input" type="checkbox" value="" id="dinner">
 								<label class="form-check-label" for="flexCheckChecked2">
 									저녁
 								</label>
@@ -199,7 +199,7 @@ export default {
         const stream = await navigator.mediaDevices.getUserMedia(constraints); // 사용자의 미디어 디바이스 엑세스
         this.$refs.camera.srcObject = stream; // 성공시 할당되어 화면에 출력
       } catch (error) {	// 오류 시
-        alert("인터넷 엑세스 오류.");
+        alert("카메라 권한 오류.");
       } finally {
         this.isLoading = false;
         this.isCameraOpen = true;
