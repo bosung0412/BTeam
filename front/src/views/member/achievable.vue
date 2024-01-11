@@ -86,11 +86,13 @@ export default {
     // 여기까지 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     Save() {
       axios.post('http://192.168.0.88/project/upweight', {
+        id : this.id,
         currentWeight: this.currentWeight,
         futureWeight: this.futureWeight,
       })
       .then((res) => {
         console.log('데이터 저장 성공:', res.data);
+        this.id = res.data.id
         this.currentWeight = res.data.currentWeight
         this.futureWeight = res.data.futureWeight
       })

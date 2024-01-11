@@ -21,14 +21,14 @@
 				<div class="col-lg-6 col-md-7 wow fadeInUp" data-wow-delay="0.3s">
 					<div class="row">
 						<!-- 웹캠 촬영을 위한 비디오 엘리먼트 추가 -->
-						<div id="webcamContainer" style="position: relative;" class="mb-3">
-							<video id="webcam" width="100%" height="auto" autoplay
+						<div id="videoContainer" style="position: relative;" class="mb-3">
+							<video id="video" ref="video" @canplay="playVideo" width="100%" height="auto" autoplay
 								style="border: 2px solid #ccc; border-radius: 8px;"></video>
 						</div>
 					</div>
 					<div class="row">
 						<div class="d-flex justify-content-center align-items-center">
-							<a class="btn btn-success mx-2 btnall" href="#">촬영</a>
+							<a class="btn btn-success mx-2 btnall" id="takephoto" @click="takePhoto">촬영</a>
 						</div>
 					</div>
 					<div class="row mb-3">
