@@ -27,6 +27,7 @@
 						 <span v-if="!isCameraOpen">Open Camera</span>
 						 <span v-else>Close Camera</span>
 						 </button>
+						<button type="button" @click="openNewActivity">모바일 카메라 테스트</button>
 					  </div>
 	
 					  <!-- 카메라가 열리고 로딩중이면 로딩이미지 -->
@@ -171,6 +172,7 @@
 	<script>
 	import Navbar from '@/components/Navbar/Navbar.vue';
 	import Footer from '../../components/Footer/Footer.vue';
+	
 	export default {
 		components:{
 			Navbar,
@@ -191,7 +193,16 @@
 		  } else {
 			this.openCamera();
 		  }
-		},
+    },
+	openNewActivity() {
+        // 안드로이드의 openNewActivity 메소드 호출
+        if (typeof window.mobile !== 'undefined') {
+			window.mobile.openNewActivity();
+        } else {
+            console.error('Android object is not defined.');
+        }
+    },
+		
 		async openCamera() {
 		  this.isLoading = true;
 		  try {
@@ -230,9 +241,8 @@
 			.replace("image/jpeg", "image/octet-stream");
 		  download.setAttribute("href", canvas);
 		},
-	  },
-	
-	   }
+	}
+	}
 	</script>
 	<style scoped>
 	body {
