@@ -118,7 +118,7 @@ export default{
   },
   methods: {
     fetchData(){
-      axios.get("http://192.168.0.74/project/boardList")
+      axios.get("http://192.168.0.88/project/boardList")
       .then((resp) => {
         this.projects = resp.data;
         this.filterProjects('*');

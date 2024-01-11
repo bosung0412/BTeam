@@ -127,7 +127,7 @@
                             </div>
                             <div class="mx-4 mb-4">
                                 <button @click="loginGo" type="button" class="btnpromain" style="margin-right: 10px;">로그인</button>
-                                <button @click="memberUpdateGo" type="button" class="btnpromain">회원정보수정</button>
+                                <button @click="memberUpdateGo" type="button" class="btnpromain" style="margin-right: 10px;">회원정보수정</button>
                             </div>
 
                         </div>
@@ -203,3 +203,12 @@ export default {
     },
 }
 </script>
+
+<style scoped>  
+@media screen and (max-width: 1080px) and (max-height: 2220px) {
+  .btnpromain{
+    margin-left: 20px;
+  }
+}
+
+</style>
