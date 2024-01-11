@@ -20,4 +20,8 @@ public class WeightService {
     public int insertWeight(WeightVO vo) {
         return dao.addWeight(vo);
     }
+    
+    public void updateWeight(WeightVO vo) {
+        dao.upWeight(vo);
+    }
 }
