@@ -13,10 +13,17 @@ public class FoodService {
     @Autowired
     private FoodDao dao;
 
+    // 리스트 보기
     public List<FoodVO> selectFoodList() {
         return dao.selectList();
     }
 
+    // 식단 상세 보기
+    public FoodVO selectFood(Integer FNO) {
+        return dao.selectFood(FNO);
+    }
+
+    // 식단 추가
     public int insertFood(FoodVO vo) {
         return dao.addFood(vo);
     }
