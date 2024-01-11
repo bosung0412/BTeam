@@ -8,9 +8,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableAutoConfiguration
-public class WebConfig implements WebMvcConfigurer{
-    
-    @Bean
+public class WebConfig implements WebMvcConfigurer {
+
+   @Bean
    public WebMvcConfigurer crosConfigure() {
       return new WebMvcConfigurer() {
          @Override
@@ -18,8 +18,8 @@ public class WebConfig implements WebMvcConfigurer{
             System.out.println("Test==========");
             registry.addMapping("/**")
                   .allowedOriginPatterns("*")
-                  .exposedHeaders("Authorization","RefreshToken")
-                  .allowedOrigins("http://192.168.0.230:8080/", "http://localhost:8080/","http://192.168.0.88:8080/")
+                  .exposedHeaders("Authorization", "RefreshToken")
+                  .allowedOrigins("http://192.168.0.73:8080/", "http://localhost:8080/", "http://192.168.0.88:8080/")
                   .allowedHeaders("*")
                   .allowedMethods("*").maxAge(3600);
          }

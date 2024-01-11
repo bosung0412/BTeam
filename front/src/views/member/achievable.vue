@@ -25,6 +25,8 @@
             </div>
           </div>
           <button @click="Save" type="submit" class="btn btn-primary mx-2 btnall">저장하기</button>
+                    <!-- cors통신 확인용-->
+          <button @click="upload" type="button" class="btn btn-primary mx-2 btnall">불러오기</button>
           <button @click="Cancel" type="button" class="btn btn-primary mx-2 btnall">취소</button>
         </div>
       </div>
@@ -64,6 +66,24 @@ export default {
   },
   // 버튼 클릭 이벤트
   methods: {
+    // 업로드이건 그냥 cors통신 확인용
+    upload(){
+      axios.get("http://192.168.0.88/project/weightlist",{
+        id : this.id,
+        currentWeight: this.currentWeight,
+        futureWeight: this.futureWeight,
+      })
+      .then((res) => {
+        console.log('불러오기:', res.data);
+        this.id = res.data.id
+        this.currentWeight = res.data.currentWeight
+        this.futureWeight = res.data.futureWeight
+      })
+      .catch(error => {
+        console.error('불러오기 실패:', error);
+      });
+    },
+    // 여기까지 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     Save() {
       axios.post('http://192.168.0.88/project/upweight', {
         currentWeight: this.currentWeight,
