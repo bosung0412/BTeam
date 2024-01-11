@@ -26,7 +26,6 @@ public class ProjectApplication {
 						.allowedHeaders("*")
 						.allowedMethods("*").maxAge(3600);
 			}
-
 		};
 	}
 
