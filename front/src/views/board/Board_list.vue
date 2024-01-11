@@ -17,10 +17,8 @@
 		<div class="row wow fadeInUp" data-wow-delay="0.3s">
 		  <div class="col-12 text-center">
 			<ul class="list-inline rounded mb-5" id="portfolio-flters">
-			  <li class="mx-2" @click="filterProjects('*')">전체</li>
-			  <li class="mx-2" @click="filterProjects('.first')">카테고리2</li>
-			  <li class="mx-2" @click="filterProjects('.second')">카테고리3</li>
-		      <button onclick="window.location.href='boardWrite'" type="button" class="btn btn-primary mx-2">글작성</button>
+			  <li class="mx-5" @click="filterProjects('notice')">공지사항</li>
+			  <li class="mx-5" @click="filterProjects('.second')">자주 묻는 질문</li>
 			</ul>
 		  </div>
 		</div>
@@ -41,7 +39,7 @@
               <td>{{ project.ono }}</td>
               <td>{{ project.ocategory }}</td>
               <td>
-                <a @click="$event => href(project)">{{ project.oname }}</a>
+                <a id="oname" @click="$event => href(project)">{{ project.oname }}</a>
               </td>
               <td>{{ project.id }}</td>
               <td>{{ project.oregdate }}</td>
@@ -108,13 +106,13 @@ export default{
     totalPages() {
       return Math.ceil(this.filteredProjects.length / this.itemsPerPage);
     },
-      pages() {
-        const pagesArray = [];
-        for (let i = 1; i <= this.totalPages; i++) {
-          pagesArray.push(i);
-        }
-        return pagesArray;
-      },
+    pages() {
+      const pagesArray = [];
+      for (let i = 1; i <= this.totalPages; i++) {
+        pagesArray.push(i);
+      }
+      return pagesArray;
+    },
   },
   methods: {
     fetchData(){
@@ -142,9 +140,12 @@ export default{
       }
     },
     href(project){
-        console.log(project)
-        this.$router.push({name:'boardDetail', params:project})
+      console.log(project)
+      this.$router.push({name:'boardDetail', params:project})
     }
   }
 };
 </script>
+<style>
+  #oname:hover {cursor: pointer; text-decoration: underline;}
+</style>
