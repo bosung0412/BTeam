@@ -52,6 +52,11 @@
                 <div class="col-sm-6">
                   <button @click="redirectToFindAccount" type="button" class="btn btn-primary btnall w-100">아이디 or 비밀번호 찾기</button>
                 </div>
+
+                <div class="col-sm-12">
+                  <img src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" width="222" alt="카카오 로그인 버튼"/>
+                </div>
+
               </div>
             </form>
           </div>
@@ -76,6 +81,30 @@ export default {
   methods: {
     toggleNavbar() {
       this.isNavbarOpen = !this.isNavbarOpen;
+    },
+    kakaoLogin() {
+      window.Kakao.Auth.login({
+        scope: "profile_image, account_email",
+        success: this.getKakaoAccount,
+      });
+    },getKakaoAccount() {
+      window.Kakao.API.request({
+        url: "/v2/user/me",
+        success: (res) => {
+          const kakao_account = res.kakao_account;
+          const ninkname = kakao_account.profile.ninkname;
+          const email = kakao_account.email;
+          console.log("ninkname", ninkname);
+          console.log("email", email);
+
+          //로그인처리구현
+
+          alert("로그인 성공!");
+        },
+        fail: (error) => {
+          console.log(error);
+        },
+      });
     },
     submitLogin() {
       console.log('로그인 중입니다.');
