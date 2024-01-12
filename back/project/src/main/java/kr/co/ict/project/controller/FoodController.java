@@ -27,8 +27,9 @@ public class FoodController {
 
     // 식단 상세 정보
     @GetMapping(value = "/detail")
-    public FoodVO getFoodDetail(@RequestParam("fno") Integer FNO) {
-        return service.FoodDetail(FNO);
+    public FoodVO getFoodDetail(@RequestParam("fno") int fno) {
+        FoodVO vo = service.FoodDetail(fno);
+        return vo;
     }
     
 
