@@ -73,6 +73,10 @@
 import Navbar from '@/components/Navbar/Navbar.vue';
 import Footer from '@/components/Footer/Footer.vue';
 export default {
+  components: {
+    Navbar,
+    Footer,
+  },
   data() {
     return {
       isNavbarOpen: false,
@@ -81,32 +85,36 @@ export default {
   methods: {
     toggleNavbar() {
       this.isNavbarOpen = !this.isNavbarOpen;
+    },kakaoLogin() {
+        const redirect_uri = 'http://localhost:8081/MainView'; // redirect_uri 내가 정한거
+        const clientId = '27be1209a5e94ef12e0e5d5a27ae9161'; // kakao developer 키
+        // kakao에서 정해줌
+        const Auth_url = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirect_uri}`;
+        window.location.href = Auth_url;
+      },
+    //해당 페이지가 로딩되자마자 인자로 받았던 인가코드를 빼내어 카카오톡에게 토큰값을 요청
+    created() {
+      // code 안에 query로 받아온 값을 저장
+      this.code = this.$route.query.code;
+      console.log(this.code)
+      this.getToken();
+  },
+  // token 요청해야하기때문에 실행되자마자 code에 담아둔 내용을 get으로 서버로 전달 
+  getToken() { 
+      // this를 self 변수로 할당
+      const self = this;
+      // 서버에다가 보냄(get)
+      self.$axios.get('' + self.code)
+        .then((res) => {
+          console.log(res)
+          //  응답 데이터를 vue데이터에 할당
+          self.form.email = res.data.email;
+          self.form.pwd = res.data.id;
+          self.form.nickname = res.data.nickname;
+          self.form.kakaotoken = res.data.accessToken;
+        });
     },
-    kakaoLogin() {
-      window.Kakao.Auth.login({
-        scope: "profile_image, account_email",
-        success: this.getKakaoAccount,
-      });
-    },getKakaoAccount() {
-      window.Kakao.API.request({
-        url: "/v2/user/me",
-        success: (res) => {
-          const kakao_account = res.kakao_account;
-          const ninkname = kakao_account.profile.ninkname;
-          const email = kakao_account.email;
-          console.log("ninkname", ninkname);
-          console.log("email", email);
-
-          //로그인처리구현
-
-          alert("로그인 성공!");
-        },
-        fail: (error) => {
-          console.log(error);
-        },
-      });
-    },
-    submitLogin() {
+  submitLogin() {
       console.log('로그인 중입니다.');
       this.$router.push('/Homeview');
     },
@@ -116,12 +124,8 @@ export default {
     redirectToFindAccount() {
       this.$router.push('/findaccount');
     },
-  },
-  components: {
-    Navbar,
-    Footer,
   }
-};
+}
 </script>
 
 
