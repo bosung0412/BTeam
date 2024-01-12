@@ -19,7 +19,7 @@ public class FoodController {
     @Autowired
     private FoodService service;
 
-    // 식단 리스트 불러오기
+    // 식단 리스트 불러오기!~
     @GetMapping(value = "/foodlist")
     public List<FoodVO> getFoodList() {
         return service.selectFoodList();
