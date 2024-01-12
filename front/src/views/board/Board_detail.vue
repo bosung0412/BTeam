@@ -28,26 +28,24 @@
 
 			<ul class="bottom">
 			  <li class="prev">
-				  <span>이전글</span> |
-				  <template v-if="prevPost.prevno">
-					<a class="post" :href="prevPost.prevno">{{ prevPost.prevname }}</a>
-				  </template>
-				  <template v-else>&nbsp;&nbsp;&nbsp;&nbsp;이전 글이 없습니다.</template>
-				  <span class="date">{{ prevPost.prevdate }}</span>
+				<span>이전글</span> |
+				<template v-if="prevPost.prevno">
+				  <a class="post" :href="prevPost.prevno">{{ prevPost.prevname }}</a>
+				</template>
+				<template v-else>&nbsp;&nbsp;&nbsp;&nbsp;이전 글이 없습니다.</template>
+				<span class="date">{{ prevPost.prevdate }}</span>
 			  </li>
 			  <hr class="hr-line">
-				<li class="next">
-					<span>다음글</span> |
-					<span>
-						<template v-if="nextPost.nextno">
-						<a class="post" :href="nextPost.nextno">{{ nextPost.nextname }}</a>
-						</template>
-						<template v-else>&nbsp;&nbsp;&nbsp;&nbsp;다음 글이 없습니다.</template>
-					</span>
-					<span class="date">{{ nextPost.nextdate }}</span>
-				</li>
+			  <li class="next">
+				<span>다음글</span> |
+				<template v-if="nextPost.nextno">
+				  <a class="post" :href="nextPost.nextno">{{ nextPost.nextname }}</a>
+				</template>
+				<template v-else>&nbsp;&nbsp;&nbsp;&nbsp;다음 글이 없습니다.</template>
+				<span class="date">{{ nextPost.nextdate }}</span>
+			  </li>
 			</ul>
-			<button @click="$router.push('/boardList')" class="btn btn-secondary me-2">목록</button>
+			<router-link to="/boardList" class="btn btn-secondary me-2 tolist">목록</router-link>
 		  </form>
 		</div>
 	  </div>
@@ -97,7 +95,7 @@ export default {
   .container-fluid {padding: 0;}
   .bigtitle {border-bottom: 2px solid #000000; margin: 0 0 3% 0;}
   .bigtitle > .oregdate {position: absolute; right: 0; margin: 1% 20% 0 0; font-size: 14px;}
-  button {float: right; width: 10%;}
+  .tolist {float: right; width: 10%;}
   ul {list-style-type: none;}
   .date {font-size: 14px;}
   .bottom li {margin-bottom: 10px;}

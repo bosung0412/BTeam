@@ -24,19 +24,14 @@ public class BoardController {
     }
     @RequestMapping("/boardDetail")
     public BoardVO detailBoard(@RequestParam int ono){
-        System.out.println("dedailBoard " + ono);
-        System.out.println(service.selectDetail(ono).getOname());
         return service.selectDetail(ono);
     }
     @RequestMapping("/prevDetail")
     public BoardprevVO prevBoard(@RequestParam int ono){
-        System.out.println("prevBoard " + ono);
-        System.out.println(service.prevDetail(ono));
         return service.prevDetail(ono);
     }
     @RequestMapping("/nextDetail")
     public BoardnextVO nextBoard(@RequestParam int ono){
-        System.out.println("nextDetail " +  service.nextDetail(ono));
         return service.nextDetail(ono);
     }
 }

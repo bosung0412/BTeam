@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-	<Navbar />
+	  <Navbar />
     <!-- Navbar End -->
 
     <!-- Page Header Start -->
@@ -11,31 +11,33 @@
     </div>
     <!-- Page Header End -->
 
-	<!-- Projects Start -->
-	<div class="container-xxl py-5">
-	  <div class="container">
-		<div class="row wow fadeInUp" data-wow-delay="0.3s">
-		  <div class="col-12 text-center">
-			<ul class="list-inline rounded mb-5" id="portfolio-flters">
-			  <li class="mx-5" @click="filterProjects('notice')">공지사항</li>
-			  <li class="mx-5" @click="filterProjects('.second')">자주 묻는 질문</li>
-			</ul>
-		  </div>
-		</div>
+    <!-- Projects Start -->
+    <div class="container-xxl py-5">
+      <div class="container">
+        <div class="row wow fadeInUp" data-wow-delay="0.3s">
+          <div class="col-12 text-center">
+            <ul class="list-inline rounded mb-5" id="portfolio-flters">
+              <li class="mx-5" @click="filterProjects('notice')">공지사항</li>
+              <li class="mx-5">
+                <router-link to="/faqBoard">자주 묻는 질문(FAQ)</router-link>
+              </li>
+            </ul>
+          </div>
+        </div>
 
-		<table class="table">
-		  <thead>
-			<tr>
-			  <th>번호</th>
-			  <th>카테고리</th>
-			  <th>제목</th>
-			  <th>작성자</th>
-			  <th>작성일자</th>
-			  <th>조회수</th>
-			</tr>
-		  </thead>
-		  <tbody>
-			<tr v-for="project in paginatedProjects" :key="project.ono">
+        <table class="table">
+          <thead>
+          <tr>
+            <th>번호</th>
+            <th>카테고리</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일자</th>
+            <th>조회수</th>
+          </tr>
+          </thead>
+          <tbody>
+            <tr v-for="project in paginatedProjects" :key="project.ono">
               <td>{{ project.ono }}</td>
               <td>{{ project.ocategory }}</td>
               <td>
@@ -45,10 +47,10 @@
               <td>{{ project.oregdate }}</td>
               <td>100</td>
             </tr>
-		  </tbody>
-		</table>
-        <nav aria-label="Page navigation example">
-          <ul class="pagination">
+          </tbody>
+        </table>
+        <nav aria-label="Page navigation" class="pagination-container">
+          <ul class="pagination justify-content-center">
             <li class="page-item" :class="{ 'disabled': currentPage === 1 }">
               <a class="page-link" href="#" aria-label="Previous" @click.prevent="prevPage">
                 <span aria-hidden="true">&laquo;</span>
@@ -64,9 +66,9 @@
             </li>
           </ul>
         </nav>
-	  </div>
-	</div>
-	<!-- Projects End -->
+      </div>
+    </div>
+    <!-- Projects End -->
 
     <!-- Footer Start -->
     <Footer /> 
@@ -146,6 +148,6 @@ export default{
   }
 };
 </script>
-<style>
+<style scoped>
   #oname:hover {cursor: pointer; text-decoration: underline;}
 </style>

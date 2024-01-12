@@ -20,8 +20,7 @@ const routes = [
   {path: '/memberupdate',name: 'memberupdate',component: () => import('../views/member/memberupdate.vue')},
   {path: '/boardList',name: 'boardList',component: () => import('../views/board/Board_list.vue')},
   {path: '/boardList/boardDetail/:ono',name: 'boardDetail',component: () => import('../views/board/Board_detail.vue')},
-  {path: '/boardwrite',name: 'boardwrite',component: () => import('../views/board/Board_write.vue')},
-  {path: '/boardModify',name: 'boardModify',component: () => import('../views/board/Board_modify.vue')},
+  {path: '/faqBoard',name: 'faqBoard',component: () => import('../views/board/Board_faq.vue')},
   {path: '/calendar',name: 'calendar',component: () => import('../views/Calendar/Calendar.vue')},
   {path: '/recommendeddiet',name: 'recommendeddiet',component: () => import('../views/recommendeddiet/Recommendeddiet.vue')}
 ]

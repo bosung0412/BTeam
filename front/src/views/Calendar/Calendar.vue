@@ -15,7 +15,6 @@
       <!-- calendar start -->
       <div id="wrap">
         <FullCalendar :options="calendarOptions"></FullCalendar>
-        <div style="clear:both"></div>
       </div>
       <!-- calendar end -->
 
@@ -29,8 +28,8 @@
             <img id="foodimg" src="../../assets/img/chicken.png">
           </div>
           <div class="diet_">
-            이벤트<input type="text" id="foodinfo"><br>
-            닭가슴살 <input type="text" id="foodinfo" value="245.9 kcal"><br>
+            <input type="text" id="foodinfo" :value="dietDetail.foodName"><br>
+            <input type="text" id="foodinfo" :value="dietDetail.calorie">kcal<br>
             지방 <input type="text" id="foodinfo" value="12g"><br>
             포화지방 <input type="text" id="foodinfo" value="3.3g"><br>
             콜레스테롤 <input type="text" id="foodinfo" value="87mg"><br>
@@ -87,6 +86,10 @@
       const y = new Date().getFullYear(); // 현재 년도
       const m = new Date().getMonth(); // 현재 월
       const d = new Date().getDay(); // 현재 일
+      const dietDetail = ref({
+        date: '',
+        foodName: '',
+      });
       const calendarOptions = ref({
         plugins: [dayGridPlugin, timeGridPlugin, listPlugin],
         headerToolbar: {
@@ -132,6 +135,10 @@
           {
             title: 'All Day Event',
             start: new Date(y, m, 1),
+            extendedProps: {
+              food: '닭가슴살',
+              calorie: '245.9'
+            }
           },
           {
             id: 999,
@@ -179,10 +186,18 @@
             url: 'http://google.com/',
             className: 'success',
           },
-        ]
+        ],
+        eventClick: (info) => {
+          const food = info.event.extendedProps.food;
+          const calorie = info.event.extendedProps.calorie;
+
+          dietDetail.value.foodName = food;
+          dietDetail.value.calorie = calorie;
+        }
       });
       return { 
         calendarOptions,
+        dietDetail
       };
     }
   };
