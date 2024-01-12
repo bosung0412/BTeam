@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class access_token { // 클래스 이름은 적절하게 변경하세요
+public class access_token {
 
     public void createKakaoUser(String token) { // throws BaseException
 
