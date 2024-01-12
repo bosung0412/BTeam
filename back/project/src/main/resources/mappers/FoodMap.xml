@@ -5,6 +5,9 @@
     <select id="selectList" resultType = "Fvo">
     select * from FOODS
     </select>
+    <select id="foodDetail" resultType="Fvo">
+        select * from FOODS where fno = #{fno}
+    </select>
     <insert id="addFood" parameterType="Fvo">
       INSERT INTO FOODS (FNO,FIMAGE,FNAME,FPROVINCE,FFPROVINCE,FCHOLESTEROL,FSALT,FPOTASIUM,FCARBOHYDRATE,FDIETARYFIBER,FPROTEIN) VALUES 
     (FOODS_SEQ.nextVal,#{FIMAGE},#{FNAME},#{FPROVINCE},#{FFPROVINCE},#{FCHOLESTEROL},#{FSALT},#{FPOTASIUM},#{FCARBOHYDRATE},#{FDIETARYFIBER},#{FPROTEIN})

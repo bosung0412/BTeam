@@ -20,4 +20,5 @@ public class FoodVO {
     private String fcarbohydrate;   // 탄수화물
     private String fdietaryfiber;   // 식이섬유
     private String fprotein;        // 단백질
+    private String tocal;           // 총 칼로리
 }
