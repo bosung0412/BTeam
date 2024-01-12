@@ -18,4 +18,6 @@ public interface WeightDao {
 
     void upWeight(WeightVO vo);
 
+    void upWeight(WeightVO vo);
+
 }

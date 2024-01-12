@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="maincontainer">
   <Navbar /> 
   <div class="container-fluid page-header py-4 mb-2 wow fadeIn" :data-wow-delay="'0.1s'">
   <div class="container text-center py-3">
@@ -7,7 +7,7 @@
   </div>
 </div>
   <div class="container-xxl py-5">
-    <div class="container mt-5 d-flex justify-content-center">
+    <div class="container-1 mt-5">
       <div class="row g-5 align-items-stretch maincol pb-4 col-5 d-flex justify-content-center">
         <div class="col-12 text-center">
           <div>
@@ -130,5 +130,29 @@ export default {
   .arrow {
   font-size: 0.8em;
   margin-left: 5px;
+  
 }
+.container-1{
+    justify-content: center;
+    display: flex;
+  }
+</style>
+
+<style scoped>  
+@media screen and (max-width: 1080px) and (max-height: 2220px) {
+  .container-1{
+    height: 310px;
+    display: block;
+  }
+  .container-xxl {
+    width: 850px;
+    height: auto;
+    margin-left: 36px;
+    
+  }
+  .maincontainer{
+    overflow: hidden ; /* 세로 스크롤이 생기지 않도록 함 */
+  }
+}
+
 </style>

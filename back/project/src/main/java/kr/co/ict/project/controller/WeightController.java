@@ -38,4 +38,14 @@ public class WeightController {
             return "안들어감: " + e.getMessage();
         }
     }
+
+    @PostMapping("/upweight")
+    public String updateWeight(@RequestBody WeightVO vo) {
+        try {
+            service.updateWeight(vo);
+            return "들어감";
+        } catch (Exception e) {
+            return "안들어감: " + e.getMessage();
+        }
+    }
 }
