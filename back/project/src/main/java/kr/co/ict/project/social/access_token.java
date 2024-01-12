@@ -1,4 +1,4 @@
-package kr.co.ict.social;
+package kr.co.ict.project.social;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;

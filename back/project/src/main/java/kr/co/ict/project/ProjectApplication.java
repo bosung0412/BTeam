@@ -9,7 +9,6 @@ import kr.co.ict.project.config.WebConfig;
 @SpringBootApplication
 @Import(WebConfig.class)
 public class ProjectApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(ProjectApplication.class, args);
 	}
