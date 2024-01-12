@@ -11,7 +11,7 @@ public interface FoodDao {
     public List<FoodVO> selectList();
 
     // 추천 식단 상세 정보
-    public FoodVO selectFood(Integer FNO);
+    public FoodVO foodDetail(Integer FNO);
     // 추천 식단 추가
     public int addFood(FoodVO vo);
 }
