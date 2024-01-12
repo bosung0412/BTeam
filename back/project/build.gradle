@@ -35,6 +35,10 @@ dependencies {
 	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
 
 
+	// JSON파싱에 유용 Gson 추가
+	implementation 'com.google.code.gson:gson:2.10.1'
+	// Feign 클라이언트 활성화
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 	// security dependencies
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.security:spring-security-messaging:6.1.2'
