@@ -25,7 +25,4 @@ public class WeightService {
         dao.upWeight(vo);
     }
     
-    public void updateWeight(WeightVO vo) {
-        dao.upWeight(vo);
-    }
 }

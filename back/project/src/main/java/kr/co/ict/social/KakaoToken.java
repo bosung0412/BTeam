@@ -7,6 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+// 전달받은 카카오 토큰의 값을 받기 위해 만듬
 public class KakaoToken {
 
     private String token_type;
