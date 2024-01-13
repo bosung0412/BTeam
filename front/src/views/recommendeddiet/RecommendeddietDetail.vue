@@ -18,12 +18,12 @@
 		<form>
 			<input type="hidden" name="fno" :value="result.fno" />
 			<div class="mb-3 mt-3">
-				<label for="fname" class="form-label">식단 이름 :</label>
+				<label for="fname" class="form-label">식단 명 :</label>
 				<input type="text" class="form-control" id="fname" name="fname" readonly :value="result.fname" />
 			</div>
 			<div class="mb-3 mt-3">
-				<label for="fimage" class="form-label">식단 사진 :</label>
-				<input type="text" class="form-control" id="fimage" name="fimage" readonly :value="result.fimage" />
+				<label for="files" class="form-label">식단 이미지 :</label>
+				<input type="text" class="form-control" id="files" name="files" readonly :value="result.files" />
 			</div>
       <div class="mb-3 mt-3">
 				<label for="tocal" class="form-label">총 칼로리:</label>

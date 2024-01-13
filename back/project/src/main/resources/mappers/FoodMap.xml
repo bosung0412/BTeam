@@ -8,8 +8,11 @@
     <select id="foodDetail" resultType="Fvo">
         select * from FOODS where fno = #{fno}
     </select>
-    <insert id="addFood" parameterType="Fvo">
-      INSERT INTO FOODS (FNO,FIMAGE,FNAME,FPROVINCE,FFPROVINCE,FCHOLESTEROL,FSALT,FPOTASIUM,FCARBOHYDRATE,FDIETARYFIBER,FPROTEIN) VALUES 
-    (FOODS_SEQ.nextVal,#{FIMAGE},#{FNAME},#{FPROVINCE},#{FFPROVINCE},#{FCHOLESTEROL},#{FSALT},#{FPOTASIUM},#{FCARBOHYDRATE},#{FDIETARYFIBER},#{FPROTEIN})
-    </insert>
+
+<insert id="addFood" parameterType="Fvo">
+    INSERT INTO FOODS (fno,files,fname,fprovince,ffprovince,fcholesterol,fsalt,fpotasium,fcarbohydrate,fdietaryfiber,fprotein,tocal)
+    VALUES (FOODS_SEQ.nextVal,#{files, jdbcType=BLOB},#{fname},#{fprovince},#{ffprovince},#{fcholesterol},#{fsalt},#{fpotasium},#{fcarbohydrate},#{fdietaryfiber},#{fprotein},#{tocal})
+
+</insert>
+
 </mapper>
