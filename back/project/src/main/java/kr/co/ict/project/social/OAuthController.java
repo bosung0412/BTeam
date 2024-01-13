@@ -1,4 +1,4 @@
-package kr.co.ict.social;
+package kr.co.ict.project.social;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

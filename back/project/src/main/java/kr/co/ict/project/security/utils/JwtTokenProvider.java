@@ -4,6 +4,7 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import jakarta.servlet.http.HttpServletRequest;
+import kr.co.ict.project.config.member.MemberDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,10 +17,11 @@ import java.util.Date;
 // @Slf4j 어노테이션: Lombok 라이브러리의 Slf4j 어노테이션을 사용하여 로깅을 위한 Logger를 자동으로 생성
 @Slf4j
 public class JwtTokenProvider {
+
     // Key key: JWT 생성 및 검증에 사용되는 비밀 키, HS512 알고리즘으로 생성
     Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
-    public String createToken(Authentication authentication) {
+    public String createToken(Authentication authentication, MemberDto member) {
         // 스프링 시큐리티에서 Authentication 객체로 부터
         // 사용자의 UserDetails를 얻어 사용자 이름을 주제(subject)로 설정하고,
         // 현재 시간과 만료 시간을 포함한 토큰을 생성
@@ -28,10 +30,10 @@ public class JwtTokenProvider {
         Date expiryDate = new Date(now.getTime() + 3600000);
 
         return Jwts.builder()
-                .setSubject(userDetails.getUsername())
-                .setIssuedAt(new Date())
-                .setExpiration(expiryDate)
-                .signWith(key, SignatureAlgorithm.HS512)
+                .setSubject(userDetails.getUsername()) // 사용자
+                .setIssuedAt(new Date()) // new Date로 현재 시간 기반으로 생성
+                .setExpiration(expiryDate) // 만료세팅
+                .signWith(key, SignatureAlgorithm.HS512) // 사용할 암호화 알고리즘, signature에 들어갈 secret 값 세팅
                 // .signWith(SignatureAlgorithm.HS512,key) 였다.
                 .compact();
     }

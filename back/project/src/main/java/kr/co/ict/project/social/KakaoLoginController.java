@@ -1,4 +1,4 @@
-package kr.co.ict.social;
+package kr.co.ict.project.social;
 
 import java.util.HashMap;
 
@@ -17,16 +17,16 @@ public class KakaoLoginController {
 
     // access token을 얻어줌
     @GetMapping("/login/{code}")
-	public HashMap<String, String> kakaoLogin(@PathVariable("code") String code) {
+    public HashMap<String, String> kakaoLogin(@PathVariable("code") String code) {
         System.out.println(code);
         // 토큰을 요청하여 얻음
-		String kakaoToken = kakaoLoginService.requestToken(code);
-		System.out.println("카카오토큰" + kakaoToken);
-		
+        String kakaoToken = kakaoLoginService.requestToken(code);
+        System.out.println("카카오토큰" + kakaoToken);
+
         // 사용자 정보를 요청하여 얻음
-		HashMap<String, String> userInfo = kakaoLoginService.requestUser(kakaoToken);
-		System.out.println("userInfo : " + userInfo);
-		
+        HashMap<String, String> userInfo = kakaoLoginService.requestUser(kakaoToken);
+        System.out.println("userInfo : " + userInfo);
+
         return userInfo;
-	}
+    }
 }

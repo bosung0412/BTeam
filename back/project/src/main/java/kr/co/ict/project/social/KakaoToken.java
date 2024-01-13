@@ -1,4 +1,4 @@
-package kr.co.ict.social;
+package kr.co.ict.project.social;
 
 import lombok.Getter;
 import lombok.Setter;
