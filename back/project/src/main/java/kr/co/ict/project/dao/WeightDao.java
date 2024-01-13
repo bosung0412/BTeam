@@ -14,7 +14,7 @@ public interface WeightDao {
     // mapper.xml에 추상메서드 이름 => id="find"
     public List<WeightVO> find();
 
-    public int addWeight(WeightVO vo);
+    // public int addWeight(WeightVO vo);
 
     void upWeight(WeightVO vo);
 

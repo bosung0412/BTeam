@@ -11,7 +11,6 @@
     <Footer />
 	</section>
 </template>
-
 <script>
 import Footer from '@/components/Footer/Footer.vue';
 // @ is an alias to /src

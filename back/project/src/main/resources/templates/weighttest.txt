@@ -1,8 +1,8 @@
 -- weight_chk 테이블
 CREATE TABLE weight_chk(
   id VARCHAR2(20),
-  currentweight NUMBER,
-  futureweight NUMBER,
+  currentweight VARCHAR2(20),
+  futureweight VARCHAR2(20),
   wdate DATE DEFAULT SYSDATE NOT NULL
 );
 

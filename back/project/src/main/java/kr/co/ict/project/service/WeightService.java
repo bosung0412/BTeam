@@ -17,11 +17,12 @@ public class WeightService {
         return dao.find();
     }
 
-    public int insertWeight(WeightVO vo) {
-        return dao.addWeight(vo);
-    }
-    
+    // public int insertWeight(WeightVO vo) {
+    // return dao.addWeight(vo);
+    // }
+
     public void updateWeight(WeightVO vo) {
         dao.upWeight(vo);
     }
+
 }

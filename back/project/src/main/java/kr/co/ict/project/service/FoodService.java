@@ -19,8 +19,8 @@ public class FoodService {
     }
 
     // 식단 상세 보기
-    public FoodVO selectFood(Integer FNO) {
-        return dao.selectFood(FNO);
+    public FoodVO FoodDetail(int fno) {
+        return dao.foodDetail(fno);
     }
 
     // 식단 추가
