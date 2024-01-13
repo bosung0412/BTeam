@@ -108,9 +108,9 @@ export default {
         .then((res) => {
           console.log(res)
           //  응답 데이터를 vue데이터에 할당
+          self.form.id = res.data.id;
           self.form.email = res.data.email;
-          self.form.pwd = res.data.id;
-          self.form.nickname = res.data.nickname;
+          self.form.pwd = res.data.pwd;
           self.form.kakaotoken = res.data.accessToken;
         });
     },

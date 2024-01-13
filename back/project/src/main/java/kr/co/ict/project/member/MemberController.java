@@ -1,4 +1,4 @@
-package kr.co.ict.project.config.member;
+package kr.co.ict.project.member;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,7 +35,7 @@ public class MemberController {
         // dto가 null이 아니고 pwd가 일치하면 로그인 성공
         if (dto != null && pwd.equals(dto.getPwd())) {
             // 토큰생성(jwt)
-            String token = jwtTokenProvider.createToken(dto);
+            String token = jwtTokenProvider.generateJwtToken(dto);
             String loginId = dto.getId();
             // 로그인에 성공하면 true로 변경
             flag = true;

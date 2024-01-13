@@ -1,4 +1,4 @@
-package kr.co.ict.project.config.member;
+package kr.co.ict.project.member;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

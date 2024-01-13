@@ -62,6 +62,8 @@ public class SecurityConfig {
   // PasswordEncoder passwordEncoder() {
   // return NoOpPasswordEncoder.getInstance();
   // }
+
+  // password 암호화를 위해
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
@@ -114,7 +116,7 @@ public class SecurityConfig {
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration corsConfiguration = new CorsConfiguration();
     corsConfiguration.setAllowCredentials(true);
-    corsConfiguration.setAllowedOrigins(List.of("http://localhost:8081/", "http://192.168.0.29:8081/"));
+    corsConfiguration.setAllowedOrigins(List.of("http://localhost:8081/", "http://192.168.0.73:8081/"));
     corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
     corsConfiguration.setAllowedHeaders(List.of("*"));
     UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();

@@ -4,7 +4,7 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import jakarta.servlet.http.HttpServletRequest;
-import kr.co.ict.project.config.member.MemberDto;
+import kr.co.ict.project.member.MemberDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import java.security.Key;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 // @Slf4j 어노테이션: Lombok 라이브러리의 Slf4j 어노테이션을 사용하여 로깅을 위한 Logger를 자동으로 생성
@@ -44,6 +46,52 @@ public class JwtTokenProvider {
             return bearerToken.substring(7);
         }
         return null;
+    }
+
+    // 토큰 생성기
+    public String generateJwtToken(MemberDto member) {
+        Date now = new Date();
+        System.out.println(member);
+        JwtBuilder builder = Jwts.builder()
+                .setSubject(member.getId()) // 보통 username
+                .setHeader(createHeader())
+                .setClaims(createClaims(member)) // 클레임, 토큰에 포함될 정보
+                .setExpiration(new Date(now.getTime() + 3600000)); // 만료일
+
+        return builder.signWith(key, SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    // 헤더 셋팅
+    private Map<String, Object> createHeader() {
+        Map<String, Object> header = new HashMap<>();
+        header.put("typ", "JWT"); // 토큰 종류설정
+        header.put("alg", "HS256"); // 해시 256 사용하여 암호화
+        header.put("regDate", System.currentTimeMillis()); // 생성시간
+        return header;
+    }
+
+    // 토큰에 추가 정보 셋팅
+    private Map<String, Object> createClaims(MemberDto member) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("username", member.getId()); // 로그인 id
+        return claims;
+    }
+
+    // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+    // 해결하기 payload에 클레임 저장 X
+    private Claims getClaims(String token) {
+        return Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
+    }
+
+    // 토큰에 저장한 로그인 id값 꺼내서 반환
+    public String getUsernameFromToken(String token) {
+        return (String) getClaims(token).get("username");
+    }
+
+    // 토큰에 저장한 user type값 꺼내서 반환
+    public int getRoleFromToken(String token) {
+        return Integer.parseInt(getClaims(token).get("roles").toString());
     }
 
     // 제공된 JWT 토큰이 유효한지 검증하기 위해서 만든다.

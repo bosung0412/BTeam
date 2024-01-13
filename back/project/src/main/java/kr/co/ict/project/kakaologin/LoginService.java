@@ -1,4 +1,4 @@
-package kr.co.ict.project.social;
+package kr.co.ict.project.kakaologin;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -18,10 +18,10 @@ import kr.co.ict.project.member.MemberDto;
 import kr.co.ict.project.member.MemberService;
 import lombok.extern.slf4j.Slf4j;
 
-// 자동로깅
 @Slf4j
 @Component
-public class KakaoLoginService {
+public class LoginService {
+
 	@Autowired
 	private MemberService memberservice;
 
@@ -39,27 +39,26 @@ public class KakaoLoginService {
 
 			// POST 요청
 			conn.setRequestMethod("POST");
-			conn.setDoOutput(true);// outputStream으로 post 데이터를 넘김
+			conn.setDoOutput(true);// outputStreamm으로 post 데이터를 넘김
 
 			// 파라미터 세팅
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
 			StringBuilder sb = new StringBuilder();
 
-			// authorization_code로 고정
+			// 0번 파라미터 grant_type 입니다 authorization_code로 고정
 			sb.append("grant_type=authorization_code");
 
-			// client_id 자신의 rest api넣기
-			sb.append("&client_id=27be1209a5e94ef12e0e5d5a27ae9161");
+			// 1번 파라미터 client_id입니다.
+			sb.append("&client_id=d54083f94196531e75d7de474142e52e");
 
-			// redirect_uri 지정한 redirect_uri 설정
-			sb.append("&redirect_uri=http://localhost:8081/MainView");
+			// 2번 파라미터 redirect_uri입니다.
+			sb.append("&redirect_uri=http://localhost:8182/kakaojoin");
 
-			// code
+			// 3번 파라미터 code
 			sb.append("&code=" + code);
-			// client secret 키
+
 			sb.append("&client_secret=ifoSW84ILZ0Rszl1U4eviIYvQo3CCJS7");
 
-			// BufferedWriter는 버퍼를 잡아놔서 뒤처리를 해야함(flush(), close())
 			bw.write(sb.toString());
 			bw.flush();// 실제 요청을 보내는 부분
 
@@ -80,14 +79,12 @@ public class KakaoLoginService {
 
 			// Jackson으로 json 파싱할 것임
 			ObjectMapper mapper = new ObjectMapper();
-
 			// kakaoToken에 result를 KakaoToken.class 형식으로 변환하여 저장
 			kakaoToken = mapper.readValue(result, KakaoToken.class);
 			System.out.println(kakaoToken);
 
 			// api호출용 access token
 			access_Token = kakaoToken.getAccess_token();
-
 			// access 토큰 만료되면 refresh token사용(유효기간 더 김)
 			refresh_Token = kakaoToken.getRefresh_token();
 
@@ -99,8 +96,10 @@ public class KakaoLoginService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		log.info("카카오토큰생성완료 제ㅔ발 받아주ㅝ");
+		log.info("카카오토큰생성완료>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+		log.info("KakakoToken!!!!!!!!" + kakaoToken.getId_token());
 		return access_Token;
+
 	}
 
 	// 유저 정보 얻기
@@ -168,5 +167,4 @@ public class KakaoLoginService {
 		}
 		return userInfo;
 	}
-
 }

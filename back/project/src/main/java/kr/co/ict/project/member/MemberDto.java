@@ -1,4 +1,4 @@
-package kr.co.ict.project.config.member;
+package kr.co.ict.project.member;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package kr.co.ict.project.config.member;
+package kr.co.ict.project.member;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
