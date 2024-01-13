@@ -12,6 +12,7 @@ public interface FoodDao {
 
     // 추천 식단 상세 정보
     public FoodVO foodDetail(int fno);
+    
     // 추천 식단 추가
     public int addFood(FoodVO vo);
 }
