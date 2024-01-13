@@ -24,5 +24,5 @@ public class WeightService {
     public void updateWeight(WeightVO vo) {
         dao.upWeight(vo);
     }
-    
+
 }
