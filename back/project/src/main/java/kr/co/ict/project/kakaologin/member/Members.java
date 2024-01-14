@@ -1,4 +1,4 @@
-package kr.co.ict.project.member;
+package kr.co.ict.project.kakaologin.member;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
