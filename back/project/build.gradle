@@ -35,6 +35,8 @@ dependencies {
 	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
 
 
+	// oauth 추가
+	implementation 'org.springframework.security:spring-security-oauth2-client:5.7.5'
 	// JSON파싱에 유용 Gson 추가
 	implementation 'com.google.code.gson:gson:2.8.8'
 	// security dependencies
