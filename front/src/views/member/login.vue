@@ -129,3 +129,37 @@ export default {
 </script>
 
 
+
+<!-- import store from "@/store";
+<script>
+export default {
+  data() {
+    return {
+      email: '',
+      password: ''
+    }
+  },
+  methods: {
+    submitLoginForm() {
+      const loginForm = {
+        username: this.email,
+        password: this.password
+      }
+
+      this.$axios.post('/api/user/login', loginForm).then(res => {
+        if (res.status === 200) {
+          store.commit('setToken', res.data)
+          sessionStorage.setItem('accessToken', res.data);
+          window.alert('로그인하였습니다');
+          router.push({path:'/'})
+        }
+      }).catch(() => {
+        window.alert('로그인에 실패하였습니다.')
+      })
+    }
+  }
+}
+</script> -->
+
+
+
