@@ -28,6 +28,12 @@
 							<span v-else>Close Camera</span>
 							</button>
 						</div>
+						<div class="app-camera-button">
+							<!--앱 전용 버튼-->
+							<button type="button" class="button is-rounded" @click="openNewActivity">
+							<span>Open Camera app</span>
+							</button>
+						</div>
 
 						<!-- 카메라가 열리고 로딩중이면 로딩이미지 -->
 						<div v-show="isCameraOpen && isLoading" class="camera-loading">
@@ -45,7 +51,7 @@
 							<!-- 찍힌 후 표시되는 비디오 엘리먼트 (isPhotoTaken이 True경우에만 표시) -->
 							<canvas v-show="isPhotoTaken" id="photoTaken" ref="canvas" width="450" height="337.5"></canvas>
 						</div>
-						<!-- 카메라가 열려있고 로딩중이 아닌ㄴ경우, 사진버튼 -->
+						<!-- 카메라가 열려있고 로딩중이 아닌 경우, 사진버튼 -->
 						<div v-show="isCameraOpen && !isLoading" class="camera-shoot">
 							<!-- 사진찍는 버튼, takePhoto메소드 호출 -->
 							<button type="button" class="button" @click="takePhoto">
@@ -343,6 +349,9 @@ body {
 .web-camera-container .camera-loading .loader-circle li:nth-child(3) {
   animation-delay: .4s;
 }
+.app-camera-button {
+  display: none;
+}
 @keyframes preload {
   0% {
     opacity: 1;
@@ -354,4 +363,28 @@ body {
     opacity: 1;
   }
 }
+</style>
+<style scoped>  
+@media screen and (max-width: 1080px) and (max-height: 2220px) {
+  .web-camera-container {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 350px;
+  }
+
+  .app-camera-button {
+    display: block; /* 화면 조건을 충족하면 app-camera-button를 표시합니다. */
+  }
+  .camera-button{
+	display: none;
+  }
+}
+
 </style>

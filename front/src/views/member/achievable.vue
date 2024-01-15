@@ -141,7 +141,6 @@ export default {
 <style scoped>  
 @media screen and (max-width: 1080px) and (max-height: 2220px) {
   .container-1{
-    height: 310px;
     display: block;
   }
   .container-xxl {
