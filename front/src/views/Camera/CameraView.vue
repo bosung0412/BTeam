@@ -166,7 +166,6 @@
 	   <!-- Footer Start -->
 	   <Footer /> 
 	</div>
-	
 </template>
 
 <script>
@@ -231,8 +230,15 @@ export default {
         .replace("image/jpeg", "image/octet-stream");
       download.setAttribute("href", canvas);
     },
+	openNewActivity() {
+        // 안드로이드의 openNewActivity 메소드 호출
+        if (typeof window.mobile !== 'undefined') {
+			window.mobile.openNewActivity();
+        } else {
+            console.error('Android object is not defined.');
+        }
+    },
   },
-
 	}
 </script>
 <style scoped>
