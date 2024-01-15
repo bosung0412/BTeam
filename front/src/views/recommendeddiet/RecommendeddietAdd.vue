@@ -131,50 +131,109 @@
         this.$router.push('/recommendeddiet');
       },
       selectFile(event) {
-          this.files = [];
-          const selectedFiles = event.target.files;
-          for (let i = 0; i < selectedFiles.length; i++) {
-              const file = selectedFiles[i];
-              const preview = URL.createObjectURL(file);
-              this.files.push({
-                  name: file.name,
-                  preview: preview,
-              });
-              this.formData.append('files', file); // 여러 파일을 배열로 전송
-          }
+        this.files = [];
+        const selectedFiles = event.target.files;
+        // for (let i = 0; i < selectedFiles.length; i++) {
+        //     const file = selectedFiles[i];
+        //     const preview = URL.createObjectURL(file);
+        //     this.files.push({
+        //         name: file.name,
+        //         preview: preview,
+        //     });
+        //     this.formData.append('files', file); // 여러 파일을 배열로 전송
+        // }
+        for (let i = 0; i < selectedFiles.length; i++) {
+          const file = selectedFiles[i];
+          // 미리보기 URL 생성
+          const preview = URL.createObjectURL(file);
+          // 파일 정보와 미리보기 URL을 files 배열에 추가
+          this.files.push({
+            name: file.name,
+            preview: preview,
+          });
+          // 업로드할 파일은 FormData에 추가
+          this.formData.append('files', file);
+        }
       },
       async fetchFiles() {
           console.log("fetchFiles!!!!!!!!!!!!!");
       },
-        async sendData() {
+      async sendData() {
           // formdata에 name, email을 추가한 후에 이미지도 미리보기에서 가져온다.
-      this.formData.append("fname", document.getElementById("fname").value);
-      this.formData.append("fprovince", document.getElementById("fprovince").value);
-      this.formData.append("ffprovince", document.getElementById("ffprovince").value);
-      this.formData.append("fcholesterol", document.getElementById("fcholesterol").value);
-      this.formData.append("fsalt", document.getElementById("fsalt").value);
-      this.formData.append("fpotasium", document.getElementById("fpotasium").value);
-      this.formData.append("fcarbohydrate", document.getElementById("fcarbohydrate").value);
-      this.formData.append("fdietaryfiber", document.getElementById("fdietaryfiber").value);
-      this.formData.append("fprotein", document.getElementById("fprotein").value);
-      this.formData.append("tocal", document.getElementById("tocal").value);
+        this.formData.append("fname", document.getElementById("fname").value);
+        this.formData.append("fprovince", document.getElementById("fprovince").value);
+        this.formData.append("ffprovince", document.getElementById("ffprovince").value);
+        this.formData.append("fcholesterol", document.getElementById("fcholesterol").value);
+        this.formData.append("fsalt", document.getElementById("fsalt").value);
+        this.formData.append("fpotasium", document.getElementById("fpotasium").value);
+        this.formData.append("fcarbohydrate", document.getElementById("fcarbohydrate").value);
+        this.formData.append("fdietaryfiber", document.getElementById("fdietaryfiber").value);
+        this.formData.append("fprotein", document.getElementById("fprotein").value);
+        this.formData.append("tocal", document.getElementById("tocal").value);
 
-      // 업로드 처리하기
-      axios
-        .post("http://192.168.0.88/project/foodadd", this.formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        })
-        .then(() => {
-          // 업로드가 성공하면 추가한 파일 목록을 서버에서 가져올 수 있도록 fetchFiles 메서드 호출
-          this.fetchFiles();
-        })
-        .catch((error) => {
-          console.log(error.message);
-        });
-      },
+        // 업로드 처리하기
+        axios.post("http://192.168.0.88/project/foodadd", this.formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+          })
+          .then(() => {
+            // 업로드가 성공하면 추가한 파일 목록을 서버에서 가져올 수 있도록 fetchFiles 메서드 호출
+            this.fetchFiles();
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
+        },
+      async fetchFiles(){ //파일이 업로드가 마칠때까지 대기 
+            console.log("fetchFiles!!!!!!!!!!!!!")
+      }
     },
-  
   };
   </script>
   
-  
+  <!-- <script>
+    data(){
+        //파일 배열 초기화
+        return {
+            msg:"FileUpForm 연습문제 예제",
+            files: [],
+        }
+    },
+    methods: {
+        //change 이벤트를 통해서 호출될 selectFile 함수를 정의
+        selectFile(event){
+        //    console.log("동작확인")
+        this.files = [];
+        const formData = new FormData();
+        const selectedFiles = event.target.files;
+        for (let i = 0; i < selectedFiles.length; i++) {
+          const file = selectedFiles[i];
+          // 미리보기 URL 생성
+          const preview = URL.createObjectURL(file);
+          // 파일 정보와 미리보기 URL을 files 배열에 추가
+          this.files.push({
+            name: file.name,
+            preview: preview,
+          });
+          // 업로드할 파일은 FormData에 추가
+          formData.append('files', file);
+        }
+          console.log("=============>"+this.files);
+          // post 업로드 처리하기 
+          axios.post('http://192.168.0.21/springvue0103/files',formData,{
+            headers:{'Content-Type':'multipart/form-data'},
+          }).then(() => {
+            // 업로드가 성공하면 추가한 파일 목록을 서버에서 가져올 수 있도록 fetchFiles 메서드 호출
+            this.fetchFiles();
+          })
+          .catch((error)=>{
+            console.log(error.message);
+          })
+        },
+        async fetchFiles(){ //파일이 업로드가 마칠때까지 대기 
+            console.log("fetchFiles!!!!!!!!!!!!!")
+        }
+
+    },
+}
+
+</script> -->

@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class FoodVO {
-    private int fno;            // 음식 번호
+    private int fno;                // 음식 번호
     private String fname;           // 음식 이름
     private String fprovince;       // 지방
     private String ffprovince;      // 포화 지방
@@ -20,5 +20,5 @@ public class FoodVO {
     private String fdietaryfiber;   // 식이섬유
     private String fprotein;        // 단백질
     private String tocal;           // 총 칼로리
-    private String files;          // 음식 사진
+    private String fimage_file_name; // 음식 사진
 }
