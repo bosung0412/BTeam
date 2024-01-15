@@ -95,7 +95,6 @@ public class SecurityConfig {
     http
         .csrf((csrf) -> csrf.disable())
         .cors((cors) -> cors.configurationSource(corsConfigurationSource()))
-        // ********************** 나중에 여기다가 disable 풀어주기
         .formLogin((login) -> login.disable())
         .httpBasic((basic) -> basic.disable())
         // HTTP 요청에 대한 보안 필터 체인을 구성

@@ -20,7 +20,7 @@ import java.io.IOException;
 // JWT 인증을 위한 클래스이다.
 // HTTP 요청에 대해서 서버가 실행이 될 때 JWT 토큰을 검증하기 위한 클래스이고
 // 스프링 시큐리티 체인에서
-public class JwtTokenFilter extends OncePerRequestFilter {
+public class JwtTokenFilter extends OncePerRequestFilter { // JwtFilter.java
   // JWT 토큰을 생성하고 검증하는 데 사용
   private JwtTokenProvider jwtTokenProvider;
   // 사용자의 상세 정보를 로드하는 데 사용, UserDetailsService 인증된 권한일 때

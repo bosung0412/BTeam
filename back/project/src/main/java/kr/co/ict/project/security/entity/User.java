@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,9 +24,10 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Entity
 @Table(name = "_user")
-public class User implements UserDetails {
+public class User implements UserDetails { // Member.java
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,14 +39,6 @@ public class User implements UserDetails {
 
   @Enumerated(EnumType.STRING)
   private Role role;
-
-  public User(String firstName, String lastName, String username, String password, Role role) {
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.username = username;
-    this.password = password;
-    this.role = role;
-  }
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {

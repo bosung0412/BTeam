@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationResponse {
+public class AuthenticationResponse { // JwtDto
   // 사용자 인증 후 생성된 접근 토큰을 저장
   private String accessToken;
 }

@@ -18,12 +18,12 @@ import java.util.Map;
 @Component
 // @Slf4j 어노테이션: Lombok 라이브러리의 Slf4j 어노테이션을 사용하여 로깅을 위한 Logger를 자동으로 생성
 @Slf4j
-public class JwtTokenProvider {
+public class JwtTokenProvider { // Jwtlssuer.java
 
     // Key key: JWT 생성 및 검증에 사용되는 비밀 키, HS512 알고리즘으로 생성
     Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
-    public String createToken(Authentication authentication, MemberDto member) {
+    public String createToken(Authentication authentication) {
         // 스프링 시큐리티에서 Authentication 객체로 부터
         // 사용자의 UserDetails를 얻어 사용자 이름을 주제(subject)로 설정하고,
         // 현재 시간과 만료 시간을 포함한 토큰을 생성
@@ -48,6 +48,7 @@ public class JwtTokenProvider {
         return null;
     }
 
+    // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     // 토큰 생성기
     public String generateJwtToken(MemberDto member) {
         Date now = new Date();
@@ -78,7 +79,6 @@ public class JwtTokenProvider {
         return claims;
     }
 
-    // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     // 해결하기 payload에 클레임 저장 X
     private Claims getClaims(String token) {
         return Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
@@ -93,6 +93,7 @@ public class JwtTokenProvider {
     public int getRoleFromToken(String token) {
         return Integer.parseInt(getClaims(token).get("roles").toString());
     }
+    // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
     // 제공된 JWT 토큰이 유효한지 검증하기 위해서 만든다.
     public boolean validateToken(String token) {

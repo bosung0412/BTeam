@@ -13,7 +13,7 @@ import kr.co.ict.project.security.repo.UserRepository;
 // UserDetails 객체는 사용자의 인증 및 권한 부여 과정에서 사용된다.
 // 비밀번호 체크, 권한 ROLE에대한 체크를 담당하도록 구현!
 @Configuration
-public class CustomUserDetailsService implements UserDetailsService {
+public class CustomUserDetailsService implements UserDetailsService { // MemberService 부분
 
   @Autowired
   private UserRepository userRepository;
