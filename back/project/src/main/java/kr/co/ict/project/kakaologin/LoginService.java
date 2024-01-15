@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import kr.co.ict.project.kakaologin.member.MemberDto;
 import kr.co.ict.project.kakaologin.member.MemberService;
 import lombok.extern.slf4j.Slf4j;
 

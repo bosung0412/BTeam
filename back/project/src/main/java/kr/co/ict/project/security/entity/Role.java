@@ -4,6 +4,5 @@ package kr.co.ict.project.security.entity;
 // enum 상수 정의
 public enum Role {
     ADMIN,
-    USER,
-    KAKAO
+    USER
 }

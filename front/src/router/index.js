@@ -28,6 +28,7 @@ const routes = [
   {path: '/recommendeddietdetail/:fno',name: 'recommendeddietdetail',component: () => import('../views/recommendeddiet/RecommendeddietDetail.vue')}
 ]
 
+
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
