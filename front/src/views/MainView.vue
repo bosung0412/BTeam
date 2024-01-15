@@ -2,7 +2,7 @@
     <div>
             <!-- 네비게이션 바 시작 -->
             <Navbar />
-    <!-- 네비게이션 바 끝! -->
+    <!-- 네비게이션 바 끝 -->
         <div class="container-fluid pt-4" style="width: 80%;">
             <div class="row g-4">
                 <div class="col-sm-6 col-xl-3">
