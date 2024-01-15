@@ -1,4 +1,4 @@
-package kr.co.ict.project.member;
+package kr.co.ict.project.kakaologin.member;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

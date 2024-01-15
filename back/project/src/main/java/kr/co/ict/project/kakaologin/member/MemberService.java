@@ -1,4 +1,4 @@
-package kr.co.ict.project.member;
+package kr.co.ict.project.kakaologin.member;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
