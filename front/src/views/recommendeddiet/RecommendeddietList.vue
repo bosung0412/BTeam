@@ -26,7 +26,9 @@
       <tbody>
         <tr class="cursor-pointer" v-for="row in list" :key="row.fno" @click="goToDetail(row.fno)">
           <td>{{ row.fname }}</td>
-          <td>{{ row.files }}</td>
+          <td>
+            <img :src="'http://192.168.0.88/project/images/' + row.fimage_file_name" alt="Image" />
+          </td>
           <td>{{ row.tocal }}</td>
         </tr>
       </tbody>
@@ -84,6 +86,5 @@ export default {
     Navbar,
     Footer,
   },
-  
 };
 </script>

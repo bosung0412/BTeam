@@ -22,8 +22,8 @@
 				<input type="text" class="form-control" id="fname" name="fname" readonly :value="result.fname" />
 			</div>
 			<div class="mb-3 mt-3">
-				<label for="files" class="form-label">식단 이미지 :</label>
-				<input type="text" class="form-control" id="files" name="files" readonly :value="result.files" />
+				<label for="fimage_file_name" class="form-label">식단 이미지 :</label>
+				<input type="text" class="form-control" id="fimage_file_name" name="fimage_file_name" readonly :value="result.fimage_file_name" />
 			</div>
       <div class="mb-3 mt-3">
 				<label for="tocal" class="form-label">총 칼로리:</label>

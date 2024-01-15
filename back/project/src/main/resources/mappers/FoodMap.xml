@@ -10,8 +10,8 @@
     </select>
 
 <insert id="addFood" parameterType="Fvo">
-    INSERT INTO FOODS (fno,files,fname,fprovince,ffprovince,fcholesterol,fsalt,fpotasium,fcarbohydrate,fdietaryfiber,fprotein,tocal)
-    VALUES (FOODS_SEQ.nextVal,#{files, jdbcType=BLOB},#{fname},#{fprovince},#{ffprovince},#{fcholesterol},#{fsalt},#{fpotasium},#{fcarbohydrate},#{fdietaryfiber},#{fprotein},#{tocal})
+    INSERT INTO FOODS (fno,fimage_file_name,fname,fprovince,ffprovince,fcholesterol,fsalt,fpotasium,fcarbohydrate,fdietaryfiber,fprotein,tocal)
+    VALUES (FOODS_SEQ.nextVal,#{fimage_file_name},#{fname},#{fprovince},#{ffprovince},#{fcholesterol},#{fsalt},#{fpotasium},#{fcarbohydrate},#{fdietaryfiber},#{fprotein},#{tocal})
 
 </insert>
 
