@@ -16,52 +16,75 @@
     <!-- Projects Start -->
     <div class="container mt-3">
 		<form>
-			<input type="hidden" name="fno" :value="result.fno" />
+			<input type="hidden" name="nutrient_id" :value="result.nutrient_id" />
 			<div class="mb-3 mt-3">
-				<label for="fname" class="form-label">식단 명 :</label>
-				<input type="text" class="form-control" id="fname" name="fname" readonly :value="result.fname" />
-			</div>
-			<div class="mb-3 mt-3">
-				<label for="fimage_file_name" class="form-label">식단 이미지 :</label>
-				<input type="text" class="form-control" id="fimage_file_name" name="fimage_file_name" readonly :value="result.fimage_file_name" />
-			</div>
-      <div class="mb-3 mt-3">
-				<label for="tocal" class="form-label">총 칼로리:</label>
-				<input type="text" class="form-control" id="tocal" name="tocal" readonly :value="result.tocal" />
+				<label for="name" class="form-label">식단 명 :</label>
+				<input type="text" class="form-control" id="name" name="name" readonly :value="result.name" />
 			</div>
 			<div class="mb-3 mt-3">
-				<label for="fprovince" class="form-label">지방 :</label>
-				<input type="text" class="form-control" id="fprovince" name="fprovince" readonly :value="result.fprovince"/>
+				<label for="food_img" class="form-label">식단 이미지 :</label>
+				<input type="text" class="form-control" id="food_img" name="food_img" readonly :value="result.food_img" />
+			</div>
+      <div class="mb-3 mt-3">
+				<label for="cal" class="form-label">칼로리:</label>
+				<input type="text" class="form-control" id="cal" name="cal" readonly :value="result.cal" />
 			</div>
 			<div class="mb-3 mt-3">
-				<label for="ffprovince" class="form-label">포화 지방:</label>
-				<input type="text" class="form-control" id="ffprovince" name="ffprovince" readonly :value="result.ffprovince" />
+				<label for="weight" class="form-label">중량 :</label>
+				<input type="text" class="form-control" id="weight" name="weight" readonly :value="result.weight"/>
+			</div>
+			<div class="mb-3 mt-3">
+				<label for="carbo" class="form-label">탄수화물 :</label>
+				<input type="text" class="form-control" id="carbo" name="carbo" readonly :value="result.carbo" />
 			</div>
       <div class="mb-3 mt-3">
-				<label for="fcholesterol" class="form-label">콜레스테롤:</label>
-				<input type="text" class="form-control" id="fcholesterol" name="fcholesterol" readonly :value="result.fcholesterol" />
+				<label for="sugars" class="form-label">당류 :</label>
+				<input type="text" class="form-control" id="sugars" name="sugars" readonly :value="result.sugars" />
 			</div>
       <div class="mb-3 mt-3">
-				<label for="fsalt" class="form-label">나트륨:</label>
-				<input type="text" class="form-control" id="fsalt" name="fsalt" readonly :value="result.fsalt" />
+				<label for="fat" class="form-label">지방:</label>
+				<input type="text" class="form-control" id="fat" name="fat" readonly :value="result.fat" />
 			</div>
       <div class="mb-3 mt-3">
-				<label for="fpotasium" class="form-label">칼륨:</label>
-				<input type="text" class="form-control" id="fpotasium" name="fpotasium" readonly :value="result.fpotasium" />
+				<label for="protein" class="form-label">단백질:</label>
+				<input type="text" class="form-control" id="protein" name="protein" readonly :value="result.protein" />
 			</div>
       <div class="mb-3 mt-3">
-				<label for="fcarbohydrate" class="form-label">탄수화물:</label>
-				<input type="text" class="form-control" id="fcarbohydrate" name="fcarbohydrate" readonly :value="result.fcarbohydrate" />
+				<label for="calcium" class="form-label">칼슘:</label>
+				<input type="text" class="form-control" id="calcium" name="calcium" readonly :value="result.calcium" />
 			</div>
       <div class="mb-3 mt-3">
-				<label for="fdietaryfiber" class="form-label">식이섬유:</label>
-				<input type="text" class="form-control" id="fdietaryfiber" name="fdietaryfiber" readonly :value="result.fdietaryfiber" />
+				<label for="phosphorus" class="form-label">인:</label>
+				<input type="text" class="form-control" id="phosphorus" name="phosphorus" readonly :value="result.phosphorus" />
 			</div>
       <div class="mb-3 mt-3">
-				<label for="fprotein" class="form-label">단백질:</label>
-				<input type="text" class="form-control" id="fprotein" name="fprotein" readonly :value="result.fprotein" />
+				<label for="sodium" class="form-label">나트륨:</label>
+				<input type="text" class="form-control" id="sodium" name="sodium" readonly :value="result.sodium" />
 			</div>
-
+      <div class="mb-3 mt-3">
+				<label for="potassium" class="form-label">칼륨:</label>
+				<input type="text" class="form-control" id="potassium" name="potassium" readonly :value="result.potassium" />
+			</div>
+      <div class="mb-3 mt-3">
+				<label for="magnesium" class="form-label">마그네슘:</label>
+				<input type="text" class="form-control" id="magnesium" name="magnesium" readonly :value="result.magnesium" />
+			</div>
+      <div class="mb-3 mt-3">
+				<label for="iron" class="form-label">철:</label>
+				<input type="text" class="form-control" id="iron" name="iron" readonly :value="result.iron" />
+			</div>
+      <div class="mb-3 mt-3">
+				<label for="zinc" class="form-label">아연:</label>
+				<input type="text" class="form-control" id="zinc" name="zinc" readonly :value="result.zinc" />
+			</div>
+      <div class="mb-3 mt-3">
+				<label for="cholesterol" class="form-label">콜레스테롤:</label>
+				<input type="text" class="form-control" id="cholesterol" name="cholesterol" readonly :value="result.cholesterol" />
+			</div>
+      <div class="mb-3 mt-3">
+				<label for="transfat" class="form-label">트랜스지방:</label>
+				<input type="text" class="form-control" id="transfat" name="transfat" readonly :value="result.transfat" />
+			</div>
       
 
 		</form>
@@ -83,7 +106,7 @@ export default {
   },
   created() {
     axios
-        .get("http://192.168.0.88/project/detail?fno=" + this.$route.params.fno)
+        .get("http://192.168.0.88/project/detail?nutrient_id=" + this.$route.params.nutrient_id)
         .then((resp) => {
           console.log(resp);
           this.result = resp.data;

@@ -19,8 +19,8 @@ public class FoodService {
     }
 
     // 식단 상세 보기
-    public FoodVO FoodDetail(int fno) {
-        return dao.foodDetail(fno);
+    public FoodVO FoodDetail(int nutrient_id) {
+        return dao.foodDetail(nutrient_id);
     }
 
     // 식단 추가

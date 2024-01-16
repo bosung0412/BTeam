@@ -24,12 +24,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="cursor-pointer" v-for="row in list" :key="row.fno" @click="goToDetail(row.fno)">
-          <td>{{ row.fname }}</td>
+        <tr class="cursor-pointer" v-for="row in list" :key="row.nutrient_id" @click="goToDetail(row.nutrient_id)">
+          <td>{{ row.name }}</td>
           <td>
-            <img :src="'http://192.168.0.88/project/images/' + row.fimage_file_name" alt="Image" />
+            <img :src="'http://192.168.0.88/project/images/' + row.food_img" alt="Image" />
           </td>
-          <td>{{ row.tocal }}</td>
+          <td>{{ row.cal }}</td>
         </tr>
       </tbody>
     </table>
@@ -75,8 +75,8 @@ export default {
           console.log(error);
         })
     },
-    goToDetail(fno) {
-  this.$router.push({ name: "recommendeddietdetail", params: { fno } });
+    goToDetail(nutrient_id) {
+  this.$router.push({ name: "recommendeddietdetail", params: { nutrient_id } });
     },
     Add() {
       this.$router.push('/Recommendeddietadd');

@@ -3,16 +3,18 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace ="kr.co.ict.project.dao.FoodDao">
     <select id="selectList" resultType = "Fvo">
-    select * from FOODS
+    select * from nutrient
     </select>
     <select id="foodDetail" resultType="Fvo">
-        select * from FOODS where fno = #{fno}
+        select * from nutrient where nutrient_id = #{nutrient_id}
     </select>
 
 <insert id="addFood" parameterType="Fvo">
-    INSERT INTO FOODS (fno,fimage_file_name,fname,fprovince,ffprovince,fcholesterol,fsalt,fpotasium,fcarbohydrate,fdietaryfiber,fprotein,tocal)
-    VALUES (FOODS_SEQ.nextVal,#{fimage_file_name},#{fname},#{fprovince},#{ffprovince},#{fcholesterol},#{fsalt},#{fpotasium},#{fcarbohydrate},#{fdietaryfiber},#{fprotein},#{tocal})
-
+    INSERT INTO nutrient (
+    nutrient_id, food_img, name, weight, cal, carbo, sugars, fat, protein, calcium, 
+    phosphorus, sodium, potassium, magnesium, iron, zinc, cholesterol, transfat)
+    VALUES (FOODS_SEQ.nextVal, #{food_img}, #{name}, #{weight}, #{cal}, #{carbo}, #{sugars}, #{fat}, #{protein}, #{calcium}, 
+    #{phosphorus}, #{sodium}, #{potassium}, #{magnesium}, #{iron}, #{zinc}, #{cholesterol}, #{transfat});
 </insert>
 
 </mapper>
