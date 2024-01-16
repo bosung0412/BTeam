@@ -72,6 +72,7 @@
 <script>
 import Navbar from '@/components/Navbar/Navbar.vue';
 import Footer from '@/components/Footer/Footer.vue';
+// import axios from axios;
 export default {
   components: {
     Navbar,
@@ -86,33 +87,12 @@ export default {
     toggleNavbar() {
       this.isNavbarOpen = !this.isNavbarOpen;
     },kakaoLogin() {
-        const redirect_uri = 'http://localhost:8081/MainView'; // redirect_uri 내가 정한거
+        const redirect_uri = 'http://localhost:8081/kakaojoin'; // redirect_uri 내가 정한거
         const clientId = '27be1209a5e94ef12e0e5d5a27ae9161'; // kakao developer 키
         // kakao에서 정해줌
         const Auth_url = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirect_uri}`;
         window.location.href = Auth_url;
       },
-    //해당 페이지가 로딩되자마자 인자로 받았던 인가코드를 빼내어 카카오톡에게 토큰값을 요청
-    created() {
-      // code 안에 query로 받아온 값을 저장
-      this.code = this.$route.query.code;
-      console.log(this.code)
-      this.getToken();
-  },
-  // token 요청해야하기때문에 실행되자마자 code에 담아둔 내용을 get으로 서버로 전달 
-  getToken() { 
-      // this를 self 변수로 할당
-      const self = this;
-      // 서버에다가 보냄(get)
-      self.$axios.get('' + self.code)
-        .then((res) => {
-          console.log(res)
-          //  응답 데이터를 vue데이터에 할당
-          self.form.id = res.data.id;
-          self.form.email = res.data.email;
-          self.form.pwd = res.data.pwd;
-          self.form.kakaotoken = res.data.accessToken;
-        });
     },
   submitLogin() {
       console.log('로그인 중입니다.');
@@ -125,7 +105,6 @@ export default {
       this.$router.push('/findaccount');
     },
   }
-}
 </script>
 
 

@@ -5,5 +5,3 @@ import store from './store'
 
 createApp(App).use(store).use(router).mount('#app')
 
-
-window.Kakao.init("d23378ff6b70109a54449af376d2c66c");

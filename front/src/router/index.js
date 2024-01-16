@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import kakaojoin from '../views/member/kakaojoin.vue'
 
 const routes = [
   {path: '/',name: 'home',component: HomeView},
@@ -25,7 +26,8 @@ const routes = [
   {path: '/boardModify',name: 'boardModify',component: () => import('../views/board/Board_modify.vue')},
   {path: '/calendar',name: 'calendar',component: () => import('../views/Calendar/Calendar.vue')},
   {path: '/recommendeddiet',name: 'recommendeddietlist',component: () => import('../views/recommendeddiet/RecommendeddietList.vue')},
-  {path: '/recommendeddietdetail/:fno',name: 'recommendeddietdetail',component: () => import('../views/recommendeddiet/RecommendeddietDetail.vue')}
+  {path: '/recommendeddietdetail/:fno',name: 'recommendeddietdetail',component: () => import('../views/recommendeddiet/RecommendeddietDetail.vue')},
+  {path: "/kakaojoin", name: 'kakaojoin',  component: kakaojoin}
 ]
 
 
