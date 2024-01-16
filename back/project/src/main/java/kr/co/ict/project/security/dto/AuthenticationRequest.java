@@ -9,7 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class AuthenticationRequest { // SignUpForm 부분
+public class AuthenticationRequest {
   // 사용자 이름을 저장
   private String username;
   // 사용자 비밀번호를 저장

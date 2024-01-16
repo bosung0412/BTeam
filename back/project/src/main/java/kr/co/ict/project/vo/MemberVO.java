@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @Alias("mvo")
 public class MemberVO {
-    private String id;// 회원 아이디
+    private Long id;// 회원 아이디
     private String name;// 회원 이름
     private String password;// 비밀번호
     private String birth;// 생년월일
@@ -20,6 +20,6 @@ public class MemberVO {
     private String email;// 이메일
     private String gender;// 성별
     private String disease;// 질병
-    private String height;// 키
-    private String weight;// 몸무게
+    private Integer height;// 키
+    private Integer weight;// 몸무게
 }
