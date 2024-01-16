@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
+import kr.co.ict.project.login.dto.request.auth.EmailCertificationRequestDto;
 import kr.co.ict.project.login.dto.request.auth.IdCheckRequestDto;
+import kr.co.ict.project.login.dto.response.auth.EmailCertificationResponseDto;
 import kr.co.ict.project.login.dto.response.auth.IdCheckResponseDto;
 import kr.co.ict.project.login.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,14 @@ public class AuthController {
         @RequestBody @Valid IdCheckRequestDto requestBody
     ){
         ResponseEntity<? super IdCheckResponseDto> response = authService.idCheck(requestBody);
+        return response;
+    }
+
+    @PostMapping("/email-certification")
+    public ResponseEntity<? super EmailCertificationResponseDto> emailCertification(
+        @RequestBody @Valid EmailCertificationRequestDto requestBody
+    ) {
+        ResponseEntity<? super EmailCertificationResponseDto> response = authService.emailCertification(requestBody);
         return response;
     }
 }
