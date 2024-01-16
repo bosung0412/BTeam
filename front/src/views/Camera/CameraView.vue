@@ -99,6 +99,7 @@
 						<!-- 파일 업로드를 위한 input 추가 -->
 						<input type="file" class="form-control mt-2" id="foodImage" name="foodImage" accept="image/*">
 					</div>
+					음식 분석 결과 추가 예정
 				</div>
 				<div class="col-lg-3 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
 				   <div class="row g-5">
@@ -121,6 +122,7 @@
 				</div>
 			 </div>
 			 <!-- 첫번째 행 끝 -->
+			
 			 <!-- 아침, 점심, 저녁 공간 시작-->
 			 <div class="row g-5 align-items-stretch maincol mt-4 mb-5 pb-5" style="box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);">
 				<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
