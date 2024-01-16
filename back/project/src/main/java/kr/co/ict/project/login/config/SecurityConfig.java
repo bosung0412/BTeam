@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configurers.CsrfConfig
 import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -22,6 +23,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.co.ict.project.login.filter.JwtAuthenticationFilter;
+import kr.co.ict.project.login.handler.OAuth2SuccessHandler;
 import lombok.RequiredArgsConstructor;
 
 // @Bean을 등록가능하게 만들어줌
@@ -33,6 +35,8 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final DefaultOAuth2UserService oAuth2UserService;
+    private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
     @Bean
     protected SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception{
@@ -53,11 +57,17 @@ public class SecurityConfig {
             // 권한
             .authorizeHttpRequests(request -> request
                 // 이패턴에 대해서는 모두 허용하겠다라는뜻.
-                .requestMatchers("/", "/api/v1/auth/**").permitAll()
+                .requestMatchers("/", "/api/v1/auth/**", "/oauth2/**").permitAll()
                 // hasRole을 사용해 권한부여
                 .requestMatchers("/api/v1/user/**").hasRole("USER")
                 .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
+            )
+            .oauth2Login(oauth2 -> oauth2
+                .authorizationEndpoint(endpoint -> endpoint.baseUri("/api/v1/auth/oauth2"))
+                .redirectionEndpoint(endpoint -> endpoint.baseUri("/oauth2/callback/*"))
+                .userInfoEndpoint(endpoint -> endpoint.userService(oAuth2UserService))
+                .successHandler(oAuth2SuccessHandler)
             )
             // 예외 처리
             .exceptionHandling(exceptionHandling -> exceptionHandling
