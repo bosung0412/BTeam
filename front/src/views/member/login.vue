@@ -107,6 +107,7 @@ export default {
     })
           .then(response => {
           const token = response.data.token;
+          sessionStorage.setItem('token', token);
           console.log('로그인 성공', response);
           // 로그인 성공 시 처리 (예: 리다이렉트, 토큰 저장)
           this.$router.push('/main');
