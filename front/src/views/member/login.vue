@@ -73,6 +73,7 @@
 import Navbar from '@/components/Navbar/Navbar.vue';
 import Footer from '@/components/Footer/Footer.vue';
 import axios from 'axios';
+import { mapMutations } from 'vuex';
 export default {
   components: {
     Navbar,
@@ -86,6 +87,7 @@ export default {
     };
   },
   methods: {
+    ...mapMutations(['setAuthToken']),
     toggleNavbar() {
       this.isNavbarOpen = !this.isNavbarOpen;
     },kakaoLogin() {
@@ -104,16 +106,20 @@ export default {
         axios.post('http://localhost/project/api/v1/auth/sign-in', {
           id: this.id,
           password: this.password
+          
     })
           .then(response => {
           const token = response.data.token;
-          sessionStorage.setItem('token', token);
           console.log('로그인 성공', response);
-          // 로그인 성공 시 처리 (예: 리다이렉트, 토큰 저장)
+          // Vuex 스토어에 토큰 저장
+          this.setAuthToken(token);
+          console.log(token);
+          console.log(this.$store.state.authToken);
           this.$router.push('/main');
       })
           .catch(error => {
           console.error('로그인 실패', error);
+          sessionStorage.setItem('token', null); // 로그인 실패 시 토큰을 null로 설정
           // 로그인 실패 시 처리 (예: 에러 메시지 표시)
       });
 
@@ -121,39 +127,3 @@ export default {
     },
 }
 </script>
-
-
-
-<!-- import store from "@/store";
-<script>
-export default {
-  data() {
-    return {
-      email: '',
-      password: ''
-    }
-  },
-  methods: {
-    submitLoginForm() {
-      const loginForm = {
-        username: this.email,
-        password: this.password
-      }
-
-      this.$axios.post('/api/user/login', loginForm).then(res => {
-        if (res.status === 200) {
-          store.commit('setToken', res.data)
-          sessionStorage.setItem('accessToken', res.data);
-          window.alert('로그인하였습니다');
-          router.push({path:'/'})
-        }
-      }).catch(() => {
-        window.alert('로그인에 실패하였습니다.')
-      })
-    }
-  }
-}
-</script> -->
-
-
-

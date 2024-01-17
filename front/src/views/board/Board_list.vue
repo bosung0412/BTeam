@@ -94,6 +94,7 @@ export default{
   mounted() {
     this.fetchData();
     this.filterProjects('*');
+    console.log(this.$store.state.authToken);
   },
   components:{
     Navbar,
