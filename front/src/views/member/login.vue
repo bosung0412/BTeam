@@ -73,7 +73,6 @@
 import Navbar from '@/components/Navbar/Navbar.vue';
 import Footer from '@/components/Footer/Footer.vue';
 import axios from 'axios';
-import { mapMutations } from 'vuex';
 export default {
   components: {
     Navbar,
@@ -87,7 +86,6 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(['setAuthToken']),
     toggleNavbar() {
       this.isNavbarOpen = !this.isNavbarOpen;
     },kakaoLogin() {
@@ -112,7 +110,7 @@ export default {
           const token = response.data.token;
           console.log('로그인 성공', response);
           // Vuex 스토어에 토큰 저장
-          this.setAuthToken(token);
+          this.$store.commit('setAuthToken', token);
           console.log(token);
           console.log(this.$store.state.authToken);
           this.$router.push('/main');
