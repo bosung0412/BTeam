@@ -2,6 +2,7 @@ package kr.co.ict.project.login.handler;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -12,6 +13,7 @@ import kr.co.ict.project.login.provider.JwtProvider;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
+@Component
 // OAuth2 인증 성공 시 처리를 담당하는 클래스 SimpleUrlAuthenticationSuccessHandler - 커스텀 인증 성공
 public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
