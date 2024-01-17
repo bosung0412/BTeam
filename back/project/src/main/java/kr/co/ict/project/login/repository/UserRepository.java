@@ -6,10 +6,11 @@ import org.springframework.stereotype.Repository;
 import kr.co.ict.project.login.entity.UserEntity;
 
 @Repository
-public interface UserRepository extends JpaRepository<UserEntity, String>{
+public interface UserRepository extends JpaRepository<UserEntity, String> {
 
+    // 사용자 아이디가 db에 존지하는지에 대한 여부
     boolean existsByUserId(String userId);
 
-    // 아이디 찾기
+    // 주어진 사용자 아이디로 UserEntity를 조회하는 메서드
     UserEntity findByUserId(String userId);
 }

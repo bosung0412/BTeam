@@ -7,19 +7,25 @@ import kr.co.ict.project.login.dto.response.ResponseDto;
 import lombok.Getter;
 
 @Getter
-public class CheckCertificationResponseDto extends ResponseDto{
-    
-    private CheckCertificationResponseDto(){
+// 이메일 인증번호 확인에 대한 응답을 생성하는 response class
+public class CheckCertificationResponseDto extends ResponseDto {
+
+    private CheckCertificationResponseDto() {
         super();
     }
 
-    public static ResponseEntity<CheckCertificationResponseDto> success(){
+    // ResponseEntity - HTTP 응답 상태 코드
+    // CheckCertificationResponseDto - 이메일 인증번호확인에 대한 성공 or 실패에 대한 코드 생성
+    public static ResponseEntity<CheckCertificationResponseDto> success() {
         CheckCertificationResponseDto responseBody = new CheckCertificationResponseDto();
+        // OK는 200 성공 응답
         return ResponseEntity.status(HttpStatus.OK).body(responseBody);
     }
 
-    public static ResponseEntity<ResponseDto> certificationFail(){
+    // 이메일 인증번호확인이 실패하면 코드 생성
+    public static ResponseEntity<ResponseDto> certificationFail() {
         ResponseDto responseBody = new ResponseDto();
+        // UNAUTHORIZED 401 실패 응답
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);
     }
 

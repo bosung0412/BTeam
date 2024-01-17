@@ -13,17 +13,18 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name="use")
-@Table(name="users")
+@Entity(name = "user")
+@Table(name = "users")
 public class UserEntity {
-    @Id   
+    @Id
     private String userId;
     private String password;
     private String email;
     private String type;
     private String role;
 
-    public UserEntity (SignUpRequestDto dto) {
+    // SignUpRequestDto 객체로부터 UserEntity 생성 - 회원가입 목적
+    public UserEntity(SignUpRequestDto dto) {
         this.userId = dto.getId();
         this.password = dto.getPassword();
         this.email = dto.getEmail();
@@ -31,7 +32,7 @@ public class UserEntity {
         this.role = "ROLE_USER";
     }
 
-    public UserEntity (String userId, String email, String type) {
+    public UserEntity(String userId, String email, String type) {
         this.userId = userId;
         this.password = "Passw0rd";
         this.email = email;

@@ -12,11 +12,18 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name="certification")
-@Table(name="certification")
+// jpa 엔터티임
+@Entity(name = "certification")
+// 테이블 이름 지정
+@Table(name = "certification")
+// 이메일 인증 관리를 위한 entity
 public class CertificationEntity {
+    // 기본 키
     @Id
+    // 고유 식별자
     private String userId;
+    // 이메일 주소
     private String email;
+    // 이메일 인증에 사용되는 인증번호를 저장하는 필드
     private String certificationNumber;
 }
