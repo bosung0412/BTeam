@@ -24,7 +24,7 @@
               <div class="row mb-3">
                 <div class="col-sm-12">
                   <label for="id" class="form-label">아이디</label>
-                  <input type="text" class="form-control" id="id" name="id" v-model="user_id" placeholder="아이디를 입력해주세요!">
+                  <input type="text" class="form-control" id="id" name="id" v-model="id" placeholder="아이디를 입력해주세요!">
                 </div>
               </div>
 
@@ -103,12 +103,13 @@ export default {
       // };
         axios.post('http://localhost/project/api/v1/auth/sign-in', {
           id: this.id,
-        password: this.password
+          password: this.password
     })
           .then(response => {
+          const token = response.data.token;
           console.log('로그인 성공', response);
           // 로그인 성공 시 처리 (예: 리다이렉트, 토큰 저장)
-          this.$router.push('/Homeview');
+          this.$router.push('/main');
       })
           .catch(error => {
           console.error('로그인 실패', error);
