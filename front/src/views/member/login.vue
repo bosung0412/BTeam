@@ -24,7 +24,7 @@
               <div class="row mb-3">
                 <div class="col-sm-12">
                   <label for="id" class="form-label">아이디</label>
-                  <input type="text" class="form-control" id="id" name="id" placeholder="아이디를 입력해주세요!">
+                  <input type="text" class="form-control" id="id" name="id" v-model="user_id" placeholder="아이디를 입력해주세요!">
                 </div>
               </div>
 
@@ -32,7 +32,7 @@
               <div class="row mb-3">
                 <div class="col-sm-12">
                   <label for="password" class="form-label">비밀번호</label>
-                  <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호를 입력해주세요!">
+                  <input type="password" class="form-control" id="password" name="password" v-model="password" placeholder="비밀번호를 입력해주세요!">
                 </div>
               </div>
 
@@ -72,7 +72,7 @@
 <script>
 import Navbar from '@/components/Navbar/Navbar.vue';
 import Footer from '@/components/Footer/Footer.vue';
-// import axios from axios;
+import axios from 'axios';
 export default {
   components: {
     Navbar,
@@ -81,6 +81,8 @@ export default {
   data() {
     return {
       isNavbarOpen: false,
+      id: '',
+      password: '',
     };
   },
   methods: {
@@ -93,18 +95,29 @@ export default {
         const Auth_url = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirect_uri}`;
         window.location.href = Auth_url;
       },
-    },
-  submitLogin() {
-      console.log('로그인 중입니다.');
-      this.$router.push('/Homeview');
-    },
-    redirectToJoin() {
-      this.$router.push('/join'); 
-    },
-    redirectToFindAccount() {
-      this.$router.push('/findaccount');
-    },
+
+      submitLogin() {
+      //   const loginData = {
+      //   user_id: this.user_id,
+      //   password: this.password
+      // };
+        axios.post('http://localhost/project/api/v1/auth/sign-in', {
+          id: this.id,
+        password: this.password
+    })
+          .then(response => {
+          console.log('로그인 성공', response);
+          // 로그인 성공 시 처리 (예: 리다이렉트, 토큰 저장)
+          this.$router.push('/Homeview');
+      })
+          .catch(error => {
+          console.error('로그인 실패', error);
+          // 로그인 실패 시 처리 (예: 에러 메시지 표시)
+      });
+
   }
+    },
+}
 </script>
 
 

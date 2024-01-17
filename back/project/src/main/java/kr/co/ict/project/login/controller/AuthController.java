@@ -69,7 +69,9 @@ public class AuthController {
     public ResponseEntity<? super SignInResponseDto> signIn(
             // SignInResponseDto 통해 로그인 요청 및 데이터 유효성 검사
             @RequestBody @Valid SignInRequestDto requestBody) {
+                System.out.println("넘어가잖아 솔직히");
         ResponseEntity<? super SignInResponseDto> response = authService.signIn(requestBody);
+    
         return response;
     }
 }
