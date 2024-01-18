@@ -55,8 +55,8 @@
                     <div style="text-align: center;" class="mainline">
                         <h4 class="mb-3 maintext">식단 관리</h4>
                         <button @click="cameraGo" class="btnmain">촬영 및 기록</button>
-                        <!--	<a href="file:///C:/Users/user/Desktop/123/123/gardener-1.0.0/foodmemo.html"><button type="button"
-								class="btnmain">업로드</button></a>-->
+                        <!--   <a href="file:///C:/Users/user/Desktop/123/123/gardener-1.0.0/foodmemo.html"><button type="button"
+                        class="btnmain">업로드</button></a>-->
                     </div>
                     <div style="text-align: center">
                         <div class="d-flex flex-column mainline">
@@ -100,9 +100,9 @@
                                 <p class="mb-2">kcal</p>
                                 <p class="mb-2">남은 칼로리</p>
 
-                                    <button @click="calendarGo" type="button" class="btnmain" style="height: 50px;width: 150px;">캘린더가기</button>
+                                    <button @onclick="calendarGo" type="button" class="btnmain" style="height: 50px;width: 150px;">캘린더가기</button>
             
-                                    <button @click="boardGo" type="button" class="btnmain" style="height: 50px;width: 150px;">게시판가기</button>
+                                    <button @onclick="boardGo" type="button" class="btnmain" style="height: 50px;width: 150px;">게시판가기</button>
                             </div>
                         </div>
                     </div>
@@ -120,13 +120,13 @@
                                     <button @click="achievableGo" type="button" class="btnpromain" style="margin-bottom: 0px; min-width: 80px;">목표설정</button>
                                 </div>
                                 <!-- <div class="ms-3 d-flex flex-column">
-								
-									<span>현재 체중: </span>
-									<span>목표 체중: </span>
-								</div> -->
+                        
+                           <span>현재 체중: </span>
+                           <span>목표 체중: </span>
+                        </div> -->
                             </div>
                             <div class="mx-4 mb-4">
-                                <button @click="loginGo" type="button" class="btnpromain" style="margin-right: 10px;">로그인</button>
+                                <button @click="logoutGo" type="button" class="btnpromain" style="margin-right: 10px;" v-if="hasToken()">로그아웃</button>
                                 <button @click="memberUpdateGo" type="button" class="btnpromain" style="margin-right: 10px;">회원정보수정</button>
                             </div>
 
@@ -160,10 +160,21 @@ export default {
     },
     data() {
         return {
-
+            
         };
     },
+    mounted(){
+       if(this.hasToken()){
+         console.log("토큰: " +this.$store.state.authToken);
+       }else{
+        this.$router.push('/');
+       }
+    },
     methods: {
+        //store에 토큰 여부 확인
+        hasToken(){
+            return this.$store.state.authToken !==null;
+        },
         cameraGo() {
             //버튼 클릭 시 camera 페이지로 이동
             this.$router.push('/camera');
@@ -180,9 +191,11 @@ export default {
         ingrePlusGo() {
             this.$router.push('/ingredientsplus');
         },
-        //로그인 페이지로 이동
-        loginGo(){
-            this.$router.push('/login');
+        //로그아웃으로 이동
+        logoutGo(){
+            this.$store.dispatch('logout');
+            this.$router.push('/');
+            console.log("logout 토큰: " + this.$store.state.authToken);
         },
         //회원정보 수정 페이지로 이동
         memberUpdateGo(){
@@ -194,7 +207,7 @@ export default {
         },
         //게시판 페이지로 이동
         boardGo(){
-            this.$router.push('/boardList');
+            this.$router.push('');
         },
         //추천식단 페이지로 이동
         recommendeddietGO(){

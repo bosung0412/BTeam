@@ -28,9 +28,9 @@
                   <div class="col-sm-8">
                     <label for="id" class="form-label">아이디</label>
                     <div class="input-group">
-                      <input type="text" class="form-control" id="id" name="id">
-                      <div class="input-group-append">
-                        <button type="button" class="btn btn-success btnall" style="margin-bottom: 0px;">중복확인</button>
+                      <input type="text"  class="form-control" id="id" v-model="id" name="id" placeholder="아이디 입력">
+                      <div class="input-group-append" >
+                        <button type="button" class="btn btn-success btnall" @click="checkDuplicate">중복확인</button>
                       </div>
                     </div>
 
@@ -59,18 +59,17 @@
 
                     <label for="email" class="form-label mt-2">이메일</label>
                     <div class="input-group">
-                      <input type="text" class="form-control" id="email" name="email">
+                      <input type="email" class="form-control" id="email" name="email" v-model="email" placeholder="이메일 주소를 입력하세요">
                       <div class="input-group-append">
-                        <button type="button" class="btn btn-success btnall" style="margin-bottom: 0px;">인증번호받기</button>
+                        <button type="button"  class="btn btn-success btnall" @click="requestCertificationNumber" style="margin-bottom: 0px;">인증번호받기</button>
                       </div>
                     </div>
-                    <div id="certificationContainer" style="display: none;">
                     <label for="certification" class="form-label mt-2">인증번호</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" id="certification" name="certification">
-                        <button type="button" class="btn btn-primary btn-all" onclick="verifyCertificationNumber()">인증번호 확인</button>
+                        <input type="certificationnumber" class="form-control" id="certificationnumber" name="certificationnumber" v-model="certificationnumber" placeholder="인증 번호를 입력하세요">
+                        <button type="button" class="btn btn-success btnall" click="verifyCertificationNumber()">인증번호 확인</button>
                     </div>
-                  </div>
+
                     <label for="question" class="form-label mt-2">비밀번호찾기 질문</label>
                     <input type="text" class="form-control" id="question" name="question">
 
@@ -127,6 +126,7 @@
 <script>
 import Navbar from '@/components/Navbar/Navbar.vue';
 import Footer from '../../components/Footer/Footer.vue';
+import axios from 'axios';
 export default {
   components: {
   Navbar,
@@ -136,9 +136,85 @@ export default {
     return {
       isNavbarOpen: false,
       showCheckboxContainer: false,
+      email: '', // 이메일 바인딩 데이터 초기화
+      id: '', 
+      duplicateResult: null,
+      certificationnumber: '',
     };
   },
   methods: {
+    isValidEmail(email) {
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+        return emailRegex.test(email);
+    },
+    requestCertificationNumber() {
+        if (!this.isValidEmail(this.email)) { 
+            alert("유효한 이메일 주소를 입력하세요.");
+            return;
+        }
+        axios.post('http://localhost/project/api/v1/auth/email-certification', { 
+          id : this.id,
+          email: this.email,
+        })
+            .then(response => {
+                
+                if (response.data.success) {
+                    console.log(" 발송 완료")
+                    alert("인증번호가 전송되었습니다 최대 3분이 걸릴 수 있어요~");
+                } else {
+                    alert("이메일 인증 요청 실패: " + response.data.message);
+                }
+            })
+            .catch(error => {
+                console.error('로그인 실패', error);
+                alert("서버와 통신 중 오류가 발생했습니다.");
+            });
+    },
+    checkDuplicate() {
+            // 서버로 아이디 중복성 체크 요청 보내기
+            axios.post('http://localhost/project/api/v1/auth/id-check', { 
+              id: this.id 
+            })
+                .then(response => {
+                    // 서버로부터 응답을 받았을 때 처리
+                    if (response.data.duplicate) {
+                        console.log(" 중복")
+                        alert("중복 된 아이디입니다 !! 다른아이디 이용부탁드립니다(합장합장)")
+                        this.duplicateResult = false; // 중복된 아이디
+                    } else {
+                        console.log("사용가능")
+                        alert("사용 가능한 아이디입니다 !")
+                        this.duplicateResult = true; // 사용 가능한 아이디
+                    }
+                })
+                .catch(error => {
+                    alert("중복 확인 실패.");
+                    console.error('아이디 중복 확인 실패', error);
+                    this.duplicateResult = null; // 오류 발생 시 초기화
+                });
+    },
+     verifyCertificationNumber() {
+            // 서버로 인증 번호 확인 요청 보내기
+            axios.post('http://localhost/project/api/v1/auth/check-certification', { 
+              id : this.id,
+              email : this.email,
+              certificationnumber: this.certificationnumber 
+            })
+                .then(response => {
+                    // 서버로부터 응답을 받았을 때 처리
+                    if (response.data.verified) {
+                        alert("인증번호가 일치합니다.");
+                        this.verificationResult = true; // 인증번호 일치
+                    } else {
+                       alert("인증번호가 불일치합니다.");
+                        this.verificationResult = false; // 인증번호 불일치
+                    }
+                })
+                .catch(error => {
+                    console.error('인증번호 확인 실패', error);
+                    this.verificationResult = null; // 오류 발생 시 초기화
+                });
+    },
     toggleNavbar() {
       this.isNavbarOpen = !this.isNavbarOpen;
     },
@@ -166,34 +242,8 @@ export default {
     cancel() {
       this.$router.push('/');
     },
-  },
-
+  }
 };
 
-function requestCertificationNumber() {
-        // 이메일 값 가져오기
-        var email = document.getElementById('email').value;
 
-        // 이메일이 유효한지 확인 (예: 정규 표현식 사용)
-
-        // 서버에 이메일을 전송하고 인증번호를 받아오는 로직을 구현해야 함
-        // 여기서는 간단하게 인증번호 입력란을 보이도록 함
-        showCertificationInput();
-    }
-
-function showCertificationInput() {
-        // 동적으로 추가된 인증번호 입력란을 보이게 함
-        document.getElementById('certificationContainer').style.display = 'block';
-    }
-    
-function verifyCertificationNumber() {
-        // 인증번호 확인 로직을 구현
-        // 여기서는 간단하게 콘솔에 출력하는 코드
-        var certificationNumber = document.getElementById('certification').value;
-        console.log('Verifying certification number:', certificationNumber);
-    }
-function openAddressPopup() {
-        // 새 창을 열고 주소 검색 페이지를 띄웁니다.
-        window.open('address_search.html', '주소검색', 'width=500, height=600, scrollbars=yes');
-    }
 </script>
