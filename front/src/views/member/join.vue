@@ -46,8 +46,13 @@
                     <label for="birth" class="form-label mt-2">생년월일</label>
                     <input type="text" class="form-control" id="birth" name="birth">
 
-                    <label for="address" class="form-label mt-2">주소</label>
-                    <input type="text" class="form-control" id="address" name="address">
+                    <label for="email" class="form-label mt-2">주소</label>
+                    <div class="input-group">
+                      <input type="text" class="form-control" id="email" name="email">
+                      <div class="input-group-append">
+                        <button type="button" class="btn btn-success btnall" onclick="openAddressPopup()" style="margin-bottom: 0px;">주소찾기</button>
+                      </div>
+                    </div>
 
                     <label for="phoneNumber" class="form-label mt-2">휴대전화</label>
                     <input type="text" class="form-control" id="phoneNumber" maxlength="13" @input="formatPhoneNumber">
@@ -56,11 +61,19 @@
                     <div class="input-group">
                       <input type="text" class="form-control" id="email" name="email">
                       <div class="input-group-append">
-                        <button type="button" class="btn btn-success btnall" style="margin-bottom: 0px;">중복확인</button>
+                        <button type="button" class="btn btn-success btnall" style="margin-bottom: 0px;">인증번호받기</button>
                       </div>
                     </div>
+                    <div id="certificationContainer" style="display: none;">
+                    <label for="certification" class="form-label mt-2">인증번호</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="certification" name="certification">
+                        <button type="button" class="btn btn-primary btn-all" onclick="verifyCertificationNumber()">인증번호 확인</button>
+                    </div>
+                  </div>
                     <label for="question" class="form-label mt-2">비밀번호찾기 질문</label>
                     <input type="text" class="form-control" id="question" name="question">
+
 
                     <label for="answer" class="form-label mt-2">비밀번호찾기 답변</label>
                     <input type="text" class="form-control" id="answer" name="answer">
@@ -156,5 +169,31 @@ export default {
   },
 
 };
-</script>
 
+function requestCertificationNumber() {
+        // 이메일 값 가져오기
+        var email = document.getElementById('email').value;
+
+        // 이메일이 유효한지 확인 (예: 정규 표현식 사용)
+
+        // 서버에 이메일을 전송하고 인증번호를 받아오는 로직을 구현해야 함
+        // 여기서는 간단하게 인증번호 입력란을 보이도록 함
+        showCertificationInput();
+    }
+
+function showCertificationInput() {
+        // 동적으로 추가된 인증번호 입력란을 보이게 함
+        document.getElementById('certificationContainer').style.display = 'block';
+    }
+    
+function verifyCertificationNumber() {
+        // 인증번호 확인 로직을 구현
+        // 여기서는 간단하게 콘솔에 출력하는 코드
+        var certificationNumber = document.getElementById('certification').value;
+        console.log('Verifying certification number:', certificationNumber);
+    }
+function openAddressPopup() {
+        // 새 창을 열고 주소 검색 페이지를 띄웁니다.
+        window.open('address_search.html', '주소검색', 'width=500, height=600, scrollbars=yes');
+    }
+</script>
