@@ -54,7 +54,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
 
             // 검증까지 완료시 유저정보 꺼내오기
-            UserEntity userEntity = userRepository.findBymemberNo(memberNo);
+            UserEntity userEntity = userRepository.findByUserId(userId);
             String role = userEntity.getRole(); // role : ROLE_USER, ROLE_ADMIN
 
             System.out.println(role);
