@@ -18,13 +18,8 @@ public class FoodService {
         return dao.selectList();
     }
 
-    // 식단 상세 보기
+    // 음식 상세 보기
     public FoodVO FoodDetail(int nutrient_id) {
         return dao.foodDetail(nutrient_id);
-    }
-
-    // 식단 추가
-    public int insertFood(FoodVO vo) {
-        return dao.addFood(vo);
     }
 }

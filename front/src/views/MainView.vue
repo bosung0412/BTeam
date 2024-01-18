@@ -61,7 +61,7 @@
                     <div style="text-align: center">
                         <div class="d-flex flex-column mainline">
 
-                            <h4 @click="recommendeddietGO" class="mb-3 maintext">추천 식단 정보</h4>
+                            <h4 @click="recommendeddietGO" class="mb-3 maintext">추천 음식 정보</h4>
                             <p  class="mb-2 maintext">1.추천식단</p>
                             <p class="mb-2 maintext">2.추천식단</p>
                             <p class="mb-2 maintext">3.추천식단</p>
@@ -196,7 +196,7 @@ export default {
         boardGo(){
             this.$router.push('');
         },
-        //추천식단 페이지로 이동
+        //추천음식 페이지로 이동
         recommendeddietGO(){
             this.$router.push('/recommendeddiet');
         }

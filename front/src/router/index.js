@@ -26,7 +26,7 @@ const routes = [
   {path: '/calendar',name: 'calendar',component: () => import('../views/Calendar/Calendar.vue')},
   {path: '/recommendeddiet',name: 'recommendeddietlist',component: () => import('../views/recommendeddiet/RecommendeddietList.vue')},
   {path: '/recommendeddietdetail/:nutrient_id',name: 'recommendeddietdetail',component: () => import('../views/recommendeddiet/RecommendeddietDetail.vue')},
-  {path: '/recommendeddietadd',name: 'recommendeddietadd',component: () => import('../views/recommendeddiet/RecommendeddietAdd.vue')},
+  {path: '/foodmenu',name: 'foodmenu',component: () => import('../views/recommendeddiet/FoodMenu.vue')},
 ]
 
 const router = createRouter({
