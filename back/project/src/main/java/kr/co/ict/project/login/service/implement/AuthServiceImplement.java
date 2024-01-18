@@ -47,7 +47,7 @@ public class AuthServiceImplement implements AuthService {
         try {
             // 중복 시, IdCheckResponseDto 안에 duplicatedId메소드 이용하여 중복 응답 생성 및 반환
             String userId = dto.getId();
-            boolean isExistId = userRepository.existsByUserId(userId);
+            boolean isExistId = userRepository.existsBymemberNo(memberNo);
             if (isExistId)
                 return IdCheckResponseDto.duplicateId();
 
@@ -70,7 +70,7 @@ public class AuthServiceImplement implements AuthService {
             String email = dto.getEmail();
 
             // 중복 발생시 처리
-            boolean isExistId = userRepository.existsByUserId(userId);
+            boolean isExistId = userRepository.existsBymemberNo(memberNo);
             if (isExistId)
                 return EmailCertificationResponseDto.duplicateId();
 
@@ -127,7 +127,7 @@ public class AuthServiceImplement implements AuthService {
 
             // 중복 확인
             String userId = dto.getId();
-            boolean isExistId = userRepository.existsByUserId(userId);
+            boolean isExistId = userRepository.existsBymemberNo(memberNo);
             // 실패 시 duplicateId반환
             if (isExistId)
                 return SignUpResponseDto.duplicateId();
@@ -173,7 +173,7 @@ public class AuthServiceImplement implements AuthService {
         try {
             // 사용자 조회
             String userId = dto.getId();
-            UserEntity userEntity = userRepository.findByUserId(userId);
+            UserEntity userEntity = userRepository.findBymemberNo(memberNo);
             // 조회된 사용자가 없을 시 fail반환
             if (userEntity == null)
                 return SignInResponseDto.signInFail();

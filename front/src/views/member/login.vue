@@ -73,6 +73,7 @@
 import Navbar from '@/components/Navbar/Navbar.vue';
 import Footer from '@/components/Footer/Footer.vue';
 import axios from 'axios';
+import { mapActions } from 'vuex';
 export default {
   components: {
     Navbar,
@@ -86,6 +87,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(['login']), // login 액션을 사용하기 위해 매핑
     toggleNavbar() {
       this.isNavbarOpen = !this.isNavbarOpen;
     },kakaoLogin() {
@@ -97,22 +99,25 @@ export default {
       },
 
       submitLogin() {
-      //   const loginData = {
-      //   user_id: this.user_id,
-      //   password: this.password
-      // };
         axios.post('http://localhost/project/api/v1/auth/sign-in', {
           id: this.id,
-          password: this.password
+          password: this.password,
           
     })
           .then(response => {
           const token = response.data.token;
           console.log('로그인 성공', response);
+           // Vuex 스토어에 토큰 저장
+          this.login(token);
+
+          // 역직렬화된 토큰 확인
+          const decodedToken = this.$store.getters.decodedToken;
+          console.log('Decoded Token:', decodedToken);
+          
+          
           // Vuex 스토어에 토큰 저장
-          this.$store.commit('setAuthToken', token);
-          console.log(token);
-          console.log(this.$store.state.authToken);
+          // this.$store.commit('setAuthToken', token);
+          // console.log(this.$store.state.authToken);
           this.$router.push('/main');
       })
           .catch(error => {

@@ -100,9 +100,9 @@
                                 <p class="mb-2">kcal</p>
                                 <p class="mb-2">남은 칼로리</p>
 
-                                    <button @onclick="calendarGo" type="button" class="btnmain" style="height: 50px;width: 150px;">캘린더가기</button>
+                                    <button @click="calendarGo" type="button" class="btnmain" style="height: 50px;width: 150px;">캘린더가기</button>
             
-                                    <button @onclick="boardGo" type="button" class="btnmain" style="height: 50px;width: 150px;">게시판가기</button>
+                                    <button @click="boardGo" type="button" class="btnmain" style="height: 50px;width: 150px;">게시판가기</button>
                             </div>
                         </div>
                     </div>
@@ -194,7 +194,7 @@ export default {
         },
         //게시판 페이지로 이동
         boardGo(){
-            this.$router.push('');
+            this.$router.push('/boardList');
         },
         //추천식단 페이지로 이동
         recommendeddietGO(){
