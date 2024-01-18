@@ -3,6 +3,7 @@ package kr.co.ict.project.login.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import kr.co.ict.project.login.dto.request.auth.SignUpRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,4 +27,11 @@ public class CertificationEntity {
     private String email;
     // 이메일 인증에 사용되는 인증번호를 저장하는 필드
     private String certificationNumber;
+
+    public CertificationEntity(SignUpRequestDto dto) {
+        this.userId = dto.getId();
+        this.email = dto.getEmail();
+        this.certificationNumber = dto.getCertificationNumber();
+    }
+
 }

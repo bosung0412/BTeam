@@ -32,7 +32,9 @@ public class JwtProvider {
                 // signwith key부분이 encoded 마지막 부분 jwt의signature부분
                 .signWith(key, SignatureAlgorithm.HS256)
                 // setsubject가 payload첫부분에서 ~~
-                .setSubject(userId).setIssuedAt(new Date()).setExpiration(expiredDate)
+                .setSubject(userId)
+                .setIssuedAt(new Date())
+                .setExpiration(expiredDate)
                 .compact();
 
         return jwt;

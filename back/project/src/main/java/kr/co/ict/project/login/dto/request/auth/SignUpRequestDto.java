@@ -32,4 +32,15 @@ public class SignUpRequestDto {
     @NotBlank
     private String certificationNumber;
 
+    private String name;
+    private String birth;
+    private String address;
+    private String question;
+    private String answer;
+    private String phoneno;
+    private String gender;
+    private String disease;
+    private int height;
+    private int weight;
+
 }

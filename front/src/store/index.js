@@ -1,5 +1,4 @@
 import { createStore } from 'vuex'
-import { decodeToken } from '@/utils/jwtUtils';
 
 export default createStore({
   state: {
@@ -7,13 +6,7 @@ export default createStore({
   },
   getters: {
     isAuthenticated: state => !!state.authToken, // 인증된 상태 여부 확인
-    decodedToken: (state) => {
-      if (state.authToken) {
-        return decodeToken(state.authToken);
-      }
-      return null;
     },
-  },
   mutations: {
     setAuthToken(state, token) {
     state.authToken = token // 토큰 설정 뮤테이션
