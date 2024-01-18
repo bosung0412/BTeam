@@ -7,7 +7,7 @@
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-4 mb-2 wow fadeIn" data-wow-delay="0.1s">
       <div class="container text-center py-5">
-        <h1 class="display-5 text-white mb-4 animated slideInDown">추천 식단 상세 정보 보기</h1>
+        <h1 class="display-5 text-white mb-4 animated slideInDown">추천 음식 상세 정보 보기</h1>
         <nav aria-label="breadcrumb" class="animated slideInDown"></nav>
       </div>
     </div>
@@ -18,12 +18,8 @@
 		<form>
 			<input type="hidden" name="nutrient_id" :value="result.nutrient_id" />
 			<div class="mb-3 mt-3">
-				<label for="name" class="form-label">식단 명 :</label>
+				<label for="name" class="form-label">음식 명 :</label>
 				<input type="text" class="form-control" id="name" name="name" readonly :value="result.name" />
-			</div>
-			<div class="mb-3 mt-3">
-				<label for="food_img" class="form-label">식단 이미지 :</label>
-				<input type="text" class="form-control" id="food_img" name="food_img" readonly :value="result.food_img" />
 			</div>
       <div class="mb-3 mt-3">
 				<label for="cal" class="form-label">칼로리:</label>
@@ -106,7 +102,7 @@ export default {
   },
   created() {
     axios
-        .get("http://192.168.0.88/project/detail?nutrient_id=" + this.$route.params.nutrient_id)
+        .get("http://localhost/project/detail?nutrient_id=" + this.$route.params.nutrient_id)
         .then((resp) => {
           console.log(resp);
           this.result = resp.data;

@@ -11,9 +11,9 @@
 
 <insert id="addFood" parameterType="Fvo">
     INSERT INTO nutrient (
-    nutrient_id, food_img, name, weight, cal, carbo, sugars, fat, protein, calcium, 
+    nutrient_id, name, weight, cal, carbo, sugars, fat, protein, calcium, 
     phosphorus, sodium, potassium, magnesium, iron, zinc, cholesterol, transfat)
-    VALUES (FOODS_SEQ.nextVal, #{food_img}, #{name}, #{weight}, #{cal}, #{carbo}, #{sugars}, #{fat}, #{protein}, #{calcium}, 
+    VALUES (FOODS_SEQ.nextVal, #{name}, #{weight}, #{cal}, #{carbo}, #{sugars}, #{fat}, #{protein}, #{calcium}, 
     #{phosphorus}, #{sodium}, #{potassium}, #{magnesium}, #{iron}, #{zinc}, #{cholesterol}, #{transfat});
 </insert>
 
