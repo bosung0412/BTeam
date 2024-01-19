@@ -15,11 +15,17 @@ import lombok.NoArgsConstructor;
 public class CustomOAuth2User implements OAuth2User {
     // OAuth2 사용자의 식별자를 저장하는 필드
     private String userId;
+    private String accessToken;
 
     @Override
     // getAttributes - OAuth2 사용자의 속성을 반환
     public Map<String, Object> getAttributes() {
         return null;
+    }
+
+    // 액세스 토큰 반환 메서드
+    public String getAccessToken() {
+        return accessToken;
     }
 
     @Override

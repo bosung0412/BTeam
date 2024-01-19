@@ -88,13 +88,31 @@ export default {
   methods: {
     toggleNavbar() {
       this.isNavbarOpen = !this.isNavbarOpen;
-    },kakaoLogin() {
-        const redirect_uri = 'http://localhost/project/oauth2/callback/kakao'; // redirect_uri 내가 정한거
-        const clientId = '27be1209a5e94ef12e0e5d5a27ae9161'; // kakao developer 키
-        // kakao에서 정해줌
-        const Auth_url = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirect_uri}`;
-        window.location.href = Auth_url;
-      },
+    },async kakaoLogin() {
+    const redirect_uri = 'http://localhost:8081/join'; // redirect_uri 내가 정한거
+    const clientId = '27be1209a5e94ef12e0e5d5a27ae9161'; // kakao developer 키
+    const Auth_url = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirect_uri}`;
+
+    try {
+      // Kakao 로그인 페이지로 리다이렉트
+      window.location.href = Auth_url;
+
+      // 로그인 페이지에서 카카오에서 전달받은 code를 추출
+      const urlParams = new URLSearchParams(window.location.search);
+      const code = urlParams.get('code');
+      console.log(code);
+
+      // 추출한 code를 백엔드로 전송
+      const response = await axios.post('http://localhost:80/project/api/v1/auth/oauth2/kakao', {
+        code: code,
+      });
+
+      // 백엔드에서 받은 응답을 출력
+      console.log('백엔드 응답:', response.data);
+    } catch (error) {
+      console.error('카카오 로그인 실패:', error);
+    }
+  },
 
       submitLogin() {
         axios.post('http://localhost/project/api/v1/auth/sign-in', {
@@ -108,6 +126,8 @@ export default {
        
           //Vuex 스토어에 토큰 저장
           this.$store.commit('setAuthToken', token);
+          // localStorage에도 저장
+          localStorage.setItem('authToken', token);
 
           const payloadBase64 = token.split('.')[1];
           const decodedPayload = JSON.parse(atob(payloadBase64));

@@ -25,6 +25,10 @@ public class OAuth2UserServiceImplement extends DefaultOAuth2UserService {
 
         // loaduser에 request던지면 결과를 받을 수 있음
         OAuth2User oauth2User = super.loadUser(request);
+
+        // 액세스 토큰 추출
+        String accessToken = request.getAccessToken().getTokenValue();
+
         // 클라이언트 이름을 받아옴
         String oauthClientName = request.getClientRegistration().getClientName();
 
@@ -58,7 +62,7 @@ public class OAuth2UserServiceImplement extends DefaultOAuth2UserService {
         // 검증 할 필요없으므로 그냥 저장
         userRepository.save(userEntity);
 
-        return new CustomOAuth2User(userId);
+        return new CustomOAuth2User(userId, accessToken);
 
     }
 }
