@@ -9,8 +9,32 @@
         select * from nutrient where nutrient_id = #{nutrient_id}
     </select>
 
-    <select id="selectListByType" parameterType="String" resultType="Fvo">
-        select * from nutrient where foodtype = #{foodtype}
-    </select>
+    <!-- 여러 그룹에서 랜덤으로 하나씩 선택하는 쿼리 -->
+    <select id="selectRandomMeals" resultType="Fvo">
+    <![CDATA[
+        SELECT * FROM (
+            SELECT * FROM (
+                SELECT * FROM NUTRIENT WHERE FOODTYPE IN ('밥', '면') ORDER BY DBMS_RANDOM.VALUE
+            ) WHERE ROWNUM <= 3
+        )
+        UNION ALL
+        SELECT * FROM (
+            SELECT * FROM NUTRIENT WHERE FOODTYPE = '국' ORDER BY DBMS_RANDOM.VALUE
+        ) WHERE ROWNUM <= 3
+        UNION ALL
+        SELECT * FROM (
+            SELECT * FROM NUTRIENT WHERE FOODTYPE = '반찬1' ORDER BY DBMS_RANDOM.VALUE
+        ) WHERE ROWNUM <= 3
+        UNION ALL
+        SELECT * FROM (
+            SELECT * FROM NUTRIENT WHERE FOODTYPE = '반찬2' ORDER BY DBMS_RANDOM.VALUE
+        ) WHERE ROWNUM <= 3
+        UNION ALL
+        SELECT * FROM (
+            SELECT * FROM NUTRIENT WHERE FOODTYPE = '반찬3' ORDER BY DBMS_RANDOM.VALUE
+        ) WHERE ROWNUM <= 3
+    ]]>
+</select>
+
 
 </mapper>
