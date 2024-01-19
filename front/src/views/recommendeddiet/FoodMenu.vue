@@ -1,74 +1,67 @@
 <template>
-    <div id="app">
-      <Navbar />
-  
-      <!-- 페이지 헤더 시작 -->
-      <div class="container-fluid page-header py-4 mb-2 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container text-center py-5">
-          <h1 class="display-5 text-white mb-4 animated slideInDown">추천 식단</h1>
-          <nav aria-label="breadcrumb" class="animated slideInDown"></nav>
-        </div>
+  <div id="app">
+    <Navbar />
+
+    <!-- 페이지 헤더 시작 -->
+    <div class="container-fluid page-header py-4 mb-2 wow fadeIn" data-wow-delay="0.1s">
+      <div class="container text-center py-5">
+        <h1 class="display-5 text-white mb-4 animated slideInDown">추천 식단</h1>
+        <nav aria-label="breadcrumb" class="animated slideInDown"></nav>
       </div>
-      <!-- 페이지 헤더 끝 -->
-  
-      <!-- 카드 그리드 시작 -->
-      <div class="container mt-3">
-        <div class="row">
-          <!-- 아침 카드 -->
-          <div class="col-md-4">
-            <h2 class="text-center">아침</h2>
-            <div class="card mb-4">
-              <div class="card-body">
-                <h5 class="card-title">{{ meals.breakfast.name }}</h5>
-                <p class="card-text">밥or면: {{ meals.lunch.calories }}kcal</p>
-                <p class="card-text">국: {{ meals.lunch.calories }}kcal</p>
-                <p class="card-text">반찬: {{ meals.lunch.calories }}kcal</p>
-                <p class="card-text">반찬: {{ meals.lunch.calories }}kcal</p>
-                <p class="card-text">반찬: {{ meals.lunch.calories }}kcal</p>
-                <p class="card-text">총 칼로리: {{ meals.lunch.calories }}kcal</p>
-                <button @click="goToDetail(meals.breakfast.id)" class="btn btn-success">자세히 보기</button>
-              </div>
-            </div>
-          </div>
-          <!-- 점심 카드 -->
-          <div class="col-md-4">
-            <h2 class="text-center">점심</h2>
-            <div class="card mb-4">
-              <div class="card-body">
-                <h5 class="card-title">{{ meals.lunch.name }}</h5>
-                <p class="card-text">밥or면: {{ meals.lunch.calories }}kcal</p>
-                <p class="card-text">국: {{ meals.lunch.calories }}kcal</p>
-                <p class="card-text">반찬: {{ meals.lunch.calories }}kcal</p>
-                <p class="card-text">반찬: {{ meals.lunch.calories }}kcal</p>
-                <p class="card-text">반찬: {{ meals.lunch.calories }}kcal</p>
-                <p class="card-text">총 칼로리: {{ meals.lunch.calories }}kcal</p>
-                <button @click="goToDetail(meals.lunch.id)" class="btn btn-success">자세히 보기</button>
-              </div>
-            </div>
-          </div>
-          <!-- 저녁 카드 -->
-          <div class="col-md-4">
-            <h2 class="text-center">저녁</h2>
-            <div class="card mb-4">
-              <div class="card-body">
-                <h5 class="card-title">{{ meals.dinner.name }}</h5>
-                <p class="card-text">밥or면: {{ meals.lunch.calories }}kcal</p>
-                <p class="card-text">국: {{ meals.lunch.calories }}kcal</p>
-                <p class="card-text">반찬: {{ meals.lunch.calories }}kcal</p>
-                <p class="card-text">반찬: {{ meals.lunch.calories }}kcal</p>
-                <p class="card-text">반찬: {{ meals.lunch.calories }}kcal</p>
-                <p class="card-text">총 칼로리: {{ meals.lunch.calories }}kcal</p>
-                <button @click="goToDetail(meals.dinner.id)" class="btn btn-success">자세히 보기</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- 카드 그리드 끝 -->
-  
-      <Footer />
     </div>
-  </template>
+    <!-- 페이지 헤더 끝 -->
+
+    <!-- 카드 그리드 시작 -->
+    <div class="container mt-3">
+      <div class="row">
+        <!-- 아침 카드 -->
+        <div class="col-md-4">
+          <h2 class="text-center">아침</h2>
+          <div class="card mb-4">
+            <div class="card-body">
+              <h5 class="card-title">밥or면 :{{ meals.breakfast.name }}</h5>
+              <p class="card-text">밥or면: {{ meals.breakfast.calories }}kcal</p>
+              <!-- 다른 식사 항목과 칼로리 정보를 추가할 수 있습니다 -->
+              <p class="card-text">총 칼로리: {{ meals.breakfast.calories }}kcal</p>
+              <button @click="goToDetail(meals.breakfast.id)" class="btn btn-success">자세히 보기</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 점심 카드 -->
+        <div class="col-md-4">
+          <h2 class="text-center">점심</h2>
+          <div class="card mb-4">
+            <div class="card-body">
+              <h5 class="card-title">{{ meals.lunch.name }}</h5>
+              <p class="card-text">밥or면: {{ meals.lunch.calories }}kcal</p>
+              <!-- 다른 식사 항목과 칼로리 정보를 추가할 수 있습니다 -->
+              <p class="card-text">총 칼로리: {{ meals.lunch.calories }}kcal</p>
+              <button @click="goToDetail(meals.lunch.id)" class="btn btn-success">자세히 보기</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 저녁 카드 -->
+        <div class="col-md-4">
+          <h2 class="text-center">저녁</h2>
+          <div class="card mb-4">
+            <div class="card-body">
+              <h5 class="card-title">{{ meals.dinner.name }}</h5>
+              <p class="card-text">밥or면: {{ meals.dinner.calories }}kcal</p>
+              <!-- 다른 식사 항목과 칼로리 정보를 추가할 수 있습니다 -->
+              <p class="card-text">총 칼로리: {{ meals.dinner.calories }}kcal</p>
+              <button @click="goToDetail(meals.dinner.id)" class="btn btn-success">자세히 보기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 카드 그리드 끝 -->
+
+    <Footer />
+  </div>
+</template>
 
 <script>
 import Navbar from "@/components/Navbar/Navbar.vue";
@@ -95,11 +88,9 @@ export default {
   },
   methods: {
     fetchRandomMeals() {
-      // 백엔드에서 아침, 점심, 저녁 식단 메뉴 데이터를 받아오는 API 호출
       axios.get("/api/meals")
-        .then((resp) => {
-          const data = resp.data;
-          // 서버에서 받아온 데이터를 meals 객체에 할당
+        .then((response) => {
+          const data = response.data;
           this.meals.breakfast = {
             name: data.breakfast.name,
             calories: data.breakfast.calories,
@@ -121,7 +112,8 @@ export default {
         });
     },
     goToDetail(id) {
-      // 상세 페이지로 이동하는 로직 추가
+      // 여기에 상세 페이지로 이동하는 로직을 추가하세요.
+      // 예: this.$router.push({ name: 'DetailPage', params: { id: id } });
     }
   }
 };

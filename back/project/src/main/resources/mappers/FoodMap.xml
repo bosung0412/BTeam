@@ -9,12 +9,8 @@
         select * from nutrient where nutrient_id = #{nutrient_id}
     </select>
 
-<insert id="addFood" parameterType="Fvo">
-    INSERT INTO nutrient (
-    nutrient_id, name, weight, cal, carbo, sugars, fat, protein, calcium, 
-    phosphorus, sodium, potassium, magnesium, iron, zinc, cholesterol, transfat)
-    VALUES (FOODS_SEQ.nextVal, #{name}, #{weight}, #{cal}, #{carbo}, #{sugars}, #{fat}, #{protein}, #{calcium}, 
-    #{phosphorus}, #{sodium}, #{potassium}, #{magnesium}, #{iron}, #{zinc}, #{cholesterol}, #{transfat});
-</insert>
+    <select id="selectListByType" parameterType="String" resultType="Fvo">
+        select * from nutrient where foodtype = #{foodtype}
+    </select>
 
 </mapper>
