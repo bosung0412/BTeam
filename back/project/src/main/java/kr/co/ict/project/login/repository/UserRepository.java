@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import kr.co.ict.project.login.entity.UserEntity;
 
 @Repository
-public interface UserRepository extends JpaRepository<UserEntity, String> {
+public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     // 사용자 아이디가 db에 존지하는지에 대한 여부
     boolean existsByUserId(String userId);

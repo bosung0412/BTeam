@@ -29,7 +29,7 @@
                     <label for="id" class="form-label">아이디</label>
                     <div class="input-group">
                       <input type="text"  class="form-control" id="id" v-model="id" name="id" placeholder="아이디 입력">
-                      <div class="input-group-append" >
+                      <div class="input-group-append">
                         <button type="button" class="btn btn-success btnall" @click="checkDuplicate">중복확인</button>
                       </div>
                     </div>
@@ -51,6 +51,7 @@
                       <input type="text" class="form-control" id="email" name="email">
                       <div class="input-group-append">
                         <button type="button" class="btn btn-success btnall" onclick="openAddressPopup()" style="margin-bottom: 0px;">주소찾기</button>
+
                       </div>
                     </div>
 
@@ -67,9 +68,8 @@
                     <label for="certification" class="form-label mt-2">인증번호</label>
                     <div class="input-group">
                         <input type="certificationnumber" class="form-control" id="certificationnumber" name="certificationnumber" v-model="certificationnumber" placeholder="인증 번호를 입력하세요">
-                        <button type="button" class="btn btn-success btnall" click="verifyCertificationNumber()">인증번호 확인</button>
+                        <button type="button" class="btn btn-success btnall" @click="verifyCertificationNumber()">인증번호 확인</button>
                     </div>
-
                     <label for="question" class="form-label mt-2">비밀번호찾기 질문</label>
                     <input type="text" class="form-control" id="question" name="question">
 
@@ -204,17 +204,17 @@ export default {
                     // 서버로부터 응답을 받았을 때 처리
                     if (response.data.verified) {
                         alert("인증번호가 일치합니다.");
-                        this.verificationResult = true; // 인증번호 일치
+                        this.certificationnumber = true; // 인증번호 일치
                     } else {
                        alert("인증번호가 불일치합니다.");
-                        this.verificationResult = false; // 인증번호 불일치
+                        this.certificationnumber = false; // 인증번호 불일치
                     }
                 })
                 .catch(error => {
                     console.error('인증번호 확인 실패', error);
-                    this.verificationResult = null; // 오류 발생 시 초기화
+                    this.certificationnumber = null; // 오류 발생 시 초기화
                 });
-    },
+              },
     toggleNavbar() {
       this.isNavbarOpen = !this.isNavbarOpen;
     },
@@ -242,8 +242,8 @@ export default {
     cancel() {
       this.$router.push('/');
     },
-  }
-};
+  },
 
+};
 
 </script>

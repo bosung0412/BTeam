@@ -89,7 +89,7 @@ export default {
     toggleNavbar() {
       this.isNavbarOpen = !this.isNavbarOpen;
     },kakaoLogin() {
-        const redirect_uri = 'http://localhost:8081/kakaojoin'; // redirect_uri 내가 정한거
+        const redirect_uri = 'http://localhost/project/oauth2/callback/kakao'; // redirect_uri 내가 정한거
         const clientId = '27be1209a5e94ef12e0e5d5a27ae9161'; // kakao developer 키
         // kakao에서 정해줌
         const Auth_url = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirect_uri}`;

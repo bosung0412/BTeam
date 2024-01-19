@@ -34,74 +34,75 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    private final DefaultOAuth2UserService oAuth2UserService;
-    private final OAuth2SuccessHandler oAuth2SuccessHandler;
+        private final JwtAuthenticationFilter jwtAuthenticationFilter;
+        private final DefaultOAuth2UserService oAuth2UserService;
+        private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
-    @Bean
-    protected SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
+        @Bean
+        protected SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
 
-        httpSecurity
-                .cors(cors -> cors
-                        .configurationSource(corsConfigurationSource()))
-                // 사이트 요청
-                .csrf(CsrfConfigurer::disable)
-                // 인증방식을 Bearer로 할껀데 security는 기본적으로 httpBasic이 잡혀있음 그래서 disable시켜줌
-                .httpBasic(HttpBasicConfigurer::disable)
-                // session 방식
-                .sessionManagement(sessionManagement -> sessionManagement
-                        // 세션을 유지하지 않겠다
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                // 권한
-                .authorizeHttpRequests(request -> request
-                        // 이패턴에 대해서는 모두 허용하겠다라는뜻.
-                        .requestMatchers("/", "/api/v1/auth/**", "/oauth2/**").permitAll()
-                        // hasRole을 사용해 권한부여
-                        .requestMatchers("/api/v1/user/**").hasRole("USER")
-                        .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
-                        .anyRequest().authenticated())
-                // oauth2Login 부분
-                .oauth2Login(oauth2 -> oauth2
-                        .authorizationEndpoint(endpoint -> endpoint.baseUri("/api/v1/auth/oauth2"))
-                        .redirectionEndpoint(endpoint -> endpoint.baseUri("/oauth2/callback/*"))
-                        .userInfoEndpoint(endpoint -> endpoint.userService(oAuth2UserService))
-                        .successHandler(oAuth2SuccessHandler))
-                // 예외 처리
-                .exceptionHandling(exceptionHandling -> exceptionHandling
-                        .authenticationEntryPoint(new FailedAuthenticationEntryPoint()))
-                // 필터 등록
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-        return httpSecurity.build();
+                httpSecurity
+                                .cors(cors -> cors
+                                                .configurationSource(corsConfigurationSource()))
+                                // 사이트 요청
+                                .csrf(CsrfConfigurer::disable)
+                                // 인증방식을 Bearer로 할껀데 security는 기본적으로 httpBasic이 잡혀있음 그래서 disable시켜줌
+                                .httpBasic(HttpBasicConfigurer::disable)
+                                // session 방식
+                                .sessionManagement(sessionManagement -> sessionManagement
+                                                // 세션을 유지하지 않겠다
+                                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                                // 권한
+                                .authorizeHttpRequests(request -> request
+                                                // 이패턴에 대해서는 모두 허용하겠다라는뜻.
+                                                .requestMatchers("/", "/api/v1/auth/**", "/oauth2/**").permitAll()
+                                                // hasRole을 사용해 권한부여
+                                                .requestMatchers("/api/v1/user/**").hasRole("USER")
+                                                .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
+                                                .anyRequest().authenticated())
+                                // oauth2Login 부분
+                                .oauth2Login(oauth2 -> oauth2
+                                                .authorizationEndpoint(
+                                                                endpoint -> endpoint.baseUri("/api/v1/auth/oauth2"))
+                                                .redirectionEndpoint(endpoint -> endpoint.baseUri("/oauth2/callback/*"))
+                                                .userInfoEndpoint(endpoint -> endpoint.userService(oAuth2UserService))
+                                                .successHandler(oAuth2SuccessHandler))
+                                // 예외 처리
+                                .exceptionHandling(exceptionHandling -> exceptionHandling
+                                                .authenticationEntryPoint(new FailedAuthenticationEntryPoint()))
+                                // 필터 등록
+                                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                return httpSecurity.build();
 
-    }
+        }
 
-    @Bean
-    protected CorsConfigurationSource corsConfigurationSource() {
+        @Bean
+        protected CorsConfigurationSource corsConfigurationSource() {
 
-        CorsConfiguration corsconfiguration = new CorsConfiguration();
-        // 모든 출처에서 허용
-        corsconfiguration.addAllowedOrigin("*");
-        corsconfiguration.addAllowedMethod("*");
-        corsconfiguration.addAllowedHeader("*");
+                CorsConfiguration corsconfiguration = new CorsConfiguration();
+                // 모든 출처에서 허용
+                corsconfiguration.addAllowedOrigin("*");
+                corsconfiguration.addAllowedMethod("*");
+                corsconfiguration.addAllowedHeader("*");
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", corsconfiguration);
+                UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+                source.registerCorsConfiguration("/**", corsconfiguration);
 
-        return source;
-    }
+                return source;
+        }
 }
 
 // 인가처리에 실패했을 시
 class FailedAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
-    @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response,
-            AuthenticationException authException) throws IOException, ServletException {
+        @Override
+        public void commence(HttpServletRequest request, HttpServletResponse response,
+                        AuthenticationException authException) throws IOException, ServletException {
 
-        response.setContentType("application/json");
-        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-        // {"code": "NP", "message" : "No Permissin."}
-        response.getWriter().write("{\"code\": \"NP\", \"message\" : \"No Permissin.\"}");
-    }
+                response.setContentType("application/json");
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                // {"code": "NP", "message" : "No Permissin."}
+                response.getWriter().write("{\"code\": \"NP\", \"message\" : \"No Permissin.\"}");
+        }
 
 }

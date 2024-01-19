@@ -58,6 +58,7 @@ public class UserEntity {
 
     public UserEntity(String userId, String email, String type) {
         this.userId = userId;
+        // 의미 없으므로 그냥 아무거나
         this.password = "Passw0rd";
         this.email = email;
         this.type = type;
