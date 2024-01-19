@@ -22,4 +22,9 @@ public class FoodService {
     public FoodVO FoodDetail(int nutrient_id) {
         return dao.foodDetail(nutrient_id);
     }
+
+    // foodtype에 해당하는 음식 리스트 가져오기
+    public List<FoodVO> selectFoodListByType(String foodtype) {
+        return dao.selectListByType(foodtype);
+    }
 }

@@ -26,5 +26,5 @@ public class FoodVO {
     private int zinc; // 아연
     private int cholesterol; // 콜레스테롤
     private int transfat; // 트랜스지방
-    
+    private String foodtype; // 음식 타입
 }
