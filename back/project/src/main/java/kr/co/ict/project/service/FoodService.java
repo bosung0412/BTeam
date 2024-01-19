@@ -1,6 +1,8 @@
 package kr.co.ict.project.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,7 @@ import kr.co.ict.project.vo.FoodVO;
 
 @Service
 public class FoodService {
+
     @Autowired
     private FoodDao dao;
 
@@ -23,8 +26,8 @@ public class FoodService {
         return dao.foodDetail(nutrient_id);
     }
 
-    // foodtype에 해당하는 음식 리스트 가져오기
-    public List<FoodVO> selectFoodListByType(String foodtype) {
-        return dao.selectListByType(foodtype);
+    public List<FoodVO> getRandomMeals() {
+        return dao.selectRandomMeals();
     }
+
 }

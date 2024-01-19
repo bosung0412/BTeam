@@ -60,16 +60,11 @@
                     </div>
                     <div style="text-align: center">
                         <div class="d-flex flex-column mainline">
-
-                            <h4 @click="recommendeddietGO" class="mb-3 maintext">추천 음식 정보</h4>
+                            <h4 class="mb-3 maintext">추천 식단</h4>
                             <p  class="mb-2 maintext">1.추천식단</p>
                             <p class="mb-2 maintext">2.추천식단</p>
                             <p class="mb-2 maintext">3.추천식단</p>
-                            <div class="mt-2 mx-5 d-flex align-items-center"
-                                style="border: 2px solid #d7d7d7;border-radius: 8px;">
-                                <img src="../assets/img/food3.png" class="img-fluid"
-                                style="margin: 0 auto;width: 100px;height: 100px;">
-                            </div>
+                            <button @click="recommendeddietGO" class="btnmain">음식 리스트 보기</button>
                         </div>
                     </div>
                     <div>

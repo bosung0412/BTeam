@@ -4,13 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.ict.project.service.FoodService;
 import kr.co.ict.project.vo.FoodVO;
 import org.springframework.web.bind.annotation.RequestParam;
-
 
 @RestController
 public class FoodController {
@@ -31,9 +29,8 @@ public class FoodController {
         return vo;
     }
 
-    // foodtype에 해당하는 음식 리스트 불러오기
-    @GetMapping(value = "/foodlist/{foodtype}")
-    public List<FoodVO> getFoodListByType(@PathVariable String foodtype) {
-        return service.selectFoodListByType(foodtype);
+    @GetMapping("/randomMeals")
+    public List<FoodVO> getRandomMeals() {
+        return service.getRandomMeals();
     }
 }
