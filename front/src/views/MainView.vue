@@ -57,17 +57,15 @@
                         <button @click="cameraGo" class="btnmain">촬영 및 기록</button>
                         <!--	<a href="file:///C:/Users/user/Desktop/123/123/gardener-1.0.0/foodmemo.html"><button type="button"
 								class="btnmain">업로드</button></a>-->
-                    </div>
-                    <div style="text-align: center">
-                        <div class="d-flex flex-column mainline">
-                            <h4 class="mb-3 maintext">추천 식단</h4>
-                            <p  class="mb-2 maintext">1.추천식단</p>
-                            <p class="mb-2 maintext">2.추천식단</p>
-                            <p class="mb-2 maintext">3.추천식단</p>
-                            <button @click="recommendeddietGO" class="btnmain">음식 리스트 보기</button>
                         </div>
-                    </div>
-                    <div>
+                        <div style="text-align: center">
+                        <div class="d-flex flex-column align-items-center">
+                            <h4 class="mb-3 maintext">추천 식단</h4>
+                            <button @click="showFood" class="btnmain">추천 식단</button>
+                            <button @click="recommendeddietGO" class="btnmain">음식 리스트 보기</button>
+                            </div>
+                        </div>
+                        <div>
                         <div class="d-flex flex-column align-items-center ">
                             <h4 class="mb-3 maintext">나만의 냉장고</h4>
                             <button @click="refriGo" type="button" class="btnmain">냉장고 확인</button>
@@ -194,7 +192,11 @@ export default {
         //추천음식 페이지로 이동
         recommendeddietGO(){
             this.$router.push('/recommendeddiet');
-        }
+        },
+        // 식단 페이지 이동
+        showFood() {
+            this.$router.push('/foodmenu');
+        },
     },
 }
 </script>
