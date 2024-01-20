@@ -15,7 +15,6 @@
                 <h5 class="card-title">{{ item.foodtype }}: {{ item.name }}</h5>
               </div>
               <p class="card-text">총 칼로리: {{ calculateTotalCalories(mealItems) }}kcal</p>
-              <button class="btn btn-success" @click="goToDetail(mealItems[0].id)">자세히 보기</button>
             </div>
           </div>
         </div>
@@ -87,9 +86,6 @@ export default {
     calculateTotalCalories(mealItems) {
       return mealItems.reduce((sum, item) => sum + item.cal, 0);
     },
-    goToDetail(id) {
-      // 상세 페이지 이동 로직
-    }
   },
   computed: {
     totalCalories() {
