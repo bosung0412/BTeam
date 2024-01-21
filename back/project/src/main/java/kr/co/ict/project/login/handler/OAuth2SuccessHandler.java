@@ -37,6 +37,8 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         // 추출한 사용자 정보를 기반으로 JWT 토큰을 생성
         String token = jwtProvider.create(userId);
 
+        logger.info("jwt Token: " + token);
+
         // 생성한 JWT 토큰을 포함한 리다이렉트 URL을 생성하여 클라이언트로 리다이렉트
         response.sendRedirect("http://localhost:8081/auth/oauth-response/" + token + "/3600");
 

@@ -1,6 +1,5 @@
 package kr.co.ict.project.login.service.implement;
 
-import java.util.Map;
 
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -52,17 +51,13 @@ public class OAuth2UserServiceImplement extends DefaultOAuth2UserService {
             userId = "kakao_" + oauth2User.getAttributes().get("id");
             userEntity = new UserEntity(userId, "email", "kakao");
         }
-        // // clientname : naver
-        if (oauthClientName.equals("naver")) {
-            // 네이버에서는 넘어올때 resultcode, message, response로 넘어와서 body가 들어있는 response를 키로 잡아줌 ,
-            // 강제 형변환 시켜줌
-            Map<String, String> responseMap = (Map<String, String>) oauth2User.getAttributes().get("response");
-            userId = "naver_" + responseMap.get("id").substring(0, 14);
-            email = responseMap.get("email");
-            userEntity = new UserEntity(userId, "email", "naver");
+            // 데이터베이스에서 사용자를 찾습니다.
+            UserEntity existingUser = userRepository.findByUserId(userId);
+
+        // 사용자가 존재하지 않는 경우에만 저장합니다.
+            if (existingUser == null) {
+                userRepository.save(userEntity);
         }
-        // 검증 할 필요없으므로 그냥 저장
-        userRepository.save(userEntity);
 
         return new CustomOAuth2User(userId, accessToken);
 
