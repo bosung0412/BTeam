@@ -86,6 +86,17 @@ export default {
       code : '',
     };
   },
+  created() {
+    // URL에서 인증 코드 추출
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+
+     // 인증 코드가 있으면 백엔드에 요청
+     if (code) {
+      this.kakaoLogin(code);
+    }
+
+  },
   methods: {
     toggleNavbar() {
       this.isNavbarOpen = !this.isNavbarOpen;
@@ -96,12 +107,16 @@ export default {
 
     const Auth_url = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirect_uri}`;
     // Kakao 로그인 페이지로 리다이렉트
-    window.location.href = Auth_url;
+    
 
     this.getKakaoUserInfo(this.code);
+
+    window.location.href = Auth_url;
   },
     async getKakaoUserInfo(code) {
     try {
+      console.log("urllllll", window.location.search)
+      console.log("codeee",code);
       const response = await axios.post('http://localhost/project/api/v1/auth/oauth2', { code: code });
       const jwtToken = response.data.jwtToken;
 
