@@ -64,7 +64,7 @@
                             <p  class="mb-2 maintext">1.추천식단</p>
                             <p class="mb-2 maintext">2.추천식단</p>
                             <p class="mb-2 maintext">3.추천식단</p>
-                            <button @click="recommendeddietGO" class="btnmain">음식 리스트 보기</button>
+                            <button @click="recommendeddietGO" class="btnmain" style="margin: auto;">음식 리스트 보기</button>
                         </div>
                     </div>
                     <div>
