@@ -237,7 +237,7 @@
     white-space: nowrap; /* 각 날짜가 다음 줄로 넘어가지 않도록 설정합니다. */
   }
 
-  .fc-media-screen {
+ .fc-media-screen {
     width: 100%;
     height: 700px;
   }

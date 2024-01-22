@@ -8,8 +8,9 @@
       <!-- Copyright Start -->
 
     
-    <Footer />
+      <Footer />
 	</section>
+  
 </template>
 <script>
 import Footer from '@/components/Footer/Footer.vue';
@@ -33,3 +34,14 @@ export default {
   }
 }
 </script>
+
+<style scoped>  
+@media screen and (max-width: 1080px) and (max-height: 2220px) {
+  section.u-clearfix {
+    width: 100%;
+    height: 100vh; /* 화면 높이에 꽉 차게 설정 */
+    box-sizing: border-box; /* border와 padding을 요소의 크기에 포함시킴 */
+  }
+}
+
+</style>
