@@ -4,6 +4,9 @@
     <Navbar />
     <h2 class="card-text text-center">일일 섭취 칼로리: {{ totalCalories }}kcal</h2>
     <!-- 카드 그리드 -->
+    <div>
+    <h3 class="card-text text-center">User Height: {{ height }}</h3>
+    </div>
     <div class="container mt-3">
       <div class="row g-4">
         <!-- 식사 카드: 아침, 점심, 저녁 -->
@@ -39,6 +42,8 @@ export default {
   },
   data() {
     return {
+      user_id: 1, // 가져올 사용자의 ID
+      height: null,
       meals: {
         breakfast: [],
         lunch: [],
@@ -46,42 +51,59 @@ export default {
       }
     };
   },
+  mounted() {
+    this.fetchUserHeight();
+  },
   created() {
     this.fetchRandomMeals();
   },
   methods: {
-    fetchRandomMeals() {
-      axios.get("http://localhost/project/randomMeals")
-        .then((response) => {
-          const mealsData = response.data;
-          // 각 식사 시간에 맞춰서 데이터를 할당합니다.
-          this.meals.breakfast = mealsData.filter(item => item.foodtype === '밥' || item.foodtype === '면').slice(0, 1)
-            .concat(
-              mealsData.filter(item => item.foodtype === '국').slice(0, 1),
-              mealsData.filter(item => item.foodtype === '반찬1').slice(0, 1),
-              mealsData.filter(item => item.foodtype === '반찬2').slice(0, 1),
-              mealsData.filter(item => item.foodtype === '반찬3').slice(0, 1)
-            );
-
-          this.meals.lunch = mealsData.filter(item => item.foodtype === '밥' || item.foodtype === '면').slice(1, 2)
-            .concat(
-              mealsData.filter(item => item.foodtype === '국').slice(1, 2),
-              mealsData.filter(item => item.foodtype === '반찬1').slice(1, 2),
-              mealsData.filter(item => item.foodtype === '반찬2').slice(1, 2),
-              mealsData.filter(item => item.foodtype === '반찬3').slice(1, 2)
-            );
-
-          this.meals.dinner = mealsData.filter(item => item.foodtype === '밥' || item.foodtype === '면').slice(2, 3)
-            .concat(
-              mealsData.filter(item => item.foodtype === '국').slice(2, 3),
-              mealsData.filter(item => item.foodtype === '반찬1').slice(2, 3),
-              mealsData.filter(item => item.foodtype === '반찬2').slice(2, 3),
-              mealsData.filter(item => item.foodtype === '반찬3').slice(2, 3)
-            );
+    fetchUserHeight() {
+      // 백엔드에서 해당 API 엔드포인트로 요청 보내기
+      fetch("http://localhost/project/${this.userId}/height")
+        .then(response => response.json())
+        .then(data => {
+          // 받아온 데이터 사용
+          this.userHeight = data.height;
         })
-        .catch((error) => {
-          console.error(error);
-        });
+        .catch(error => console.error('Error fetching user height:', error));
+    },
+  fetchRandomMeals() {
+    axios.get("http://localhost/project/randomMeals")
+      .then((response) => {
+        const mealsData = response.data;
+        // 각 식사 시간에 맞춰서 데이터를 할당합니다.
+        this.meals.breakfast = mealsData.filter(item => item.foodtype === '밥' || item.foodtype === '면').slice(0, 1)
+          .concat(
+            mealsData.filter(item => item.foodtype === '국').slice(0, 1),
+            mealsData.filter(item => item.foodtype === '반찬1').slice(0, 1),
+            mealsData.filter(item => item.foodtype === '반찬2').slice(0, 1),
+            mealsData.filter(item => item.foodtype === '반찬3').slice(0, 1)
+          );
+
+        this.meals.lunch = mealsData.filter(item => item.foodtype === '밥' || item.foodtype === '면').slice(1, 2)
+          .concat(
+            mealsData.filter(item => item.foodtype === '국').slice(1, 2),
+            mealsData.filter(item => item.foodtype === '반찬1').slice(1, 2),
+            mealsData.filter(item => item.foodtype === '반찬2').slice(1, 2),
+            mealsData.filter(item => item.foodtype === '반찬3').slice(1, 2)
+          );
+
+        this.meals.dinner = mealsData.filter(item => item.foodtype === '밥' || item.foodtype === '면').slice(2, 3)
+          .concat(
+            mealsData.filter(item => item.foodtype === '국').slice(2, 3),
+            mealsData.filter(item => item.foodtype === '반찬1').slice(2, 3),
+            mealsData.filter(item => item.foodtype === '반찬2').slice(2, 3),
+            mealsData.filter(item => item.foodtype === '반찬3').slice(2, 3)
+          );
+        
+        this.meals.breakfast.forEach(item => item.cal = Math.floor(Math.random() * 101) + 100);
+        this.meals.lunch.forEach(item => item.cal = Math.floor(Math.random() * 101) + 100);
+        this.meals.dinner.forEach(item => item.cal = Math.floor(Math.random() * 101) + 100);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
     },
     calculateTotalCalories(mealItems) {
       return mealItems.reduce((sum, item) => sum + item.cal, 0);
