@@ -67,7 +67,7 @@
 							</button>
 							<!-- 식단을 등록하는 버튼, 안드로이드 saveToDB메소드 호출 -->
 							<button v-show="isCameraOpen && isMobile" type="button" class="button" id="saveToDB" @click="saveToDB">
-								<img src="../../assets/img/camera/icons8-save-64.png" alt="saveToDB-icon">
+								<img src="../../assets/img/camera/icons8-database-of-an-android-smartphone-operating-system-36.png" alt="saveToDB-icon">
 							</button>
 						</div>
 						<div v-show="isCameraOpen && !isLoading">
