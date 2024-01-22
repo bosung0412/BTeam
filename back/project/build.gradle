@@ -38,6 +38,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
 
+	// 템플릿 엔진을 사용하기 위한 thymeleaf
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
 	// 메일
  	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	// oauth 추가
