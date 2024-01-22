@@ -30,20 +30,18 @@
 						<!-- 카메라 열기닫기 -->
 						<div class="camera-button">
 							<!-- 버튼을 누르면 toggleCamera메소드 호출하여 카메라 전환-->
-							<button type="button" class="button is-rounded" :class="{ 'is-primary': !isCameraOpen, 'is-danger': isCameraOpen}" @click="toggleCamera">
+							<button v-if="!isMobile" type="button" class="button is-rounded" :class="{ 'is-primary': !isCameraOpen, 'is-danger': isCameraOpen}" @click="toggleCamera">
 							<span v-if="!isCameraOpen">Open Camera</span>
 							<span v-else>Close Camera</span>
 							</button>
-						</div>
-						<div class="app-camera-button">
-							<!--앱 전용 버튼-->
-							<button type="button" class="button is-rounded" @click="openNewActivity">
+							<button v-else type="button" class="button is-rounded" @click="openNewActivity">
 							<span>Open Camera app</span>
 							</button>
 						</div>
 
+
 						<!-- 카메라가 열리고 로딩중이면 로딩이미지 -->
-						<div v-show="isCameraOpen && isLoading" class="camera-loading">
+						<div v-if="isCameraOpen && isLoading" class="camera-loading">
 							<ul class="loader-circle">
 							<li></li>
 							<li></li>
@@ -208,7 +206,7 @@ export default {
       isPhotoTaken: false, // 사진활영 여부
       isShotPhoto: false, // 촬영 시, 플래시 효과
       isLoading: false, // 카메라 로딩 상태
-	  isMobile: false, // 모바일 시작 
+	  isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) || /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.platform),
 	  hasResult: false,	// 모델 예측 결과 존재 여부
 	  stream: null, // 웹캠 스트림
 
@@ -224,7 +222,7 @@ export default {
     },
     async openCamera() {
 	if(typeof window.mobile !== 'undefined'){
-		isMobile = true;		
+		this.isMobile = true;		
 	}
       this.isLoading = true;
       try {
@@ -277,13 +275,14 @@ export default {
       this.isPhotoTaken = false;
       this.isShotPhoto = false;
     },
+	
 	openNewActivity() {
-        // 안드로이드의 openNewActivity 메소드 호출
-        if (typeof window.mobile !== 'undefined') {
-			window.mobile.openNewActivity();
-        } else {
-            console.error('Android object is not defined.');
-        }
+      // 안드로이드의 openNewActivity 메소드 호출
+      if (typeof window.mobile !== 'undefined') {
+        window.mobile.openNewActivity();
+      } else {
+        console.error('Android object is not defined.');
+      }
     },
 	saveToDB() {
         // 안드로이드의 saveToDB 메소드 호출
@@ -433,12 +432,7 @@ body {
     width: 350px;
   }
 
-  .app-camera-button {
-    display: block; /* 화면 조건을 충족하면 app-camera-button를 표시합니다. */
-  }
-  .camera-button{
-	display: block;
-  }
+  
 }
 
 </style>
