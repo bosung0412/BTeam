@@ -55,14 +55,20 @@
                     <div style="text-align: center;" class="mainline">
                         <h4 class="mb-3 maintext">식단 관리</h4>
                         <button @click="cameraGo" class="btnmain">촬영 및 기록</button>
-                        <!--	<a href="file:///C:/Users/user/Desktop/123/123/gardener-1.0.0/foodmemo.html"><button type="button"
-								class="btnmain">업로드</button></a>-->
-                        </div>
-                        <div style="text-align: center">
-                        <div class="d-flex flex-column align-items-center">
-                            <h4 class="mb-3 maintext">추천 식단</h4>
-                            <button @click="showFood" class="btnmain">추천 식단</button>
-                            <button @click="recommendeddietGO" class="btnmain">음식 리스트 보기</button>
+                        <!--   <a href="file:///C:/Users/user/Desktop/123/123/gardener-1.0.0/foodmemo.html"><button type="button"
+                        class="btnmain">업로드</button></a>-->
+                    </div>
+                    <div style="text-align: center">
+                        <div class="d-flex flex-column mainline">
+
+                            <h4 @click="recommendeddietGO" class="mb-3 maintext">추천 식단 정보</h4>
+                            <p  class="mb-2 maintext">1.추천식단</p>
+                            <p class="mb-2 maintext">2.추천식단</p>
+                            <p class="mb-2 maintext">3.추천식단</p>
+                            <div class="mt-2 mx-5 d-flex align-items-center"
+                                style="border: 2px solid #d7d7d7;border-radius: 8px;">
+                                <img src="../assets/img/food3.png" class="img-fluid"
+                                style="margin: 0 auto;width: 100px;height: 100px;">
                             </div>
                         </div>
                         <div>
@@ -113,13 +119,13 @@
                                     <button @click="achievableGo" type="button" class="btnpromain" style="margin-bottom: 0px; min-width: 80px;">목표설정</button>
                                 </div>
                                 <!-- <div class="ms-3 d-flex flex-column">
-								
-									<span>현재 체중: </span>
-									<span>목표 체중: </span>
-								</div> -->
+                        
+                           <span>현재 체중: </span>
+                           <span>목표 체중: </span>
+                        </div> -->
                             </div>
                             <div class="mx-4 mb-4">
-                                <button @click="loginGo" type="button" class="btnpromain" style="margin-right: 10px;">로그인</button>
+                                <button @click="logoutGo" type="button" class="btnpromain" style="margin-right: 10px;" v-if="hasToken()">로그아웃</button>
                                 <button @click="memberUpdateGo" type="button" class="btnpromain" style="margin-right: 10px;">회원정보수정</button>
                             </div>
 
@@ -142,6 +148,7 @@
         </div>
     <Footer />
     </div>
+</div>
 </template>
 <script>
 import Navbar from '@/components/Navbar/Navbar.vue';
@@ -153,10 +160,21 @@ export default {
     },
     data() {
         return {
-
+            
         };
     },
+    mounted(){
+       if(this.hasToken()){
+         console.log("토큰: " +this.$store.state.authToken);
+       }else{
+        this.$router.push('/');
+       }
+    },
     methods: {
+        //store에 토큰 여부 확인
+        hasToken(){
+            return this.$store.state.authToken !==null;
+        },
         cameraGo() {
             //버튼 클릭 시 camera 페이지로 이동
             this.$router.push('/camera');
@@ -173,9 +191,11 @@ export default {
         ingrePlusGo() {
             this.$router.push('/ingredientsplus');
         },
-        //로그인 페이지로 이동
-        loginGo(){
-            this.$router.push('/login');
+        //로그아웃으로 이동
+        logoutGo(){
+            this.$store.dispatch('logout');
+            this.$router.push('/');
+            console.log("logout 토큰: " + this.$store.state.authToken);
         },
         //회원정보 수정 페이지로 이동
         memberUpdateGo(){

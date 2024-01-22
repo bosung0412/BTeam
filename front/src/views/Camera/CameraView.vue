@@ -173,7 +173,7 @@
 	   </div>
 	   <!-- Footer Start -->
 	   <Footer /> 
-	</div>
+	   </div>
 </template>
 
 <script>
@@ -365,28 +365,4 @@ body {
     opacity: 1;
   }
 }
-</style>
-<style scoped>  
-@media screen and (max-width: 1080px) and (max-height: 2220px) {
-  .web-camera-container {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 350px;
-  }
-
-  .app-camera-button {
-    display: block; /* 화면 조건을 충족하면 app-camera-button를 표시합니다. */
-  }
-  .camera-button{
-	display: none;
-  }
-}
-
 </style>

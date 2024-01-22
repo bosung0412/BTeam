@@ -24,7 +24,7 @@
               <div class="row mb-3">
                 <div class="col-sm-12">
                   <label for="id" class="form-label">아이디</label>
-                  <input type="text" class="form-control" id="id" name="id" placeholder="아이디를 입력해주세요!">
+                  <input type="text" class="form-control" id="id" name="id" v-model="id" placeholder="아이디를 입력해주세요!">
                 </div>
               </div>
 
@@ -32,7 +32,7 @@
               <div class="row mb-3">
                 <div class="col-sm-12">
                   <label for="password" class="form-label">비밀번호</label>
-                  <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호를 입력해주세요!">
+                  <input type="password" class="form-control" id="password" name="password" v-model="password" placeholder="비밀번호를 입력해주세요!">
                 </div>
               </div>
 
@@ -72,56 +72,97 @@
 <script>
 import Navbar from '@/components/Navbar/Navbar.vue';
 import Footer from '@/components/Footer/Footer.vue';
+import axios from 'axios';
 export default {
+  components: {
+    Navbar,
+    Footer,
+  },
   data() {
     return {
       isNavbarOpen: false,
+      id: '',
+      password: '',
+      code : '',
     };
+  },
+  created() {
+    // URL에서 인증 코드 추출
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+
+     // 인증 코드가 있으면 백엔드에 요청
+     if (code) {
+      this.kakaoLogin(code);
+    }
+
   },
   methods: {
     toggleNavbar() {
       this.isNavbarOpen = !this.isNavbarOpen;
-    },
+    }, 
     kakaoLogin() {
-      window.Kakao.Auth.login({
-        scope: "profile_image, account_email",
-        success: this.getKakaoAccount,
-      });
-    },getKakaoAccount() {
-      window.Kakao.API.request({
-        url: "/v2/user/me",
-        success: (res) => {
-          const kakao_account = res.kakao_account;
-          const ninkname = kakao_account.profile.ninkname;
-          const email = kakao_account.email;
-          console.log("ninkname", ninkname);
-          console.log("email", email);
+    const redirect_uri = 'http://localhost:8081/join'; // redirect_uri 내가 정한거
+    const clientId = '27be1209a5e94ef12e0e5d5a27ae9161'; // kakao developer 키
 
-          //로그인처리구현
+    const Auth_url = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirect_uri}`;
+    // Kakao 로그인 페이지로 리다이렉트
+    
 
-          alert("로그인 성공!");
-        },
-        fail: (error) => {
-          console.log(error);
-        },
-      });
-    },
-    submitLogin() {
-      console.log('로그인 중입니다.');
-      this.$router.push('/Homeview');
-    },
-    redirectToJoin() {
-      this.$router.push('/join'); 
-    },
-    redirectToFindAccount() {
-      this.$router.push('/findaccount');
-    },
+    this.getKakaoUserInfo(this.code);
+
+    window.location.href = Auth_url;
   },
-  components: {
-    Navbar,
-    Footer,
+    async getKakaoUserInfo(code) {
+    try {
+      console.log("urllllll", window.location.search)
+      console.log("codeee",code);
+      const response = await axios.post('http://localhost/project/api/v1/auth/oauth2', { code: code });
+      const jwtToken = response.data.jwtToken;
+
+      // Vuex 스토어의 setAuthToken 뮤테이션을 호출하여 토큰을 저장
+      this.$store.commit('setAuthToken', jwtToken);
+
+      // 콘솔에 저장된 토큰 출력
+      console.log(this.$store.state.authToken);
+
+      // 메인 페이지로 리다이렉트
+      this.$router.push('/main');
+    } catch (error) {
+      console.error('사용자 정보 요청 실패', error);
+      // 에러 처리 로직
+    }
+        },
+  
+      submitLogin() {
+        axios.post('http://localhost/project/api/v1/auth/sign-in', {
+          id: this.id,
+          password: this.password,
+          
+    })
+          .then(response => {
+          const token = response.data.token;
+          console.log('로그인 성공', response);
+       
+          //Vuex 스토어에 토큰 저장
+          this.$store.commit('setAuthToken', token);
+          // localStorage에도 저장
+          localStorage.setItem('authToken', token);
+
+          const payloadBase64 = token.split('.')[1];
+          const decodedPayload = JSON.parse(atob(payloadBase64));
+          console.log('Decoded Token:', decodedPayload);
+          console.log(this.$store.state.authToken);
+          this.$router.push('/main');
+
+      })
+          .catch(error => {
+          console.error('로그인 실패', error);
+          sessionStorage.setItem('token', null); // 로그인 실패 시 토큰을 null로 설정
+          // 로그인 실패 시 처리 (예: 에러 메시지 표시)
+      });
+
   }
-};
+    },
+}
 </script>
-
-
