@@ -50,38 +50,43 @@ export default {
     this.fetchRandomMeals();
   },
   methods: {
-    fetchRandomMeals() {
-      axios.get("http://localhost/project/randomMeals")
-        .then((response) => {
-          const mealsData = response.data;
-          // 각 식사 시간에 맞춰서 데이터를 할당합니다.
-          this.meals.breakfast = mealsData.filter(item => item.foodtype === '밥' || item.foodtype === '면').slice(0, 1)
-            .concat(
-              mealsData.filter(item => item.foodtype === '국').slice(0, 1),
-              mealsData.filter(item => item.foodtype === '반찬1').slice(0, 1),
-              mealsData.filter(item => item.foodtype === '반찬2').slice(0, 1),
-              mealsData.filter(item => item.foodtype === '반찬3').slice(0, 1)
-            );
+  fetchRandomMeals() {
+    axios.get("http://localhost/project/randomMeals")
+      .then((response) => {
+        const mealsData = response.data;
+        // 각 식사 시간에 맞춰서 데이터를 할당합니다.
+        this.meals.breakfast = mealsData.filter(item => item.foodtype === '밥' || item.foodtype === '면').slice(0, 1)
+          .concat(
+            mealsData.filter(item => item.foodtype === '국').slice(0, 1),
+            mealsData.filter(item => item.foodtype === '반찬1').slice(0, 1),
+            mealsData.filter(item => item.foodtype === '반찬2').slice(0, 1),
+            mealsData.filter(item => item.foodtype === '반찬3').slice(0, 1)
+          );
 
-          this.meals.lunch = mealsData.filter(item => item.foodtype === '밥' || item.foodtype === '면').slice(1, 2)
-            .concat(
-              mealsData.filter(item => item.foodtype === '국').slice(1, 2),
-              mealsData.filter(item => item.foodtype === '반찬1').slice(1, 2),
-              mealsData.filter(item => item.foodtype === '반찬2').slice(1, 2),
-              mealsData.filter(item => item.foodtype === '반찬3').slice(1, 2)
-            );
+        this.meals.lunch = mealsData.filter(item => item.foodtype === '밥' || item.foodtype === '면').slice(1, 2)
+          .concat(
+            mealsData.filter(item => item.foodtype === '국').slice(1, 2),
+            mealsData.filter(item => item.foodtype === '반찬1').slice(1, 2),
+            mealsData.filter(item => item.foodtype === '반찬2').slice(1, 2),
+            mealsData.filter(item => item.foodtype === '반찬3').slice(1, 2)
+          );
 
-          this.meals.dinner = mealsData.filter(item => item.foodtype === '밥' || item.foodtype === '면').slice(2, 3)
-            .concat(
-              mealsData.filter(item => item.foodtype === '국').slice(2, 3),
-              mealsData.filter(item => item.foodtype === '반찬1').slice(2, 3),
-              mealsData.filter(item => item.foodtype === '반찬2').slice(2, 3),
-              mealsData.filter(item => item.foodtype === '반찬3').slice(2, 3)
-            );
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+        this.meals.dinner = mealsData.filter(item => item.foodtype === '밥' || item.foodtype === '면').slice(2, 3)
+          .concat(
+            mealsData.filter(item => item.foodtype === '국').slice(2, 3),
+            mealsData.filter(item => item.foodtype === '반찬1').slice(2, 3),
+            mealsData.filter(item => item.foodtype === '반찬2').slice(2, 3),
+            mealsData.filter(item => item.foodtype === '반찬3').slice(2, 3)
+          );
+        
+        // 각 카드의 칼로리를 500kcal로 설정
+        this.meals.breakfast.forEach(item => item.cal = Math.floor(Math.random() * 101) + 100);
+        this.meals.lunch.forEach(item => item.cal = Math.floor(Math.random() * 101) + 100);
+        this.meals.dinner.forEach(item => item.cal = Math.floor(Math.random() * 101) + 100);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
     },
     calculateTotalCalories(mealItems) {
       return mealItems.reduce((sum, item) => sum + item.cal, 0);
