@@ -14,13 +14,16 @@ import kr.co.ict.project.vo.DietVO;
 import kr.co.ict.project.vo.DietinfoVO;
 import kr.co.ict.project.vo.FoodVO;
 
+
 @RestController
 public class FoodController {
+
     @Autowired
     private FoodService service;
 
-    @GetMapping("/foodlist")
-    public List<FoodVO> listfood() {
+    // 식단 리스트 불러오기
+    @GetMapping(value = "/foodlist")
+    public List<FoodVO> getFoodList() {
         return service.selectFoodList();
     }
     @PostMapping("/foodAdd")
@@ -46,4 +49,17 @@ public class FoodController {
     public DietinfoVO selectFoodInfo(int nutrient_id){
         return service.selectFoodInfo(nutrient_id);
     }
+
+    // 식단 상세 정보
+    @GetMapping(value = "/detail")
+    public FoodVO getFoodDetail(@RequestParam("nutrient_id") int nutrient_id) {
+        FoodVO vo = service.FoodDetail(nutrient_id);
+        return vo;
+    }
+
+    @GetMapping("/randomMeals")
+    public List<FoodVO> getRandomMeals() {
+        return service.getRandomMeals();
+    }
+
 }

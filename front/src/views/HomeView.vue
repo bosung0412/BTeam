@@ -6,20 +6,12 @@
         <button @click="NextGo" class="u-border-none u-btn u-button-style u-custom-color-3 u-hover-custom-color-5 u-radius u-btn-1" data-animation-name="customAnimationIn" data-animation-duration="1000" data-animation-direction="">Next&nbsp;</button>
       </div>
       <!-- Copyright Start -->
-	<div class="container-fluid copyright py-4">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-					&copy; <a class="border-bottom" href="#">냉장고든램지</a>, All Right Reserved.
-				</div>
-						</div>
-		</div>
-	</div>
-    
-    <Footer />
-	</section>
-</template>
 
+    
+      <Footer />
+	</section>
+  
+</template>
 <script>
 import Footer from '@/components/Footer/Footer.vue';
 // @ is an alias to /src
@@ -42,3 +34,14 @@ export default {
   }
 }
 </script>
+
+<style scoped>  
+@media screen and (max-width: 1080px) and (max-height: 2220px) {
+  section.u-clearfix {
+    width: 100%;
+    height: 100vh; /* 화면 높이에 꽉 차게 설정 */
+    box-sizing: border-box; /* border와 padding을 요소의 크기에 포함시킴 */
+  }
+}
+
+</style>

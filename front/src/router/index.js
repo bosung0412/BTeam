@@ -23,8 +23,12 @@ const routes = [
   {path: '/boardList/faqBoard',name: 'faqBoard',component: () => import('../views/board/Board_faq.vue')},
   {path: '/boardList/faqBoard/faqDetail/:ocategory',name: 'faqDetail',component: () => import('../views/board/Board_faqdetail.vue')},
   {path: '/calendar',name: 'calendar',component: () => import('../views/Calendar/Calendar.vue')},
-  {path: '/recommendeddiet',name: 'recommendeddiet',component: () => import('../views/recommendeddiet/Recommendeddiet.vue')}
+  {path: '/recommendeddiet',name: 'recommendeddietlist',component: () => import('../views/recommendeddiet/RecommendeddietList.vue')},
+  {path: '/recommendeddietdetail/:nutrient_id',name: 'recommendeddietdetail',component: () => import('../views/recommendeddiet/RecommendeddietDetail.vue')},
+  {path: '/foodmenu',name: 'foodmenu',component: () => import('../views/recommendeddiet/FoodMenu.vue')},
+  {path: '/faqlist',name: 'faqlist',component: () => import('../views/board/FAQList.vue')},
 ]
+
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

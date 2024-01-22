@@ -55,8 +55,8 @@
                     <div style="text-align: center;" class="mainline">
                         <h4 class="mb-3 maintext">식단 관리</h4>
                         <button @click="cameraGo" class="btnmain">촬영 및 기록</button>
-                        <!--	<a href="file:///C:/Users/user/Desktop/123/123/gardener-1.0.0/foodmemo.html"><button type="button"
-								class="btnmain">업로드</button></a>-->
+                        <!--   <a href="file:///C:/Users/user/Desktop/123/123/gardener-1.0.0/foodmemo.html"><button type="button"
+                        class="btnmain">업로드</button></a>-->
                     </div>
                     <div style="text-align: center">
                         <div class="d-flex flex-column mainline">
@@ -71,8 +71,7 @@
                                 style="margin: 0 auto;width: 100px;height: 100px;">
                             </div>
                         </div>
-                    </div>
-                    <div>
+                        <div>
                         <div class="d-flex flex-column align-items-center ">
                             <h4 class="mb-3 maintext">나만의 냉장고</h4>
                             <button @click="refriGo" type="button" class="btnmain">냉장고 확인</button>
@@ -100,7 +99,7 @@
                                 <p class="mb-2">kcal</p>
                                 <p class="mb-2">남은 칼로리</p>
 
-                                    <button @onclick="calendarGo" type="button" class="btnmain" style="height: 50px;width: 150px;">캘린더가기</button>
+                                    <button @click="calendarGo" type="button" class="btnmain" style="height: 50px;width: 150px;">캘린더가기</button>
             
                                     <button @click="boardGo" type="button" class="btnmain" style="height: 50px;width: 150px;">게시판가기</button>
                             </div>
@@ -120,14 +119,14 @@
                                     <button @click="achievableGo" type="button" class="btnpromain" style="margin-bottom: 0px; min-width: 80px;">목표설정</button>
                                 </div>
                                 <!-- <div class="ms-3 d-flex flex-column">
-								
-									<span>현재 체중: </span>
-									<span>목표 체중: </span>
-								</div> -->
+                        
+                           <span>현재 체중: </span>
+                           <span>목표 체중: </span>
+                        </div> -->
                             </div>
                             <div class="mx-4 mb-4">
-                                <button @click="loginGo" type="button" class="btnpromain" style="margin-right: 10px;">로그인</button>
-                                <button @click="memberUpdateGo" type="button" class="btnpromain">회원정보수정</button>
+                                <button @click="logoutGo" type="button" class="btnpromain" style="margin-right: 10px;" v-if="hasToken()">로그아웃</button>
+                                <button @click="memberUpdateGo" type="button" class="btnpromain" style="margin-right: 10px;">회원정보수정</button>
                             </div>
 
                         </div>
@@ -149,6 +148,7 @@
         </div>
     <Footer />
     </div>
+</div>
 </template>
 <script>
 import Navbar from '@/components/Navbar/Navbar.vue';
@@ -160,10 +160,21 @@ export default {
     },
     data() {
         return {
-
+            
         };
     },
+    mounted(){
+       if(this.hasToken()){
+         console.log("토큰: " +this.$store.state.authToken);
+       }else{
+        this.$router.push('/');
+       }
+    },
     methods: {
+        //store에 토큰 여부 확인
+        hasToken(){
+            return this.$store.state.authToken !==null;
+        },
         cameraGo() {
             //버튼 클릭 시 camera 페이지로 이동
             this.$router.push('/camera');
@@ -180,9 +191,11 @@ export default {
         ingrePlusGo() {
             this.$router.push('/ingredientsplus');
         },
-        //로그인 페이지로 이동
-        loginGo(){
-            this.$router.push('/login');
+        //로그아웃으로 이동
+        logoutGo(){
+            this.$store.dispatch('logout');
+            this.$router.push('/');
+            console.log("logout 토큰: " + this.$store.state.authToken);
         },
         //회원정보 수정 페이지로 이동
         memberUpdateGo(){
@@ -190,16 +203,29 @@ export default {
         },
         //캘린더 페이지로 이동
         calendarGo(){
-            this.$router.push('');
+            this.$router.push('/calendar');
         },
         //게시판 페이지로 이동
         boardGo(){
             this.$router.push('/boardList');
         },
-        //추천식단 페이지로 이동
+        //추천음식 페이지로 이동
         recommendeddietGO(){
             this.$router.push('/recommendeddiet');
-        }
+        },
+        // 식단 페이지 이동
+        showFood() {
+            this.$router.push('/foodmenu');
+        },
     },
 }
 </script>
+
+<style scoped>  
+@media screen and (max-width: 1080px) and (max-height: 2220px) {
+  .btnpromain{
+    margin-left: 20px;
+  }
+}
+
+</style>

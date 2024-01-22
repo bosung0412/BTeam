@@ -6,8 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Alias("Fvo")
-@Getter
 @Setter
+@Getter
 public class FoodVO {
     private int nutrient_id;    // 음식영양소 아이디
     private String name;        // 음식명

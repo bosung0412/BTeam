@@ -1,10 +1,13 @@
 <template>
   <div>
     <!-- Navbar Start -->
-    <Navbar/>
+    <Navbar />
 
     <!-- Page Header Start -->
-    <div class="container-fluid page-header py-4 mb-2 wow fadeIn" data-wow-delay="0.1s">
+    <div
+      class="container-fluid page-header py-4 mb-2 wow fadeIn"
+      data-wow-delay="0.1s"
+    >
       <div class="container text-center py-3">
         <h3 class="display-5 text-white mb-2 animated slideInDown">캘린더</h3>
       </div>
@@ -60,7 +63,7 @@
     <Footer />
 </div>
 </template>
-  
+
 <script>
 import FullCalendar from '@fullcalendar/vue3';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -99,10 +102,6 @@ export default {
           week: 'ddd d',
           day: 'dddd M/d',
           agendaDay: 'dddd d',
-        },
-        titleFormat: {
-          month: 'long',
-          year: 'numeric',
         },
         allDaySlot: false,
         events: [],
@@ -305,4 +304,43 @@ export default {
   
   @media(max-width: 768px){.container-fluid{flex-direction: column; padding: 0;} #wrap{width: 100%;} .detail{width: 100%;}}
 </style>
+<style scoped>
+@media screen and (max-width: 1080px) and (max-height: 2220px) {
+  .cal {
+    display: flex;
+    padding: 1%;
+    width: 390px;
+  }
+
+  #wrap {
+    margin: 1px;
+    width: 100%;
+    height: 100%;
+    border: 1px solid white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    overflow-x: auto; /* 좌우 스크롤을 추가합니다. */
+    white-space: nowrap; /* 각 날짜가 다음 줄로 넘어가지 않도록 설정합니다. */
+  }
+
+ .fc-media-screen {
+    width: 100%;
+    height: 700px;
+  }
+
+  .fc-day {
+    width: 90px; /* 각 날짜의 너비를 조절합니다. */
+    background-color: #FFFFFF;
+    display: inline-block; /* 각 날짜를 가로로 배열합니다. */
+  }
+}
+</style>
+
+
+
+
+
+
+
+
     

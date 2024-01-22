@@ -9,8 +9,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class WeightVO {
-    private String id; // 회원아이디
-    private int currentweight; // 현재 몸무게
-    private int futureweight; // 목표 몸무게
+    private int member_no; // 회원번호
+    private String currentweight; // 현재 몸무게
+    private String futureweight; // 목표 몸무게
     private String wdate; // 시간
 }

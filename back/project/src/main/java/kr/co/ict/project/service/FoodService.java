@@ -12,9 +12,11 @@ import kr.co.ict.project.vo.FoodVO;
 
 @Service
 public class FoodService {
+
     @Autowired
     private FoodDao dao;
 
+    // 리스트 보기
     public List<FoodVO> selectFoodList() {
         return dao.selectList();
     }
@@ -35,4 +37,16 @@ public class FoodService {
     public DietinfoVO selectFoodInfo(int nutrient_id){
         return dao.selectFoodInfo(nutrient_id);
     }
+
+    // 음식 상세 보기
+    public FoodVO FoodDetail(int nutrient_id) {
+        return dao.foodDetail(nutrient_id);
+    }
+
+    // 추천 식단
+    public List<FoodVO> getRandomMeals() {
+        return dao.selectRandomMeals();
+    }
+
+
 }

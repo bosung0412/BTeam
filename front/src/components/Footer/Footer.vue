@@ -23,3 +23,13 @@
     bottom:0;
   }
 </style>
+
+<style scoped>  
+@media screen and (max-width: 1080px) and (max-height: 2220px) {
+  .container-fluid{
+    height: 75px;
+  }
+
+}
+
+</style>
