@@ -15,7 +15,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "user")
+@Entity
 @Table(name = "users")
 public class UserEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_no_sequence")

@@ -54,7 +54,7 @@ public class SecurityConfig {
                                                 .requestMatchers("/", "/api/v1/auth/**", "/oauth2/**").permitAll()
                                                 // hasRole을 사용해 권한부여
                                                 .requestMatchers("/api/v1/user/**").hasRole("USER")
-                                                .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
+                                                .requestMatchers("/api/admin/**").hasRole("ADMIN")
                                                 .anyRequest().authenticated())
                                 // 예외 처리
                                 .exceptionHandling(exceptionHandling -> exceptionHandling

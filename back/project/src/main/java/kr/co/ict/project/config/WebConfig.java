@@ -19,7 +19,7 @@ public class WebConfig implements WebMvcConfigurer {
             registry.addMapping("/**")
                   .allowedOrigins("http://localhost:8080", "http://localhost:8081", "http://localhost")
                   .allowedHeaders("*")
-                  .allowedMethods("*")
+                  .allowedMethods("GET", "POST", "PUT", "DELETE")
                   .maxAge(3600);
 
             // addMapping - CORS를 적용할 url의 패턴을 정의 (/** 로 모든 패턴을 가능하게 함)
