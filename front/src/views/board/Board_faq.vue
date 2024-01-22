@@ -20,19 +20,19 @@
               <li class="mx-5">
                 <router-link to="/boardList">공지사항</router-link>
               </li>
-              <li class="mx-5" @click="filterProjects('faq')">자주 묻는 질문(FAQ)</li>
+              <li class="mx-5">자주 묻는 질문(FAQ)</li>
             </ul>
           </div>
         </div>
         <div class="faq-list">
           <div class="faq-item">
             <div class="img-container">
-              <img src="#" alt="Image Description">
+              <img src="../../assets/img/faq1.png" alt="Image Description" width="100px;">
             </div>
             <div class="title">
               <h4>계정관리</h4>
               <p>로그인, 보호조치, 도용 등 문제 해결 방법</p>
-              <a href="#">자세히 보기</a>
+              <router-link :to="{name:'faqDetail', params:{ocategory:'user'}}">자세히 보기</router-link>
             </div>
           </div>
           <div class="faq-item">
@@ -42,7 +42,7 @@
             <div class="title">
               <h4>홈페이지 관련</h4>
               <p>접속 장애 및 해결 방법</p>
-              <a href="#">자세히 보기</a>
+              <router-link :to="{name:'faqDetail', params:{ocategory:'web'}}">자세히 보기</router-link>
             </div>
           </div>
         </div>
@@ -54,7 +54,7 @@
             <div class="title">
               <h4>앱 관련</h4>
               <p>앱 설치 및 각종 오류 모음</p>
-              <a href="#">자세히 보기</a>
+              <router-link :to="{name:'faqDetail', params:{ocategory:'app'}}">자세히 보기</router-link>
             </div>
           </div>
           <div class="faq-item">
@@ -64,7 +64,7 @@
             <div class="title">
               <h4>기능 관련</h4>
               <p>기능별 오류 및 문의사항 모음</p>
-              <a href="#">자세히 보기</a>
+              <router-link :to="{name:'faqDetail', params:{ocategory:'function'}}">자세히 보기</router-link>
             </div>
           </div>
         </div>
@@ -80,11 +80,10 @@ import Footer from '../../components/Footer/Footer.vue';
 import axios from 'axios'
 
 export default {
-  name: 'faqboard',
+  name: 'faqBoard',
   data(){
     return {
-      projects: [],
-      filteredProjects: [], // 필터링된 글 데이터
+      faqs: [],
     }
   },
   components:{
@@ -93,25 +92,23 @@ export default {
   },
   mounted() {
     this.fetchData();
-    this.filterProjects('*');
   },
   methods: {
     fetchData(){
-      axios.get("http://192.168.0.74/project/boardList")
+      axios.get("http://localhost/project/faqBoard")
       .then((resp) => {
-        this.projects = resp.data;
-        this.filterProjects('*');
+        this.faqs = resp.data;
       })
     },
-    filterProjects(category) {
-      this.filteredProjects = this.projects.filter(project => category === '*' || project.ocategory === category);
-      this.currentPage = 1;
-    },
+    href(faqs){
+      console.log(faqs)
+      this.$router.push({ name: 'faqDetail', params: {ocategory} });
+    }
   },
 }
 </script>
 <style>
   .faq-list {display: flex; justify-content: space-between; margin: 1% 5% 1% 5%; padding: 2%;}
-  .faq-item {display: flex; align-items: center; height: 150px; font-size: 20px; border: 1px solid #fff; border-radius: 20px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); width: 45%;}
+  .faq-item {display: flex; align-items: center; font-size: 20px; border: 1px solid #fff; border-radius: 20px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); width: 45%; height: 30%;}
   .img-container {margin: 0 5% 0 10px; width: 25%;}
 </style>

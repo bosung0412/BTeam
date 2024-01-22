@@ -18,8 +18,8 @@
 		  <form>
 			<!-- detail start -->
 			<div class="bigtitle">
-				<strong class="mb-3" style="font-size: 30px;">{{ result.oname }}</strong>
-				<span class="oregdate">{{ result.oregdate }}</span>
+			  <strong class="mb-3" style="font-size: 30px;">{{ result.oname }}</strong>
+			  <span class="oregdate">{{ result.oregdate }}</span>
 			</div>
 			<input type="hidden" name="ono" readonly :value="result.ono">
 			<div id="postContent" style="border: 1px solid #ccc; padding: 10px;">
@@ -58,7 +58,7 @@
 import Navbar from '@/components/Navbar/Navbar.vue';
 import Footer from '../../components/Footer/Footer.vue';
 import axios from 'axios';
-const BASE_URL = 'http://192.168.0.74/project/';
+const BASE_URL = 'http://localhost/project/';
 
 export default {
   components: {

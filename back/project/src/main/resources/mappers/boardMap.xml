@@ -8,6 +8,9 @@
     <select id="selectDetail" resultType="bvo" parameterType="int">
         select * from openforum where ono = #{ono}
     </select>
+    <update id="updateViews" parameterType="int">
+        update openforum set views = views + 1 where ono = #{ono}
+    </update>
     <select id="prevDetail" resultType="pvo" parameterType="int">
         SELECT * from(select ono, oname, oregdate,
         LAG(ono) OVER (ORDER BY ono) prevno,
@@ -21,5 +24,13 @@
         LEAD(oname) OVER (ORDER BY ono) nextname,
         LEAD(oregdate) OVER (ORDER BY ono) nextdate
         FROM openforum ORDER BY ono) where ono = #{ono}
+    </select>
+
+    <!-- 자주 묻는 질문 -->
+    <select id="faqList" resultType="faqvo">
+        SELECT * FROM faqboard
+    </select>
+    <select id="faqDetail" resultType="faqvo" parameterType="String">
+        SELECT * FROM faqboard WHERE OCATEGORY = #{OCATEGORY}
     </select>
 </mapper>

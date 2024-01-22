@@ -6,7 +6,7 @@
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-4 mb-2 wow fadeIn" data-wow-delay="0.1s">
       <div class="container text-center py-3">
-        <h3 class="display-5 text-white mb-2 animated slideInDown">게시글 상세보기</h3>
+        <h3 class="display-5 text-white mb-2 animated slideInDown">캘린더</h3>
       </div>
     </div>
     <!-- Page Header End -->
@@ -20,85 +20,77 @@
 
       <!-- diet Detail Start -->
       <div class="detail">
-        
-        <div class="detail_diet">
-          <h4 style="margin: 3%">음식 정보</h4>
-          <div class="diet_">
-            <input type="text" id="diet_date" value="2023-12-29 breakfast">
-            <img id="foodimg" src="../../assets/img/chicken.png">
-          </div>
-          <div class="diet_">
-            <input type="text" id="foodinfo" :value="dietDetail.foodName"><br>
-            <input type="text" id="foodinfo" :value="dietDetail.calorie">kcal<br>
-            지방 <input type="text" id="foodinfo" value="12g"><br>
-            포화지방 <input type="text" id="foodinfo" value="3.3g"><br>
-            콜레스테롤 <input type="text" id="foodinfo" value="87mg"><br>
-            나트륨 <input type="text" id="foodinfo" value="77mg"><br>
-            칼륨 <input type="text" id="foodinfo" value="239mg"><br>
-            탄수화물 <input type="text" id="foodinfo" value="1.8g"><br>
-            식이섬유 <input type="text" id="foodinfo" value="0.1g"><br>
-            단백질 <input type="text" id="foodinfo" value="30g">
+        <div style="display: flex; align-items: center;">
+          <img src="../../assets/img/cal_food.png" width="15%" style="margin: 0 1% 10% 5%;">
+          <h4 style="width:70%; margin-bottom: 15%;">음식 정보를 확인하세요.</h4>
+        </div>
+
+        <input class="foodtitle" type="text" v-model="dietList.created_at" :placeholder="'Today : '+currentDate" readonly>
+        <input class="foodtitle" type="text" v-model="dietList.mealtime" readonly>
+        <!-- for문 돌리기 -->
+        <div class="foodList" v-if="foodList.length > 0">
+          <div v-for="(food, index) in foodList" :key="index">
+            <a class="food" @click="selectFood(food.nutrient_id, index)">{{ food.name }}</a>
           </div>
         </div>
-        <div>
-          <div class="chart">
-            <div id="chart_1">
-              <h5>월별 식단 성공/실패율을 확인하세요!</h5>
-              <canvas id="activityChart"></canvas>
+        <div class="foodList" v-else>캘린더의 식단을 선택하세요!</div>
+      
+        <div class="food_detail">
+          <!-- foodDetail 내용 표시 -->
+          <template v-if="foodList.length > 0">
+            <div class="detail_diet">
+              <h4 style="margin: 3%">음식 정보 합계</h4>
+              <img id="foodimg" v-if="foodList && foodList.length > 0 && foodList[0].img_filename" 
+                :src="require(`../../assets/img/${ foodList[0].img_filename }`)">
+                <table>
+                  <tbody style="text-align: center;">
+                    <tr class="diet_" v-for="(value, key, index) in getCombinedEntries(foodList)" :key="index">
+                      <td>{{ getCustomLabel(key) }}</td>
+                      <td id="nutrient" type="text">{{value}}</td>
+                    </tr>
+                  </tbody>
+                </table>
             </div>
-            <hr>
-            <div>
-              <h5>몸무게가 어떻게 변화 되었는지 확인하세요!</h5>
-              <div class="chartbtn">
-                <button id="w_year">연별</button>
-                <button id="w_month">월별</button>
-                <button id="w_day">일별</button>
-              </div>
-              <canvas id="weightChart"></canvas>
-            </div>
-          </div>
+          </template>
         </div>
       </div>
-        <!-- diet Detail End -->
     </div>
+    <!-- diet Detail End -->
     <!-- Footer Start -->
     <Footer />
-  </div>
+</div>
 </template>
   
 <script>
-  import { ref } from 'vue';
-  import FullCalendar from '@fullcalendar/vue3';
-  import dayGridPlugin from '@fullcalendar/daygrid';
-  import timeGridPlugin from '@fullcalendar/timegrid';
-  import listPlugin from '@fullcalendar/list';
-  import Navbar from '@/components/Navbar/Navbar.vue';
-  import Footer from '../../components/Footer/Footer.vue';
+import FullCalendar from '@fullcalendar/vue3';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import listPlugin from '@fullcalendar/list';
+import Navbar from '@/components/Navbar/Navbar.vue';
+import Footer from '../../components/Footer/Footer.vue';
+import axios from 'axios';
 
-  export default {
-    name: 'calendar',
-    components: {
-      Navbar,
-      Footer,
-      FullCalendar,
-    },
-    setup() {
-      const y = new Date().getFullYear(); // 현재 년도
-      const m = new Date().getMonth(); // 현재 월
-      const d = new Date().getDay(); // 현재 일
-      const dietDetail = ref({
-        date: '',
-        foodName: '',
-      });
-      const calendarOptions = ref({
+export default {
+  name: 'calendar',
+  components: {
+    Navbar,
+    Footer,
+    FullCalendar,
+  },
+  data() {
+    return {
+      dietList: {}, // 캘린더 이벤트
+      foodList: {}, // 식단 정보
+      foodDetail: {}, // 영양 정보
+      calendarOptions: { // FullCalendar 기본 설정
         plugins: [dayGridPlugin, timeGridPlugin, listPlugin],
         headerToolbar: {
           left: 'title',
           center: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth',
           right: 'prev,next today',
         },
-        editable: true,
-        firstDay: 1,
+        editable: false,
+        firstDay: 0,
         selectable: true,
         defaultView: 'month',
         axisFormat: 'h:mm',
@@ -113,124 +105,204 @@
           year: 'numeric',
         },
         allDaySlot: false,
-        selectHelper: true,
-        select: (start, end, allDay) => {
-          const title = prompt('Event Title:');
-          if (title) {
-            // 여기서 FullCalendar 객체의 `addEvent` 메소드를 사용해 이벤트를 추가합니다.
-            calendarOptions.value.events.push({
-              title: title,
-              start: start,
-              end: end,
-              allDay: allDay,
-            });
-          }
-        },
-        droppable: true,
-        drop: (info) => {
-          // 드래그 앤 드롭 로직 추가
-        },
-        
-        events: [
-          {
-            title: 'All Day Event',
-            start: new Date(y, m, 1),
-            extendedProps: {
-              food: '닭가슴살',
-              calorie: '245.9'
-            }
-          },
-          {
-            id: 999,
-            title: "Repeating Event",
-            start: new Date(y, m, d - 3, 16, 0),
-            allDay: false,
-            className: "info",
-          },
-          {
-            id: 999,
-            title: 'Repeating Event',
-            start: new Date(y, m, d + 4, 16, 0),
-            allDay: false,
-            className: 'info',
-          },
-          {
-            title: 'Meeting',
-            start: new Date(y, m, d, 10, 30),
-            allDay: false,
-            className: 'important',
-          },
-          {
-            title: 'Lunch',
-            start: new Date(y, m, d, 12, 0),
-            end: new Date(y, m, d, 14, 0),
-            allDay: false,
-            className: 'important',
-          },
-          {
-            title: 'happy',
-            start: new Date(y, m, d, 12, 0),
-            allDay: true,
-            className: 'important',
-          },
-          {
-            title: 'Birthday Party',
-            start: new Date(y, m, d + 1, 19, 0),
-            end: new Date(y, m, d + 1, 22, 30),
-            allDay: false,
-          },
-          {
-            title: 'Click for Google',
-            start: new Date(y, m, 28),
-            end: new Date(y, m, 29),
-            url: 'http://google.com/',
-            className: 'success',
-          },
-        ],
-        eventClick: (info) => {
-          const food = info.event.extendedProps.food;
-          const calorie = info.event.extendedProps.calorie;
+        events: [],
+        eventClick: this.onEventClick,
+      },
+      selectedFoodIndex: null, // 선택된 음식 항목의 인덱스를 추적
+      nutrientSum: [],
+    };
+  },
+  computed: {
+    currentDate() { // 현재시간 포맷팅
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
 
-          dietDetail.value.foodName = food;
-          dietDetail.value.calorie = calorie;
-        }
-      });
-      return { 
-        calendarOptions,
-        dietDetail
+      return `${year}-${month}-${day}`;
+    },
+  },
+  mounted() {
+    this.loadDietData();
+  },
+  methods: {
+    getCombinedEntries(foodList) { // 각 식단마다 영양정보 합함
+      const totalCalories = foodList.reduce((sum, food) => sum + food.cal, 0.0);
+      const totalCarbo = foodList.reduce((sum, food) => sum + food.carbo, 0);
+      const totalSugars = foodList.reduce((sum, food) => sum + food.sugars, 0);
+      const totalFat = foodList.reduce((sum, food) => sum + food.fat, 0);
+      const totalProtein = foodList.reduce((sum, food) => sum + food.protein, 0);
+      const totalCalcium = foodList.reduce((sum, food) => sum + food.carcium, 0);
+      const totalPhosphorus = foodList.reduce((sum, food) => sum + food.phosphorus, 0);
+      const totalSodium = foodList.reduce((sum, food) => sum + food.sodium, 0);
+      const totalPotassium = foodList.reduce((sum, food) => sum + food.potassium, 0);
+      const totalMagnesium = foodList.reduce((sum, food) => sum + food.magnesium, 0);
+      const totalIron = foodList.reduce((sum, food) => sum + food.iron, 0);
+      const totalZinc = foodList.reduce((sum, food) => sum + food.zinc, 0);
+      const totalCholesterol = foodList.reduce((sum, food) => sum + food.cholesterol, 0);
+      const totalTransfat = foodList.reduce((sum, food) => sum + food.transfat, 0);
+
+      return {
+        cal: totalCalories,
+        carbo : totalCarbo,
+        sugars: totalSugars,
+        fat: totalFat,
+        protein: totalProtein,
+        calcium: totalCalcium,
+        phosphorus: totalPhosphorus,
+        sodium: totalSodium,
+        potassium: totalPotassium,
+        magnesium: totalMagnesium,
+        iron: totalIron,
+        zinc: totalZinc,
+        cholesterol: totalCholesterol,
+        transfat: totalTransfat,
       };
-    }
-  };
+    },
+    loadDietData() { // 캘린더의 식단 정보 데이터
+      axios.get("http://localhost/project/selectdiet")
+        .then((resp) => {
+          console.log("-----dietList-----");
+          console.log(resp.data);
+          this.dietList = resp.data;
+          const transformedEvents = this.dietList.map(diet => {
+            return {
+              title: diet.mealtime,
+              start: new Date(diet.created_at),
+              extendedProps: diet,
+            };
+          });
+          this.calendarOptions.events = transformedEvents;
+        })
+        .catch((error) => {
+          console.error('식단 데이터를 가져오는 동안 오류가 발생했습니다.', error);
+        });
+    },
+    onEventClick(info) { // 캘린더 이벤트 클릭
+      this.dietList = info.event.extendedProps;
+      this.loadFoodData();
+    },
+    loadFoodData() { // 식단 클릭 시 음식 데이터
+      axios.get(`http://localhost/project/selectdietinfo?diet_id=${this.dietList.diet_id}`)
+        .then((resp) => {
+          console.log("-----foodList-----");
+          console.log(resp.data);
+          this.foodList = resp.data;
+          this.selectedFoodIndex = null;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    selectFood(nutrient_id, index) { // 음식 선택 시
+      this.selectedFoodIndex = index; // 선택된 음식 인덱스 업데이트
+      axios.get(`http://localhost/project/selectfoodinfo?nutrient_id=${nutrient_id}`)
+        .then((resp) => {
+          console.log("-----foodDetail-----");
+          console.log(resp.data);
+          this.foodDetail = resp.data;
+
+          this.$nextTick(() => {
+            this.updateFoodDetailContent();
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    updateFoodDetailContent() { // 음식 클릭 시 데이터 변경
+      const foodDetailElement = this.$el.querySelector('.food_detail');
+
+      if (foodDetailElement) {
+        foodDetailElement.innerHTML = '';
+
+        const div = document.createElement('div');
+        div.id = 'detail_diet';
+
+        const h4 = document.createElement('h4');
+        h4.style.margin = '3%';
+        h4.textContent = '음식 정보';
+        div.appendChild(h4);
+
+        if (this.foodDetail && this.foodDetail.frimg_filename) {
+          const img = document.createElement('img');
+          img.id = 'foodimg';
+          img.src = require(`../../assets/img/${this.foodDetail.frimg_filename}`);
+          div.appendChild(img);
+        }
+
+        for (const [key, value] of Object.entries(this.foodDetail).slice(5, 21)) {
+          const dietDiv = document.createElement('div');
+          dietDiv.className = 'diet_';
+
+          const label = document.createElement('label');
+          label.textContent = this.getCustomLabel(key) + ' : ';
+          dietDiv.appendChild(label);
+
+          const input = document.createElement('input');
+          input.id = 'nutrient';
+          input.type = 'text';
+          input.value = value;
+          input.readOnly = true;
+          dietDiv.appendChild(input);
+
+          div.appendChild(dietDiv);
+        }
+        foodDetailElement.appendChild(div);
+      }
+    },
+    getCustomLabel(key) { // 영문으로 된 라벨을 한글로 변환
+      const labelMappings = {
+        name: '음식명',
+        weight: '중량(g)',
+        cal: '칼로리(kcal)',
+        carbo: '탄수화물(g)',
+        sugars: '당류(g)',
+        fat: '지방(g)',
+        protein: '단백질(g)',
+        calcium: '칼슘(mg)',
+        phosphorus: '인(mg)',
+        sodium: '나트륨(mg)',
+        potassium: '칼륨(mg)',
+        magnesium: '마그네슘(mg)',
+        iron: '철(mg)',
+        zinc: '아연(mg)',
+        cholesterol: '콜레스테롤(mg)',
+        transfat: '트랜스지방(g)'
+      };
+      return labelMappings[key] || key;
+    },
+  },
+};
 </script>
-    
+
 <style>
   body {text-align: center; font-size: 14px;}
-  .cal {display: flex; padding: 70px; height: auto;}
+  .cal {display: flex; padding: 5% 10% 10% 10%; min-height: 100%;}
 
-  #wrap {margin: 0 5% 0 5%; width: 55%; height: 100%; border: 1px solid white; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); padding: 1%; border-radius: 10px;}
-  .fc-day {margin: 0 auto; width: 90px; background-color: #FFFFFF;}
+  /* Calendar CSS */
+  #wrap {margin: 0 5% 0 0; width: 65%; height: 100%; border: 1px solid white; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); padding: 1%; border-radius: 10px;}
+  .fc-day {background-color: #FFFFFF; font-size: 15px;}
   .fc .fc-button-primary {background-color: #A5D299; border: none;}
   .fc .fc-button-primary:not(:disabled).fc-button-active{background-color: #397329; color: white;}
   .fc-toolbar-title {width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
   .u-overlap.u-overlap-transparent:not(.u-overlap-contrast) .u-header :not(.u-nav-item) > a, 
-      .u-gradient > .u-container-layout > a, .u-image:not(.u-shading) > 
-      .u-container-layout > a, a {color: black;}
-  .fc .fc-daygrid-day-number {float: left;}
-  .fc-dayGridMonth-view {border: 3px solid #A5D299;}
+    .u-gradient > .u-container-layout > a, .u-image:not(.u-shading) > .u-container-layout > a, a {color: black;}
+  .fc-dayGridMonth-view {border: 3px solid #A5D299;}.fc-day-sun a {color: red; text-decoration: none;}
+  .fc .fc-daygrid-day-top {float: left;}.fc .fc-daygrid-day-number {line-height: 20px;}
+  .fc .fc-daygrid-day.fc-day-today {background-color: #ffffff;}
+  .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {background-color: #f0768b; border-radius: 20px; height: 25px; }
 
+  /* Food info CSS */
+  .diet {width: auto; border: none; background-color: transparent;}
+  .foodtitle {margin: 2%; text-align: center; font-size: 25px; font-weight: bold; border: none; background-color: transparent;}
   .detail {position: relative; width: 30%;  margin-bottom: 100%;  border-radius: 5px;  display: flex; flex-direction: column; }
+  .foodList {margin-top: 5%; padding: 7% 1% 7% 1%; font-size: 20px; margin-bottom: 5%; border-radius: 80px; border: 2px solid #f0768b; box-shadow: 0 0 10px rgba(240, 118, 139, 0.7);}
+  .food {float: left; text-align: center; margin: 1%; border-radius: 30px; background-color: #A5D299; font-size: 90%; font-weight: bold; cursor: pointer;}
   #diet_date {width: 90%; border: none; border-bottom: 1px solid gray; font-size: 1rem; font-weight: bold; text-align: center; margin: 0 0 3% 5%; background-color: transparent; display:flex;}
-  #foodimg {border: 3px solid #f0768b; width: 70%; margin: 1% 5% 5% 0;}
-  .detail_diet {height: 80%; border: 1px solid gray; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); border-radius: 5px; background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url(../../assets/img/foodimg1.png) center/cover; color: black;}
-  .diet_ {width: 50%; float: left;}
-  #foodname, #calorie {border: none; width: 10rem; font-size: 20px; background-color: transparent; text-align: center;}
-  #foodinfo {font-size: 1rem; width: 43%; overflow: scroll; word-wrap: break-word; background-color: transparent; border: none;}
-
-  .chart {height: 80%; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); margin: 10% 0 30% 0; padding-top: 1%; background-color: white;}
-  #activityChart, #weightChart {margin: 7%; width: 85%; border: 2px solid silver; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); background-color: #fff5f6;}
-  h5 {margin: 3%;}
-  .chartbtn button {background-color: transparent; font-size: 15px; color: gray; margin: 0; float: right; border: none;}
-  .chartbtn button:hover {text-decoration: underline;}
-  @media(max-width: 768px){.container-fluid{flex-direction: column; padding: 0;} #wrap{width: 100%;} .detail{width: 100%;} .chart{width: 100%;}}
+  #foodimg {border: 3px solid #f0768b; width: 90%; margin: 1% 1% 5% 0; height: 200px;}
+  .diet_ {font-size: 17px; text-align: center;}
+  
+  @media(max-width: 768px){.container-fluid{flex-direction: column; padding: 0;} #wrap{width: 100%;} .detail{width: 100%;}}
 </style>
     
