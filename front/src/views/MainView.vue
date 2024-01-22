@@ -84,6 +84,7 @@
                         </div>
                     </div>
                 </div>
+                </div>
                 <!--메인 컨텐츠 가운데 start-->
                 <div class="col-lg-5 fadeInUp border-customend mainevent" data-wow-delay="0.3s">
                 <div class="row">
@@ -144,7 +145,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
     <Footer />
     </div>
