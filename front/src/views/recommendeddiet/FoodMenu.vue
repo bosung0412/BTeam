@@ -4,6 +4,9 @@
     <Navbar />
     <h2 class="card-text text-center">일일 섭취 칼로리: {{ totalCalories }}kcal</h2>
     <!-- 카드 그리드 -->
+    <div>
+    <h3 class="card-text text-center">User Height: {{ height }}</h3>
+    </div>
     <div class="container mt-3">
       <div class="row g-4">
         <!-- 식사 카드: 아침, 점심, 저녁 -->
@@ -39,6 +42,8 @@ export default {
   },
   data() {
     return {
+      user_id: 1, // 가져올 사용자의 ID
+      height: null,
       meals: {
         breakfast: [],
         lunch: [],
@@ -46,10 +51,23 @@ export default {
       }
     };
   },
+  mounted() {
+    this.fetchUserHeight();
+  },
   created() {
     this.fetchRandomMeals();
   },
   methods: {
+    fetchUserHeight() {
+      // 백엔드에서 해당 API 엔드포인트로 요청 보내기
+      fetch("http://localhost/project/${this.userId}/height")
+        .then(response => response.json())
+        .then(data => {
+          // 받아온 데이터 사용
+          this.userHeight = data.height;
+        })
+        .catch(error => console.error('Error fetching user height:', error));
+    },
   fetchRandomMeals() {
     axios.get("http://localhost/project/randomMeals")
       .then((response) => {
@@ -79,7 +97,6 @@ export default {
             mealsData.filter(item => item.foodtype === '반찬3').slice(2, 3)
           );
         
-        // 각 카드의 칼로리를 500kcal로 설정
         this.meals.breakfast.forEach(item => item.cal = Math.floor(Math.random() * 101) + 100);
         this.meals.lunch.forEach(item => item.cal = Math.floor(Math.random() * 101) + 100);
         this.meals.dinner.forEach(item => item.cal = Math.floor(Math.random() * 101) + 100);
