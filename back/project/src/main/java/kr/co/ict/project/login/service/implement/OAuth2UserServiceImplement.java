@@ -1,7 +1,5 @@
 package kr.co.ict.project.login.service.implement;
 
-import java.util.Map;
-
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -41,28 +39,20 @@ public class OAuth2UserServiceImplement extends DefaultOAuth2UserService {
 
         // return oauth2User
 
-            
-
         UserEntity userEntity = null;
         String userId = null;
         String email = "email@email.com";
         // clientname : kakao
         if (oauthClientName.equals("kakao")) {
             userId = "kakao_" + oauth2User.getAttributes().get("id");
-            userEntity = userRepository.findByUserId(userId);
-            if (userEntity == null) {
-                userEntity = new UserEntity(userId, "email", "kakao");
-                userRepository.save(userEntity);
-            }
-        } else if (oauthClientName.equals("naver")) {
-            Map<String, String> responseMap = (Map<String, String>) oauth2User.getAttributes().get("response");
-            userId = "naver_" + responseMap.get("id").substring(0, 14);
-            userEntity = userRepository.findByUserId(userId);
-            if (userEntity == null) {
-                email = responseMap.get("email");
-                userEntity = new UserEntity(userId, "email", "naver");
-                userRepository.save(userEntity);
-            }
+            userEntity = new UserEntity(userId, "email", "kakao");
+        }
+        // 데이터베이스에서 사용자를 찾습니다.
+        UserEntity existingUser = userRepository.findByUserId(userId);
+
+        // 사용자가 존재하지 않는 경우에만 저장합니다.
+        if (existingUser == null) {
+            userRepository.save(userEntity);
         }
 
         return new CustomOAuth2User(userId, accessToken);

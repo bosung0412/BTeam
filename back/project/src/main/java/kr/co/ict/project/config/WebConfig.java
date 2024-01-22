@@ -17,8 +17,8 @@ public class WebConfig implements WebMvcConfigurer {
          public void addCorsMappings(CorsRegistry registry) {
             System.out.println("Test==========");
             registry.addMapping("/**")
-                  .allowedOrigins("http://localhost:8080/", "http://192.168.0.42:8080/", "http://localhost:8081/",
-                        "http://localhost/")
+                  .allowedOrigins("http://localhost:8080", "http://192.168.0.51:8080", "http://localhost:8081", "http://localhost/project/api/v1/auth/oauth2/kakao",
+                        "http://localhost")
                   .allowedHeaders("*")
                   .allowedMethods("*")
                   .maxAge(3600);
