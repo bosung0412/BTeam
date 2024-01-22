@@ -19,9 +19,15 @@ public class WebConfig implements WebMvcConfigurer {
          public void addCorsMappings(CorsRegistry registry) {
             System.out.println("Test==========");
             registry.addMapping("/**")
-                  .allowedOrigins("http://192.168.0.230:8081/", "http://localhost:8081/", "http://192.168.0.4:8081/")
+                  .allowedOrigins("http://localhost:8080", "http://localhost:8081", "http://localhost", "http://192.168.0.230:8081/")
                   .allowedHeaders("*")
-                  .allowedMethods("*").maxAge(3600);
+                  .allowedMethods("GET", "POST", "PUT", "DELETE")
+                  .maxAge(3600);
+
+            // addMapping - CORS를 적용할 url의 패턴을 정의 (/** 로 모든 패턴을 가능하게 함)
+            // allowedOrigins - 허용할 origin을 정의 (* 로 모든 origin을 허용, 여러개도 지정가능)
+            // allowedMethods - HTTP Method를 지정 (* 로 모든 Method를 허용)
+            // maxAge - 원하는 시간만큼 request를 cashing함
          }
 
       };

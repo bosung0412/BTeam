@@ -28,9 +28,9 @@
                   <div class="col-sm-8">
                     <label for="id" class="form-label">아이디</label>
                     <div class="input-group">
-                      <input type="text" class="form-control" id="id" name="id">
+                      <input type="text"  class="form-control" id="id" v-model="id" name="id" placeholder="아이디 입력">
                       <div class="input-group-append">
-                        <button type="button" class="btn btn-success btnall" style="margin-bottom: 0px;">중복확인</button>
+                        <button type="button" class="btn btn-success btnall" @click="checkDuplicate">중복확인</button>
                       </div>
                     </div>
 
@@ -46,21 +46,33 @@
                     <label for="birth" class="form-label mt-2">생년월일</label>
                     <input type="text" class="form-control" id="birth" name="birth">
 
-                    <label for="address" class="form-label mt-2">주소</label>
-                    <input type="text" class="form-control" id="address" name="address">
+                    <label for="email" class="form-label mt-2">주소</label>
+                    <div class="input-group">
+                      <input type="text" class="form-control" id="email" name="email">
+                      <div class="input-group-append">
+                        <button type="button" class="btn btn-success btnall" onclick="openAddressPopup()" style="margin-bottom: 0px;">주소찾기</button>
+
+                      </div>
+                    </div>
 
                     <label for="phoneNumber" class="form-label mt-2">휴대전화</label>
                     <input type="text" class="form-control" id="phoneNumber" maxlength="13" @input="formatPhoneNumber">
 
                     <label for="email" class="form-label mt-2">이메일</label>
                     <div class="input-group">
-                      <input type="text" class="form-control" id="email" name="email">
+                      <input type="email" class="form-control" id="email" name="email" v-model="email" placeholder="이메일 주소를 입력하세요">
                       <div class="input-group-append">
-                        <button type="button" class="btn btn-success btnall" style="margin-bottom: 0px;">중복확인</button>
+                        <button type="button"  class="btn btn-success btnall" @click="requestCertificationNumber" style="margin-bottom: 0px;">인증번호받기</button>
                       </div>
+                    </div>
+                    <label for="certification" class="form-label mt-2">인증번호</label>
+                    <div class="input-group">
+                        <input type="certificationnumber" class="form-control" id="certificationnumber" name="certificationnumber" v-model="certificationnumber" placeholder="인증 번호를 입력하세요">
+                        <button type="button" class="btn btn-success btnall" @click="verifyCertificationNumber()">인증번호 확인</button>
                     </div>
                     <label for="question" class="form-label mt-2">비밀번호찾기 질문</label>
                     <input type="text" class="form-control" id="question" name="question">
+
 
                     <label for="answer" class="form-label mt-2">비밀번호찾기 답변</label>
                     <input type="text" class="form-control" id="answer" name="answer">
@@ -114,6 +126,7 @@
 <script>
 import Navbar from '@/components/Navbar/Navbar.vue';
 import Footer from '../../components/Footer/Footer.vue';
+import axios from 'axios';
 export default {
   components: {
   Navbar,
@@ -123,9 +136,86 @@ export default {
     return {
       isNavbarOpen: false,
       showCheckboxContainer: false,
+      email: '', // 이메일 바인딩 데이터 초기화
+      id: '', 
+      duplicateResult: null,
+      certificationnumber: '',
     };
   },
   methods: {
+    
+    isValidEmail(email) {
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+        return emailRegex.test(email);
+    },
+    requestCertificationNumber() {
+        if (!this.isValidEmail(this.email)) { 
+            alert("유효한 이메일 주소를 입력하세요.");
+            return;
+        }
+        axios.post('http://localhost/project/api/v1/auth/email-certification', { 
+          id : this.id,
+          email: this.email,
+        })
+            .then(response => {
+                
+                if (response.data.success) {
+                    console.log(" 발송 완료")
+                    alert("인증번호가 전송되었습니다 최대 3분이 걸릴 수 있어요~");
+                } else {
+                    alert("이메일 인증 요청 실패: " + response.data.message);
+                }
+            })
+            .catch(error => {
+                console.error('로그인 실패', error);
+                alert("서버와 통신 중 오류가 발생했습니다.");
+            });
+    },
+    checkDuplicate() {
+            // 서버로 아이디 중복성 체크 요청 보내기
+            axios.post('http://localhost/project/api/v1/auth/id-check', { 
+              id: this.id 
+            })
+                .then(response => {
+                    // 서버로부터 응답을 받았을 때 처리
+                    if (response.data.duplicate) {
+                        console.log(" 중복")
+                        alert("중복 된 아이디입니다 !! 다른아이디 이용부탁드립니다(합장합장)")
+                        this.duplicateResult = false; // 중복된 아이디
+                    } else {
+                        console.log("사용가능")
+                        alert("사용 가능한 아이디입니다 !")
+                        this.duplicateResult = true; // 사용 가능한 아이디
+                    }
+                })
+                .catch(error => {
+                    alert("중복 확인 실패.");
+                    console.error('아이디 중복 확인 실패', error);
+                    this.duplicateResult = null; // 오류 발생 시 초기화
+                });
+    },
+     verifyCertificationNumber() {
+            // 서버로 인증 번호 확인 요청 보내기
+            axios.post('http://localhost/project/api/v1/auth/check-certification', { 
+              id : this.id,
+              email : this.email,
+              certificationnumber: this.certificationnumber 
+            })
+                .then(response => {
+                    // 서버로부터 응답을 받았을 때 처리
+                    if (response.data.verified) {
+                        alert("인증번호가 일치합니다.");
+                        this.certificationnumber = true; // 인증번호 일치
+                    } else {
+                       alert("인증번호가 불일치합니다.");
+                        this.certificationnumber = false; // 인증번호 불일치
+                    }
+                })
+                .catch(error => {
+                    console.error('인증번호 확인 실패', error);
+                    this.certificationnumber = null; // 오류 발생 시 초기화
+                });
+              },
     toggleNavbar() {
       this.isNavbarOpen = !this.isNavbarOpen;
     },
@@ -156,5 +246,5 @@ export default {
   },
 
 };
-</script>
 
+</script>

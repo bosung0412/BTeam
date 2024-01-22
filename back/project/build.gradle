@@ -35,19 +35,33 @@ dependencies {
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	
 
 
+	// 메일
+ 	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	// oauth 추가
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+	 // implementation 'org.springframework.security:spring-security-oauth2-client:5.7.5'
 	// JSON파싱에 유용 Gson 추가
-	implementation 'com.google.code.gson:gson:2.8.8'
+	implementation 'com.google.code.gson:gson:2.8.9'
 	// security dependencies
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.security:spring-security-messaging:6.1.2'
 	testImplementation 'org.springframework.security:spring-security-test'
-	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
-	implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
-	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+	// jwt를 발급받기 위한 라이브러리
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
+
+	implementation 'javax.xml.bind:jaxb-api:2.3.1'
+	implementation 'com.sun.xml.bind:jaxb-core:2.3.0.1'
+	implementation 'com.sun.xml.bind:jaxb-impl:2.3.1'
+
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+	  //JSON 처리
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
 }
 

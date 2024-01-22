@@ -10,9 +10,9 @@ import lombok.Setter;
 @Getter
 public class BoardVO {
     private int ono;
-    private String id;
+    private int member_no;
     private String oname;
     private String ocontent;
     private String oregdate;
-    private String ocategory;
+    private int views;
 }
