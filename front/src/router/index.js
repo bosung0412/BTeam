@@ -25,7 +25,8 @@ const routes = [
   {path: '/boardModify',name: 'boardModify',component: () => import('../views/board/Board_modify.vue')},
   {path: '/calendar',name: 'calendar',component: () => import('../views/Calendar/Calendar.vue')},
   {path: '/recommendeddiet',name: 'recommendeddietlist',component: () => import('../views/recommendeddiet/RecommendeddietList.vue')},
-  {path: '/recommendeddietdetail/:fno',name: 'recommendeddietdetail',component: () => import('../views/recommendeddiet/RecommendeddietDetail.vue')}
+  {path: '/recommendeddietdetail/:nutrient_id',name: 'recommendeddietdetail',component: () => import('../views/recommendeddiet/RecommendeddietDetail.vue')},
+  {path: '/foodmenu',name: 'foodmenu',component: () => import('../views/recommendeddiet/FoodMenu.vue')},
 ]
 
 

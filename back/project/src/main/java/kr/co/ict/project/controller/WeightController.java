@@ -38,5 +38,4 @@ public class WeightController {
             return "안들어감: " + e.getMessage();
         }
     }
-
 }

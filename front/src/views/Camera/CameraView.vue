@@ -28,6 +28,12 @@
 							<span v-else>Close Camera</span>
 							</button>
 						</div>
+						<div class="app-camera-button">
+							<!--앱 전용 버튼-->
+							<button type="button" class="button is-rounded" @click="openNewActivity">
+							<span>Open Camera app</span>
+							</button>
+						</div>
 
 						<!-- 카메라가 열리고 로딩중이면 로딩이미지 -->
 						<div v-show="isCameraOpen && isLoading" class="camera-loading">
@@ -45,7 +51,7 @@
 							<!-- 찍힌 후 표시되는 비디오 엘리먼트 (isPhotoTaken이 True경우에만 표시) -->
 							<canvas v-show="isPhotoTaken" id="photoTaken" ref="canvas" width="450" height="337.5"></canvas>
 						</div>
-						<!-- 카메라가 열려있고 로딩중이 아닌ㄴ경우, 사진버튼 -->
+						<!-- 카메라가 열려있고 로딩중이 아닌 경우, 사진버튼 -->
 						<div v-show="isCameraOpen && !isLoading" class="camera-shoot">
 							<!-- 사진찍는 버튼, takePhoto메소드 호출 -->
 							<button type="button" class="button" @click="takePhoto">
@@ -93,6 +99,7 @@
 						<!-- 파일 업로드를 위한 input 추가 -->
 						<input type="file" class="form-control mt-2" id="foodImage" name="foodImage" accept="image/*">
 					</div>
+					음식 분석 결과 추가 예정
 				</div>
 				<div class="col-lg-3 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
 				   <div class="row g-5">
@@ -115,6 +122,7 @@
 				</div>
 			 </div>
 			 <!-- 첫번째 행 끝 -->
+			
 			 <!-- 아침, 점심, 저녁 공간 시작-->
 			 <div class="row g-5 align-items-stretch maincol mt-4 mb-5 pb-5" style="box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);">
 				<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
@@ -230,8 +238,15 @@ export default {
         .replace("image/jpeg", "image/octet-stream");
       download.setAttribute("href", canvas);
     },
+	openNewActivity() {
+        // 안드로이드의 openNewActivity 메소드 호출
+        if (typeof window.mobile !== 'undefined') {
+			window.mobile.openNewActivity();
+        } else {
+            console.error('Android object is not defined.');
+        }
+    },
   },
-
 	}
 </script>
 <style scoped>
@@ -335,6 +350,9 @@ body {
 }
 .web-camera-container .camera-loading .loader-circle li:nth-child(3) {
   animation-delay: .4s;
+}
+.app-camera-button {
+  display: none;
 }
 @keyframes preload {
   0% {

@@ -241,7 +241,7 @@ export default {
       this.$router.push('/login');
     },
     cancel() {
-      this.$router.push('/');
+      this.$router.push('/Main');
     },
   },
 
