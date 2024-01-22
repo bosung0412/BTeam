@@ -5,14 +5,14 @@ import org.apache.ibatis.type.Alias;
 import lombok.Getter;
 import lombok.Setter;
 
-@Alias("bvo")
-@Setter
+@Alias("faqvo")
 @Getter
-public class BoardVO {
+@Setter
+public class FaqBoardVO {
     private int ono;
     private int member_no;
     private String oname;
     private String ocontent;
     private String oregdate;
-    private int views;
+    private String ocategory;
 }

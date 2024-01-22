@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import kr.co.ict.project.dao.BoardDao;
 import kr.co.ict.project.vo.BoardVO;
+import kr.co.ict.project.vo.BoardnextVO;
+import kr.co.ict.project.vo.BoardprevVO;
+import kr.co.ict.project.vo.FaqBoardVO;
 
 @Service
 public class BoardService {
@@ -16,7 +19,23 @@ public class BoardService {
     public List<BoardVO> selectBoardList(){
         return dao.selectList();
     }
-    public int insertBoard(BoardVO vo){
-        return dao.addBoard(vo);
+    public BoardVO selectDetail(int ono){
+        dao.updateViews(ono);
+        return dao.selectDetail(ono);
+    }
+    public void updateViews(int ono){
+        dao.updateViews(ono);
+    }
+    public BoardprevVO prevDetail(int ono){
+        return dao.prevDetail(ono);
+    }
+    public BoardnextVO nextDetail(int ono){
+        return dao.nextDetail(ono);
+    }
+    public List<FaqBoardVO> faqList(){
+        return dao.faqList();
+    }
+    public List<FaqBoardVO> faqDetail(String ocategory){
+        return dao.faqDetail(ocategory);
     }
 }
