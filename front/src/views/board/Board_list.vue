@@ -126,7 +126,7 @@ export default{
   },
   methods: {
     fetchData(){
-      axios.get("http://localhost/project/boardList")
+      axios.get("http://192.168.0.230/api/v1/auth/project/boardList")
       .then((resp) => {
         this.projects = resp.data;
       })

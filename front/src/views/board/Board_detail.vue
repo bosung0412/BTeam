@@ -58,7 +58,7 @@
 import Navbar from '@/components/Navbar/Navbar.vue';
 import Footer from '../../components/Footer/Footer.vue';
 import axios from 'axios';
-const BASE_URL = 'http://localhost/project/';
+const BASE_URL = 'http://192.168.0.4/project/api/v1/auth/';
 
 export default {
   components: {

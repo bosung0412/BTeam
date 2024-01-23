@@ -95,7 +95,7 @@ export default {
   },
   methods: {
     fetchData(){
-      axios.get("http://localhost/project/faqBoard")
+      axios.get("http://192.168.0.4/project/api/v1/auth/faqBoard")
       .then((resp) => {
         this.faqs = resp.data;
       })

@@ -183,6 +183,7 @@ export default {
     },
     loadFoodData() { // 식단 클릭 시 음식 데이터
       axios.get(`http://192.168.0.4/project/api/v1/auth/selectdietinfo?diet_id=${this.dietList.diet_id}`)
+
         .then((resp) => {
           console.log("-----foodList-----");
           console.log(resp.data);
