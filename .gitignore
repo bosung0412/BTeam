@@ -1,3 +1,5 @@
 .vscode/launch.json
 .vscode/tasks.json
 front/vue.config.js
+front/package.json
+front/package-lock.json
