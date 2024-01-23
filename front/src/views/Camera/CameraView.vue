@@ -1,5 +1,11 @@
 <template>
 	<div>
+	<div v-if="isLoadingImg" class="loading-container">
+		<div class="loading">
+			<Fade-loader />
+		</div>
+	</div>
+
 		<!-- Navbar Start -->
 	   <Navbar/>
 	
@@ -77,32 +83,6 @@
 					</div>
 
 
-					<div class="row mb-3">
-						<div class="col">
-							<div class="form-check">
-								<input class="form-check-input" type="checkbox" value="" id="breakfast">
-								<label class="form-check-label" for="flexCheckDefault1">
-									아침
-								</label>
-							</div>
-						</div>
-						<div class="col">
-							<div class="form-check">
-								<input class="form-check-input" type="checkbox" value="" id="lunch" checked>
-								<label class="form-check-label" for="flexCheckChecked">
-									점심
-								</label>
-							</div>
-						</div>
-						<div class="col">
-							<div class="form-check">
-								<input class="form-check-input" type="checkbox" value="" id="dinner">
-								<label class="form-check-label" for="flexCheckChecked2">
-									저녁
-								</label>
-							</div>
-						</div>
-					</div>
 					<div class="row">
 						<div class="d-flex justify-content-center align-items-center">
 							
@@ -206,6 +186,7 @@ export default {
       isPhotoTaken: false, // 사진활영 여부
       isShotPhoto: false, // 촬영 시, 플래시 효과
       isLoading: false, // 카메라 로딩 상태
+	  isLoadingImg: false,
 	  isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) || /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.platform),
 	  hasResult: false,	// 모델 예측 결과 존재 여부
 	  stream: null, // 웹캠 스트림
@@ -221,9 +202,6 @@ export default {
       }
     },
     async openCamera() {
-	if(typeof window.mobile !== 'undefined'){
-		this.isMobile = true;		
-	}
       this.isLoading = true;
       try {
         navigator.mediaDevices.getUserMedia({ audio: false, video: true }) // 사용자미디어디바이스 video허용 // 사용자의 미디어 디바이스 엑세스
@@ -238,7 +216,7 @@ export default {
         this.isCameraOpen = true;
       }
     },
-	sendingToServer(){
+	async sendingToServer(){
 		this.isPhotoTaken = true; // ui에 사진 찍힌 상태 표시(캡쳐기능)
 		this.isShotPhoto = true; // 찍을 때 플래시
 		// 플래시 효과 일정시간 실행 후, false로 전환
@@ -256,16 +234,24 @@ export default {
 		formData.append("org_img", canvas);
 		formData.append("id", "1");
 		
-		axios.post("http://192.168.0.115:9000/food_ai/detectFoodWeb", formData)
-		.then((res) => {
-			console.log("전송이 성공적으로 완료")
-			console.log(res.data);
-			this.$refs.img_res.src = res.data.diet_img_pred;
-			this.hasResult = true;
-		})
-		.catch((error) => {
-			console.log("Error sending stream:", error);
-		});
+		try {
+        this.isLoadingImg = true
+			await axios.post("http://192.168.0.8:9000/food_ai/detectFoodWeb", formData)
+			.then((res) => {
+				console.log("전송이 성공적으로 완료")
+				console.log(res.data);
+				this.$refs.img_res.src = res.data.diet_img_pred;
+				this.hasResult = true;
+			})
+			.catch((error) => {
+				console.log("Error sending stream:", error);
+			});
+        this.isLoadingImg = false
+		} catch (err) {
+			this.isLoadingImg = false
+		}
+
+
 	},
     closeCamera() {	// 카메라 닫을 때 메소드
       const tracks = this.$refs.camera.srcObject.getTracks();
@@ -275,7 +261,6 @@ export default {
       this.isPhotoTaken = false;
       this.isShotPhoto = false;
     },
-	
 	openNewActivity() {
       // 안드로이드의 openNewActivity 메소드 호출
       if (typeof window.mobile !== 'undefined') {
@@ -431,8 +416,19 @@ body {
     border-radius: 4px;
     width: 350px;
   }
-
-  
 }
 
 </style>
+<style>
+.loading {
+  z-index: 2;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: rgba(0, 0, 0, 0.1) 0 0 0 9999px;
+}
+
+
+</style>
+
