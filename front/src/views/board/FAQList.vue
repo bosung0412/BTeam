@@ -46,7 +46,7 @@
     },
     methods: {
       fetchFAQs() {
-        axios.get('http://192.168.0.230/project/api/faqs')
+        axios.get('http://192.168.0.4/project/api/faqs')
           .then(response => {
             this.faqs = response.data;
           })
@@ -55,7 +55,7 @@
           });
       },
       deleteFAQ(id) {
-        axios.delete(`http://192.168.0.230/project/api/faqs/${id}`) // Spring Boot API 경로에 맞게 수정
+        axios.delete(`http://192.168.0.4/project/api/faqs/${id}`) // Spring Boot API 경로에 맞게 수정
           .then(() => {
             this.fetchFAQs();
           })
