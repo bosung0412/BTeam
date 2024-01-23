@@ -2,6 +2,7 @@
 	<div>
 	<div v-if="isLoadingImg" class="loading-container">
 		<div class="loading">
+			<pulse-loader :loading="loading" :color="color" :size="size"></pulse-loader>
 			<Fade-loader />
 		</div>
 	</div>
@@ -174,11 +175,13 @@
 import Navbar from '@/components/Navbar/Navbar.vue';
 import Footer from '../../components/Footer/Footer.vue';
 import axios from "axios";
+import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 
 export default {
     components:{
         Navbar,
         Footer,
+		PulseLoader,
     },
     data() {
     return {
