@@ -196,7 +196,7 @@ export default {
     },
      verifyCertificationNumber() {
             // 서버로 인증 번호 확인 요청 보내기
-            axios.post('http://localhost/project/api/v1/auth/check-certification', { 
+            axios.post('http://192.168.0.230/project/api/v1/auth/check-certification', { 
               id : this.id,
               email : this.email,
               certificationnumber: this.certificationnumber 
