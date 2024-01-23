@@ -4,9 +4,6 @@
     <Navbar />
     <h2 class="card-text text-center">일일 섭취 칼로리: {{ totalCalories }}kcal</h2>
     <!-- 카드 그리드 -->
-    <div>
-    <h3 class="card-text text-center">User Height: {{ height }}</h3>
-    </div>
     <div class="container mt-3">
       <div class="row g-4">
         <!-- 식사 카드: 아침, 점심, 저녁 -->
@@ -51,25 +48,12 @@ export default {
       }
     };
   },
-  mounted() {
-    this.fetchUserHeight();
-  },
   created() {
     this.fetchRandomMeals();
   },
   methods: {
-    fetchUserHeight() {
-      // 백엔드에서 해당 API 엔드포인트로 요청 보내기
-      fetch("http://localhost/project/${this.userId}/height")
-        .then(response => response.json())
-        .then(data => {
-          // 받아온 데이터 사용
-          this.userHeight = data.height;
-        })
-        .catch(error => console.error('Error fetching user height:', error));
-    },
   fetchRandomMeals() {
-    axios.get("http://localhost/project/randomMeals")
+    axios.get("http://localhost/project/api/v1/auth/randomMeals")
       .then((response) => {
         const mealsData = response.data;
         // 각 식사 시간에 맞춰서 데이터를 할당합니다.
