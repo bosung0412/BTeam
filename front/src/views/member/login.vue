@@ -102,7 +102,7 @@ export default {
       this.isNavbarOpen = !this.isNavbarOpen;
     }, 
     kakaoLogin() {
-    const redirect_uri = 'http://192.168.0.230:8081/join'; // redirect_uri 내가 정한거
+    const redirect_uri = 'http://192.168.0.4:8081/join'; // redirect_uri 내가 정한거
     const clientId = '27be1209a5e94ef12e0e5d5a27ae9161'; // kakao developer 키
 
     const Auth_url = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirect_uri}`;
@@ -117,7 +117,7 @@ export default {
     try {
       console.log("urllllll", window.location.search)
       console.log("codeee",code);
-      const response = await axios.post('http://192.168.0.230/project/api/v1/auth/oauth2', { code: code });
+      const response = await axios.post('http://192.168.0.4/project/api/v1/auth/oauth2', { code: code });
       const jwtToken = response.data.jwtToken;
 
       // Vuex 스토어의 setAuthToken 뮤테이션을 호출하여 토큰을 저장
@@ -135,7 +135,7 @@ export default {
         },
   
       submitLogin() {
-        axios.post('http://192.168.0.230/project/api/v1/auth/sign-in', {
+        axios.post('http://192.168.0.4/project/api/v1/auth/sign-in', {
           id: this.id,
           password: this.password,
           

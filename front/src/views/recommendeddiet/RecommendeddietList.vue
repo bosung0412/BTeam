@@ -84,7 +84,7 @@ export default {
   },
   methods: {
     fetchData() {
-      axios.get("http://192.168.0.230/project/api/v1/auth/foodlist")
+      axios.get("http://192.168.0.4/project/api/v1/auth/foodlist")
         .then((resp) => {
           this.list = resp.data;
           this.filteredList = resp.data; // 초기에 전체 리스트를 필터된 리스트로 설정
