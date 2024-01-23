@@ -193,7 +193,6 @@ export default {
 	  isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) || /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.platform),
 	  hasResult: false,	// 모델 예측 결과 존재 여부
 	  stream: null, // 웹캠 스트림
-
     };
   },
   methods: {
@@ -235,10 +234,9 @@ export default {
 		// Send the video to the server
 		let formData = new FormData();
 		formData.append("org_img", canvas);
-		formData.append("id", "1");
-		
+		formData.append("member_id", "1");
 		try {
-        this.isLoadingImg = true
+        	this.isLoadingImg = true
 			await axios.post("http://192.168.0.8:9000/food_ai/detectFoodWeb", formData)
 			.then((res) => {
 				console.log("전송이 성공적으로 완료")
@@ -253,8 +251,6 @@ export default {
 		} catch (err) {
 			this.isLoadingImg = false
 		}
-
-
 	},
     closeCamera() {	// 카메라 닫을 때 메소드
       const tracks = this.$refs.camera.srcObject.getTracks();
@@ -281,8 +277,19 @@ export default {
         }
     },	
 	saveToDB_web() {
-
-    },		
+		let formData = new FormData();
+		formData.append("member_id", "1");
+		formData.append("meal_time", (new Date()).toString().slice(16,21).replace(/-/g,'/'))
+		axios.post("http://192.168.0.8:9000/food_ai/detectFoodWeb_save", formData)
+		.then((res) => {
+			console.log("웹 식단기록 저장이 성공적으로 완료")
+			//todo
+			//저장완료 화면 띄우기
+		})
+		.catch((error) => {
+			console.log("Error sending stream:", error);
+		});
+    },
   },
 }
 </script>
@@ -423,14 +430,14 @@ body {
 
 </style>
 <style>
-.loading {
-  z-index: 2;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: rgba(0, 0, 0, 0.1) 0 0 0 9999px;
-}
+	.loading {
+	z-index: 2;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	box-shadow: rgba(0, 0, 0, 0.1) 0 0 0 9999px;
+	}
 
 
 </style>
