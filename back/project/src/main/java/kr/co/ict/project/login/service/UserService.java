@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
 import kr.co.ict.project.login.entity.UserEntity;
 import kr.co.ict.project.login.repository.UserRepository;
 
@@ -24,6 +25,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    @Transactional
     // 사용자 삭제 메서드
     public void deleteUser(String userId) {
         // 사용자가 존재하는지 확인
