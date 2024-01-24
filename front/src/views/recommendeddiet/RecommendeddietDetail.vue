@@ -132,7 +132,6 @@
 	created() {
 	  axios
 		.get("http://192.168.0.230/project/api/v1/auth/detail?nutrient_id=" + this.$route.params.nutrient_id)
-
 		.then((resp) => {
 		  console.log(resp);
 		  this.result = resp.data;

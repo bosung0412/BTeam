@@ -34,8 +34,6 @@ public class EmailCertificationResponseDto extends ResponseDto {
     public static ResponseEntity<ResponseDto> mailSendFail() {
         ResponseDto responseBody = new ResponseDto(ResponseCode.DUPLICATE_ID, ResponseMessage.DUPLICATE_ID);
         // INTERNAL_SERVER_ERROR - 500 실패 에러
-        System.out.println(
-                "==========여기 오는거니 이메일 전송 실패!!!!: EmailCertificationResponseDto mailSendFail: " + responseBody);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseBody);
     }
 

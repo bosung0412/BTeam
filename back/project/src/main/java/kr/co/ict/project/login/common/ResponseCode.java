@@ -12,7 +12,4 @@ public interface ResponseCode {
 
     String MAIL_FAIL = "MF";
     String DATABASE_ERROR = "DBE";
-
-    // 업데이트 실패 시 응답코드
-    String UPDATE_FAIL = "UF";
 }

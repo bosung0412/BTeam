@@ -7,13 +7,11 @@ import kr.co.ict.project.login.dto.request.auth.EmailCertificationRequestDto;
 import kr.co.ict.project.login.dto.request.auth.IdCheckRequestDto;
 import kr.co.ict.project.login.dto.request.auth.SignInRequestDto;
 import kr.co.ict.project.login.dto.request.auth.SignUpRequestDto;
-import kr.co.ict.project.login.dto.request.auth.UserUpdateRequestDto;
 import kr.co.ict.project.login.dto.response.auth.CheckCertificationResponseDto;
 import kr.co.ict.project.login.dto.response.auth.EmailCertificationResponseDto;
 import kr.co.ict.project.login.dto.response.auth.IdCheckResponseDto;
 import kr.co.ict.project.login.dto.response.auth.SignInResponseDto;
 import kr.co.ict.project.login.dto.response.auth.SignUpResponseDto;
-import kr.co.ict.project.login.dto.response.auth.UserUpdateResponseDto;
 
 // 인증관련 메소드
 public interface AuthService {
@@ -34,11 +32,5 @@ public interface AuthService {
 
     // 사용자 로그인 메서드 클라이언트에서 요청한 SignInRequestDto 를 받아서 시도하고 응답 생성 및 반환
     ResponseEntity<? super SignInResponseDto> signIn(SignInRequestDto dto);
-
-    // 사용자 회원 정보 업데이트 처리 메서드 UserUpdateRequestDto를 받아서 시도
-    ResponseEntity<? super UserUpdateResponseDto> userUpdate(UserUpdateRequestDto dto);
-
-    // 사용자 회원 정보 가져오기
-    ResponseEntity<? super UserUpdateResponseDto> userSelect(UserUpdateRequestDto dto);
 
 }

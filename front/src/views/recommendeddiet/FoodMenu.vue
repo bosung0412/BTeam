@@ -4,6 +4,9 @@
     <Navbar />
     <h2 class="card-text text-center">일일 섭취 칼로리: {{ totalCalories }}kcal</h2>
     <!-- 카드 그리드 -->
+    <div>
+    <h3 class="card-text text-center">User Height: {{ height }}</h3>
+    </div>
     <div class="container mt-3">
       <div class="row g-4">
         <!-- 식사 카드: 아침, 점심, 저녁 -->
@@ -47,6 +50,9 @@ export default {
         dinner: []
       }
     };
+  },
+  mounted() {
+    this.fetchUserHeight();
   },
   created() {
     this.fetchRandomMeals();

@@ -7,7 +7,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
-      <div class="navbar-nav ms-auto p-4 p-lg-0" v-if="hasToken()">
+      <div class="navbar-nav ms-auto p-4 p-lg-0">
         <!-- <router-link to="/mypage" class="nav-item nav-link">마이페이지</router-link> -->
         <router-link to="/calendar" class="nav-item nav-link">캘린더</router-link>
         <router-link to="/camera" class="nav-item nav-link">식단관리</router-link>
@@ -23,7 +23,6 @@
 import axios from 'axios';
 
 export default {
-
   name: 'Navbar',
   data() {
     return {
