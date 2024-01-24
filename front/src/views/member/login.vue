@@ -93,8 +93,6 @@ export default {
        
           //Vuex 스토어에 토큰 저장
           this.$store.commit('setAuthToken', token);
-          // localStorage에도 저장
-          localStorage.setItem('authToken', token);
 
           const payloadBase64 = token.split('.')[1];
           const decodedPayload = JSON.parse(atob(payloadBase64));
