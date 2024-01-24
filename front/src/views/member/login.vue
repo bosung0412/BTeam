@@ -86,59 +86,10 @@ export default {
       code : '',
     };
   },
-<<<<<<< HEAD
-  created() {
-    // URL에서 인증 코드 추출
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code');
-
-     // 인증 코드가 있으면 백엔드에 요청
-     if (code) {
-      this.kakaoLogin(code);
-    }
-
-  },
-=======
->>>>>>> 0744ca4989d3216047ed1b267fd5e9abe0e9a4b8
   methods: {
     toggleNavbar() {
       this.isNavbarOpen = !this.isNavbarOpen;
     }, 
-<<<<<<< HEAD
-    kakaoLogin() {
-    const redirect_uri = 'http://192.168.0.230:8081/join'; // redirect_uri 내가 정한거
-    const clientId = '27be1209a5e94ef12e0e5d5a27ae9161'; // kakao developer 키
-
-    const Auth_url = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirect_uri}`;
-    // Kakao 로그인 페이지로 리다이렉트
-    
-
-    this.getKakaoUserInfo(this.code);
-
-    window.location.href = Auth_url;
-  },
-    async getKakaoUserInfo(code) {
-    try {
-      console.log("urllllll", window.location.search)
-      console.log("codeee",code);
-      const response = await axios.post('http://192.168.0.230/project/api/v1/auth/oauth2', { code: code });
-      const jwtToken = response.data.jwtToken;
-
-      // Vuex 스토어의 setAuthToken 뮤테이션을 호출하여 토큰을 저장
-      this.$store.commit('setAuthToken', jwtToken);
-
-      // 콘솔에 저장된 토큰 출력
-      console.log(this.$store.state.authToken);
-
-      // 메인 페이지로 리다이렉트
-      this.$router.push('/main');
-    } catch (error) {
-      console.error('사용자 정보 요청 실패', error);
-      // 에러 처리 로직
-    }
-        },
-  
-=======
         checkEmpty(){
           if(!this.id){
         alert("아이디를 입력하세요.");
@@ -149,7 +100,6 @@ export default {
         return;
       }
         },
->>>>>>> 0744ca4989d3216047ed1b267fd5e9abe0e9a4b8
       submitLogin() {
         axios.post('http://192.168.0.230/project/api/v1/auth/sign-in', {
           id: this.id,
@@ -178,9 +128,6 @@ export default {
       });
 
   }
-<<<<<<< HEAD
-    },
-=======
->>>>>>> 0744ca4989d3216047ed1b267fd5e9abe0e9a4b8
+}
 }
 </script>
