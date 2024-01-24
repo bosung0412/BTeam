@@ -11,12 +11,14 @@ import kr.co.ict.project.login.dto.request.auth.EmailCertificationRequestDto;
 import kr.co.ict.project.login.dto.request.auth.IdCheckRequestDto;
 import kr.co.ict.project.login.dto.request.auth.SignInRequestDto;
 import kr.co.ict.project.login.dto.request.auth.SignUpRequestDto;
+import kr.co.ict.project.login.dto.request.auth.UserUpdateRequestDto;
 import kr.co.ict.project.login.dto.response.ResponseDto;
 import kr.co.ict.project.login.dto.response.auth.CheckCertificationResponseDto;
 import kr.co.ict.project.login.dto.response.auth.EmailCertificationResponseDto;
 import kr.co.ict.project.login.dto.response.auth.IdCheckResponseDto;
 import kr.co.ict.project.login.dto.response.auth.SignInResponseDto;
 import kr.co.ict.project.login.dto.response.auth.SignUpResponseDto;
+import kr.co.ict.project.login.dto.response.auth.UserUpdateResponseDto;
 import kr.co.ict.project.login.entity.CertificationEntity;
 import kr.co.ict.project.login.entity.UserEntity;
 import kr.co.ict.project.login.provider.EmailProvider;
@@ -124,7 +126,6 @@ public class AuthServiceImplement implements AuthService {
     @Override
     public ResponseEntity<? super SignUpResponseDto> signUp(SignUpRequestDto dto) {
         try {
-
             // 중복 확인
             String userId = dto.getId();
             boolean isExistId = userRepository.existsByUserId(userId);
@@ -195,6 +196,50 @@ public class AuthServiceImplement implements AuthService {
         }
         // 성공 응답 생성 및 생성된 jwt토큰 반환
         return SignInResponseDto.success(token);
+    }
+
+    // 사용자의 회원 정보 업데이트 메서드
+    // 전송된 UserUpdateRequestDto를 받아 인증번호 일치, db에 저장
+    @Override
+    public ResponseEntity<? super UserUpdateResponseDto> userUpdate(UserUpdateRequestDto dto) {
+        try {
+            // String userId = dto.getId();
+
+            // 암호화된 코드로 저장
+            String password = dto.getPassword();
+            String encodePassword = passwordEncoder.encode(password);
+            dto.setPassword(encodePassword);
+
+            // db 저장
+            UserEntity userUpdateEntity = userRepository.findByUserId(dto.getId());
+            if (userUpdateEntity != null) {
+                userRepository.save(userUpdateEntity);
+            } else {
+                UserUpdateResponseDto.databaseError();
+                System.out.println("==========에러다....");
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return UserUpdateResponseDto.success();
+    }
+
+    // 회원 정보 조회
+    @Override
+    public ResponseEntity<? super UserUpdateResponseDto> userSelect(UserUpdateRequestDto dto) {
+        try {
+            UserEntity userEntity = userRepository.findByUserId(dto.getId());
+            if (userEntity != null) {
+                userRepository.save(userEntity);
+            } else {
+                UserUpdateResponseDto.databaseError();
+                System.out.println("==========에러다....");
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return UserUpdateResponseDto.success();
+
     }
 
 }
