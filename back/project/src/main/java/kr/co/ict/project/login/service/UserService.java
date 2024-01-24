@@ -25,7 +25,12 @@ public class UserService {
     public List<UserEntity> getAllUsers() {
         return userRepository.findAll();
     }
+<<<<<<< HEAD
     
+=======
+
+    @Transactional
+>>>>>>> 4f2c49f0ff9c9a8479f06459c9605652b73d7db1
     // 사용자 삭제 메서드
     @Transactional
     public void deleteUser(String userId) {

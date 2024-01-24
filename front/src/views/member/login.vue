@@ -32,7 +32,7 @@
               <div class="row mb-3">
                 <div class="col-sm-12">
                   <label for="password" class="form-label">비밀번호</label>
-                  <input type="password" class="form-control" id="password" name="password" v-model="password" placeholder="비밀번호를 입력해주세요!">
+                  <input type="password" class="form-control" id="password" name="password" v-model="password" placeholder="비밀번호를 입력해주세요!" >
                 </div>
               </div>
 
@@ -52,11 +52,6 @@
                 <div class="col-sm-6">
                   <button @click="redirectToFindAccount" type="button" class="btn btn-primary btnall w-100">아이디 or 비밀번호 찾기</button>
                 </div>
-
-                <div class="col-sm-12 text-center">
-                  <img src='@/assets/img/kakao.png' @click="kakaoLogin" alt="카카오 로그인" style="cursor: pointer;"/>
-                </div>
-
               </div>
             </form>
           </div>
@@ -146,8 +141,6 @@ export default {
        
           //Vuex 스토어에 토큰 저장
           this.$store.commit('setAuthToken', token);
-          // localStorage에도 저장
-
           const payloadBase64 = token.split('.')[1];
           const decodedPayload = JSON.parse(atob(payloadBase64));
           console.log('Decoded Token:', decodedPayload);
@@ -160,8 +153,9 @@ export default {
           sessionStorage.setItem('token', null); // 로그인 실패 시 토큰을 null로 설정
           // 로그인 실패 시 처리 (예: 에러 메시지 표시)
       });
-
+    },redirectToJoin(){
+      this.$router.push('/join');
+    }
   }
-    },
 }
 </script>

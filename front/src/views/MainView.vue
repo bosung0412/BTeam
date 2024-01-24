@@ -59,17 +59,10 @@
                         class="btnmain">업로드</button></a>-->
                     </div>
                     <div style="text-align: center">
-                        <div class="d-flex flex-column mainline">
-
-                            <h4 @click="recommendeddietGO" class="mb-3 maintext">추천 식단 정보</h4>
-                            <p  class="mb-2 maintext">1.추천식단</p>
-                            <p class="mb-2 maintext">2.추천식단</p>
-                            <p class="mb-2 maintext">3.추천식단</p>
-                            <div class="mt-2 mx-5 d-flex align-items-center"
-                                style="border: 2px solid #d7d7d7;border-radius: 8px;">
-                                <img src="../assets/img/food3.png" class="img-fluid"
-                                style="margin: 0 auto;width: 100px;height: 100px;">
-                            </div>
+                        <div class="d-flex flex-column align-items-center">
+                            <h4 @click="recommendeddietGO" class="mb-3 maintext">추천 식단</h4>
+                            <button @click="foodmenu" type="button" class="btnmain">추천 식단 보기</button>
+                            <button @click="foodlist" type="button" class="btnmain">음식 리스트 보기</button>
                         </div>
                         <div>
                         <div class="d-flex flex-column align-items-center ">
@@ -216,6 +209,14 @@ export default {
         // 식단 페이지 이동
         showFood() {
             this.$router.push('/foodmenu');
+        },
+        // 추천 식단 페이지 이동
+        foodmenu() {
+            this.$router.push('/foodmenu');
+        },
+        // 음식 리스트 페이지 이동
+        foodlist() {
+            this.$router.push('/recommendeddiet');
         },
     },
 }

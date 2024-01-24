@@ -1,10 +1,17 @@
 package kr.co.ict.project.login.controller;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.validation.Valid;
 import kr.co.ict.project.login.dto.request.auth.CheckCertificationRequestDto;
@@ -12,11 +19,13 @@ import kr.co.ict.project.login.dto.request.auth.EmailCertificationRequestDto;
 import kr.co.ict.project.login.dto.request.auth.IdCheckRequestDto;
 import kr.co.ict.project.login.dto.request.auth.SignInRequestDto;
 import kr.co.ict.project.login.dto.request.auth.SignUpRequestDto;
+import kr.co.ict.project.login.dto.request.auth.UserUpdateRequestDto;
 import kr.co.ict.project.login.dto.response.auth.CheckCertificationResponseDto;
 import kr.co.ict.project.login.dto.response.auth.EmailCertificationResponseDto;
 import kr.co.ict.project.login.dto.response.auth.IdCheckResponseDto;
 import kr.co.ict.project.login.dto.response.auth.SignInResponseDto;
 import kr.co.ict.project.login.dto.response.auth.SignUpResponseDto;
+import kr.co.ict.project.login.dto.response.auth.UserUpdateResponseDto;
 import kr.co.ict.project.login.service.AuthService;
 import lombok.RequiredArgsConstructor;
 
@@ -53,6 +62,7 @@ public class AuthController {
             // CheckCertificationResponseDto 대한 이메일 인증번호 체크 및 데이터 유효성검사
             @RequestBody @Valid CheckCertificationRequestDto requestBody) {
         ResponseEntity<? super CheckCertificationResponseDto> response = authService.checkCertification(requestBody);
+
         return response;
     }
 
@@ -73,6 +83,44 @@ public class AuthController {
         ResponseEntity<? super SignInResponseDto> response = authService.signIn(requestBody);
 
         return response;
+    }
+
+    // 회원 업데이트
+    @PatchMapping("/update/{userId}")
+    public ResponseEntity<? super UserUpdateResponseDto> update(@RequestBody @Valid UserUpdateRequestDto requestBody) {
+        System.out.println("============여기 오니..AuthController update");
+        ResponseEntity<? super UserUpdateResponseDto> response = authService.userUpdate(requestBody);
+        return response;
+    }
+
+    // 회원 조회
+    @GetMapping("/getMember/{userId}")
+    public ResponseEntity<? super UserUpdateResponseDto> getDate(@RequestBody @Valid UserUpdateRequestDto requestBody) {
+        System.out.println("==============여기 오니: AuthController getDate ");
+        ResponseEntity<? super UserUpdateResponseDto> response = authService.userSelect(requestBody);
+        return response;
+    }
+
+    // 질문 형식
+    @GetMapping("/getquestion")
+    public List<QuestionItem> getQuestion() {
+        System.out.println("========여기 오니");
+        return Arrays.asList(new QuestionItem(0, "내가 가장 빼고 싶은 곳은?"),
+                new QuestionItem(1, "내가 가장 자신있는 곳은?"),
+                new QuestionItem(2, "가장 좋아하는 음식은?"));
+    }
+
+    public class QuestionItem {
+        @JsonProperty("id")
+        private int id;
+        @JsonProperty("question")
+        private String question;
+
+        public QuestionItem(int id, String question) {
+            this.id = id;
+            this.question = question;
+            System.out.println("========여기 question: " + question);
+        }
     }
 
 }
