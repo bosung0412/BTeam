@@ -52,6 +52,11 @@
                 <div class="col-sm-6">
                   <button @click="redirectToFindAccount" type="button" class="btn btn-primary btnall w-100">아이디 or 비밀번호 찾기</button>
                 </div>
+
+                <div class="col-sm-12 text-center">
+                  <img src='@/assets/img/kakao.png' @click="kakaoLogin" alt="카카오 로그인" style="cursor: pointer;"/>
+                </div>
+
               </div>
             </form>
           </div>
@@ -81,6 +86,20 @@ export default {
       code : '',
     };
   },
+  methods: {
+    toggleNavbar() {
+      this.isNavbarOpen = !this.isNavbarOpen;
+    }, 
+        checkEmpty(){
+          if(!this.id){
+        alert("아이디를 입력하세요.");
+        return;
+      }
+      if(!this.password){
+        alert("비밀번호를 입력하세요.");
+        return;
+      }
+        },
       submitLogin() {
         this.checkEmpty();
         axios.post('http://localhost/project/api/v1/auth/sign-in', {
@@ -111,4 +130,5 @@ export default {
       this.$router.push('/join');
     }
   }
+}
 </script>
