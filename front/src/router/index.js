@@ -26,7 +26,6 @@ const routes = [
   {path: '/recommendeddiet',name: 'recommendeddietlist',component: () => import('../views/recommendeddiet/RecommendeddietList.vue')},
   {path: '/recommendeddietdetail/:nutrient_id',name: 'recommendeddietdetail',component: () => import('../views/recommendeddiet/RecommendeddietDetail.vue')},
   {path: '/foodmenu',name: 'foodmenu',component: () => import('../views/recommendeddiet/FoodMenu.vue')},
-  {path: '/faqlist',name: 'faqlist',component: () => import('../views/board/FAQList.vue')},
 ]
 
 

@@ -16,6 +16,7 @@ import kr.co.ict.project.vo.BoardprevVO;
 import kr.co.ict.project.vo.FaqBoardVO;
 
 @RestController
+@RequestMapping("/api/v1/auth")
 public class BoardController {
     @Autowired
     private BoardService service;

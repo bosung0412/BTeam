@@ -24,7 +24,7 @@ public class FoodController {
     private FoodService service;
 
     // 식단 리스트 불러오기
-    @GetMapping(value = "/foodlist")
+    @GetMapping("/foodlist")
     public List<FoodVO> getFoodList() {
         return service.selectFoodList();
     }
@@ -44,11 +44,11 @@ public class FoodController {
     }
 
     @GetMapping("/selectdietinfo")
-    public List<DietinfoVO> selectDietInfo(int diet_id){
+    public List<DietinfoVO> selectDietInfo(@RequestParam int diet_id){
         return service.selectDietInfo(diet_id);
     }
     @GetMapping("/selectfoodinfo")
-    public DietinfoVO selectFoodInfo(int nutrient_id){
+    public DietinfoVO selectFoodInfo(@RequestParam int nutrient_id){
         return service.selectFoodInfo(nutrient_id);
     }
 

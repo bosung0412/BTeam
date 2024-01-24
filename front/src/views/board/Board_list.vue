@@ -95,7 +95,6 @@ export default{
   },
   mounted() {
     this.fetchData();
-    this.filterProjects('*');
     console.log(this.$store.state.authToken);
   },
   components:{
@@ -126,7 +125,7 @@ export default{
   },
   methods: {
     fetchData(){
-      axios.get("http://localhost/project/boardList")
+      axios.get("http://localhost/project/api/v1/auth/boardList")
       .then((resp) => {
         this.projects = resp.data;
       })
