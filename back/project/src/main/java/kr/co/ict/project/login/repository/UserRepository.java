@@ -12,4 +12,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     // 주어진 사용자 아이디로 UserEntity를 조회하는 메서드
     UserEntity findByUserId(String userId);
+
+    // 사용자 삭제 메서드
+    void deleteByUserId(String userId);
 }
