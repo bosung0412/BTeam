@@ -1,9 +1,9 @@
 <template>
 	<div>
-	<div v-if="isLoadingImg" class="loading-container">
-		<div class="loading">
-			<pulse-loader :loading="loading" :color="color" :size="size"></pulse-loader>
+		<div v-if="isLoadingImg" class="loading-container">
 			<Fade-loader />
+			<div class="loading">
+			<ring-loader :loading="loading" :color="color" :size="size"></ring-loader>
 		</div>
 	</div>
 
@@ -37,7 +37,7 @@
 						<!-- 카메라 열기닫기 -->
 						<div class="camera-button">
 							<!-- 버튼을 누르면 toggleCamera메소드 호출하여 카메라 전환-->
-							<button v-if="!isMobile" type="button" class="button is-rounded" :class="{ 'is-primary': !isCameraOpen, 'is-danger': isCameraOpen}" @click="toggleCamera">
+							<button v-if="!isMobile" type="button" class="button is-rounded btn btn-success btnall" :class="{ 'is-primary': !isCameraOpen, 'is-danger': isCameraOpen}" @click="toggleCamera">
 							<span v-if="!isCameraOpen">Open Camera</span>
 							<span v-else>Close Camera</span>
 							</button>
@@ -80,19 +80,24 @@
 						<div v-show="isCameraOpen && !isLoading">
 							사진 버튼을 클릭하여 사진을 찍으시고 저장 버튼을 클릭하여 식단을 등록하세요.
 						</div>
-
 					</div>
 
 
 					<div class="row">
-						<div class="d-flex justify-content-center align-items-center">
-							
-							<a class="btn btn-success mx-2 btnall" href="calender.html">업로드</a>
+						<div class="file-upload-label d-flex justify-content-center align-items-center">
+							<button class="is-rounded btn btn-success mx-2 btnall">식단 이미지 파일 업로드</button>
 						</div>
 						<!-- 파일 업로드를 위한 input 추가 -->
-						<input type="file" class="form-control mt-2" id="foodImage" name="foodImage" accept="image/*">
+						
+						<div class="d-flex justify-content-center align-items-center">
+							<input class="form-control input-lg mt-2" type="file"  id="foodImage" name="foodImage" accept="image/*"/>
+						</div>
+						<div class="file-upload d-flex justify-content-center align-items-center mt-3">
+							<button v-show="!isMobile" type="button" class="button" id="uploadToDB_web" @click="uploadToDB_web">
+								<img src="../../assets/img/camera/icons8-upload.gif" alt="saveToDB-icon">
+							</button>
+						</div>
 					</div>
-					음식 분석 결과 추가 예정
 				</div>
 				<div class="col-lg-3 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
 				   <div class="row g-5">
@@ -175,13 +180,16 @@
 import Navbar from '@/components/Navbar/Navbar.vue';
 import Footer from '../../components/Footer/Footer.vue';
 import axios from "axios";
-import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
+import store from '@/store/index.js';
+import RingLoader from 'vue-spinner/src/RingLoader.vue'
+import Swal from 'sweetalert2'
 
 export default {
     components:{
         Navbar,
         Footer,
-		PulseLoader,
+		RingLoader,
+		// DotLoader,
     },
     data() {
     return {
@@ -193,10 +201,21 @@ export default {
 	  isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) || /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.platform),
 	  hasResult: false,	// 모델 예측 결과 존재 여부
 	  stream: null, // 웹캠 스트림
+	  color: '#71CAA2',
+	  size: '300px',
+	  member_id: null,
     };
   },
+  created(){
+		// let jwt=store.getItem('authToken');
+
+		// const payloadBase64 = jwt.split('.')[1];
+		// const decodedPayload = JSON.parse(atob(payloadBase64));
+		// console.log('Decoded Token:', decodedPayload);
+		// console.log(this.$store.state.authToken);
+	},
   methods: {
-    toggleCamera() { // 열기, 닫기 버튼클릭 시 호출 메소드
+  toggleCamera() { // 열기, 닫기 버튼클릭 시 호출 메소드
       if (this.isCameraOpen) {
         this.closeCamera();
       } else {
@@ -280,15 +299,29 @@ export default {
 		let formData = new FormData();
 		formData.append("member_id", "1");
 		formData.append("meal_time", (new Date()).toString().slice(16,21).replace(/-/g,'/'))
-		axios.post("http://192.168.0.8:9000/food_ai/detectFoodWeb_save", formData)
-		.then((res) => {
-			console.log("웹 식단기록 저장이 성공적으로 완료")
-			//todo
-			//저장완료 화면 띄우기
-		})
-		.catch((error) => {
-			console.log("Error sending stream:", error);
-		});
+		try {
+			this.isLoadingImg = true
+			axios.post("http://192.168.0.8:9000/food_ai/detectFoodWeb_save", formData)
+			.then((res) => {
+				Swal.fire({
+					position: "top-end",
+					icon: "success",
+					title: "식단 등록 성공",
+					showConfirmButton: false,
+					timer: 1500
+				});
+			})
+			.catch((error) => {
+				this.isLoadingImg = false
+				Swal.fire({
+					icon: "question",
+					title: "식단 등록 실패",
+					footer: "원인 : " + error
+				});
+			});
+		} catch (err) {
+			this.isLoadingImg = false
+		}
     },
   },
 }
@@ -334,7 +367,7 @@ body {
   position: relative;
 }
 
-.web-camera-container .camera-shoot button {
+.web-camera-container .camera-shoot button, .file-upload button {
   height: 60px;
   width: 60px;
   display: flex;
@@ -343,10 +376,15 @@ body {
   border-radius: 100%;
 }
 
-.web-camera-container .camera-shoot button img {
+.web-camera-container .camera-shoot button img, .file-upload button img {
   height: 35px;
   object-fit: cover;
 }
+
+.file-upload-label {
+	pointer-events: none;
+}
+
 
 .web-camera-container .camera-loading {
   overflow: hidden;
@@ -431,12 +469,12 @@ body {
 </style>
 <style>
 	.loading {
-	z-index: 2;
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	box-shadow: rgba(0, 0, 0, 0.1) 0 0 0 9999px;
+		z-index: 9999;
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		/* box-shadow: rgba(0, 0, 0, 0.1) 0 0 0 9999px; */
 	}
 
 
