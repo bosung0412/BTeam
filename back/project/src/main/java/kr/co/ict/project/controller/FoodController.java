@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,13 +17,14 @@ import kr.co.ict.project.vo.FoodVO;
 
 
 @RestController
+@RequestMapping("/api/v1/auth")
 public class FoodController {
 
     @Autowired
     private FoodService service;
 
     // 식단 리스트 불러오기
-    @GetMapping(value = "/foodlist")
+    @GetMapping("/foodlist")
     public List<FoodVO> getFoodList() {
         return service.selectFoodList();
     }
@@ -42,11 +44,11 @@ public class FoodController {
     }
 
     @GetMapping("/selectdietinfo")
-    public List<DietinfoVO> selectDietInfo(int diet_id){
+    public List<DietinfoVO> selectDietInfo(@RequestParam int diet_id){
         return service.selectDietInfo(diet_id);
     }
     @GetMapping("/selectfoodinfo")
-    public DietinfoVO selectFoodInfo(int nutrient_id){
+    public DietinfoVO selectFoodInfo(@RequestParam int nutrient_id){
         return service.selectFoodInfo(nutrient_id);
     }
 

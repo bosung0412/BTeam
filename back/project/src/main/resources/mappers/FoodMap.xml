@@ -13,11 +13,18 @@
       select * from nutrient where nutrient_id = #{nutrient_id}
     </select>
 
-    <select id="selectDiet" resultType="dvo">
-      select * from diet
+    <!-- 식단 리스트와 총 칼로리 -->
+    <select id="selectDiet" resultType="dvo"> 
+      SELECT d.*, COALESCE(SUM(n.cal), 0) AS total_calories
+      FROM bteam.diet d
+      LEFT JOIN bteam.food_rec f ON d.diet_id = f.diet_id
+      LEFT JOIN bteam.nutrient n ON f.nutrient_id = n.nutrient_id
+      GROUP BY d.diet_id, d.member_no, d.created_at, d.img_filename, d.mealtime
+      ORDER BY d.diet_id
     </select>
 
-    <select id="selectDietInfo" resultType="divo" parameterType="int">
+    <!-- 식사 타임별 음식 정보 및 영양 정보 -->
+    <select id="selectDietInfo" resultType="divo" parameterType="int"> 
       SELECT
         d.diet_id, d.img_filename, d.mealtime,
         f.frimg_filename, f.nutrient_id,
@@ -30,7 +37,8 @@
       WHERE d.diet_id = #{diet_id}
     </select>
 
-    <select id="selectFoodInfo" resultType="divo" parameterType="int">
+    <!-- 음식별 영양 정보 -->
+    <select id="selectFoodInfo" resultType="divo" parameterType="int"> 
       SELECT
         f.nutrient_id, f.frimg_filename,
         n.name, n.weight, n.cal, n.carbo, n.sugars, n.fat, n.protein,
@@ -40,12 +48,14 @@
       JOIN bteam.nutrient n ON f.nutrient_id = n.nutrient_id
       WHERE f.nutrient_id = #{nutrient_id}
     </select>
+
     <select id="selectList" resultType = "Fvo">
-        select * from nutrient
+      select * from nutrient
     </select>
     <select id="foodDetail" resultType="Fvo">
-        select * from nutrient where nutrient_id = #{nutrient_id}
+      select * from nutrient where nutrient_id = #{nutrient_id}
     </select>
+    
 
     <!-- 여러 그룹에서 랜덤으로 하나씩 선택하는 쿼리 -->
     <select id="selectRandomMeals" resultType="Fvo">
@@ -73,6 +83,4 @@
             ) WHERE ROWNUM <= 3
         ]]>
     </select>
-
-
 </mapper>
