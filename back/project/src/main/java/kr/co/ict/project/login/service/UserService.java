@@ -11,7 +11,6 @@ import kr.co.ict.project.login.entity.UserEntity;
 import kr.co.ict.project.login.repository.UserRepository;
 
 @Service
-
 public class UserService {
 
     private final UserRepository userRepository;
@@ -25,14 +24,9 @@ public class UserService {
     public List<UserEntity> getAllUsers() {
         return userRepository.findAll();
     }
-<<<<<<< HEAD
-    
-=======
 
     @Transactional
->>>>>>> 4f2c49f0ff9c9a8479f06459c9605652b73d7db1
     // 사용자 삭제 메서드
-    @Transactional
     public void deleteUser(String userId) {
         // 사용자가 존재하는지 확인
         if (userRepository.existsByUserId(userId)) {
