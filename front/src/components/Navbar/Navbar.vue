@@ -7,7 +7,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
-      <div class="navbar-nav ms-auto p-4 p-lg-0">
+      <div class="navbar-nav ms-auto p-4 p-lg-0" v-if="hasToken()">
         <!-- <router-link to="/mypage" class="nav-item nav-link">마이페이지</router-link> -->
         <router-link to="/calendar" class="nav-item nav-link">캘린더</router-link>
         <router-link to="/camera" class="nav-item nav-link">식단관리</router-link>
@@ -21,6 +21,11 @@
 <script>
 export default {
 name: 'Navbar',
+    methods:{
+      hasToken(){
+            return this.$store.state.authToken !==null;
+        },
+    }
 };
 </script>
 /* 특정 디바이스 사이즈에 대한 스타일 */
