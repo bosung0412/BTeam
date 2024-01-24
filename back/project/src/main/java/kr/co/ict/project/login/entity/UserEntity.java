@@ -57,14 +57,14 @@ public class UserEntity {
         this.role = "ROLE_USER";
     }
 
-    public UserEntity(String userId, String email, String type) {
-        this.userId = userId;
-        // 의미 없으므로 그냥 아무거나
-        this.password = "Passw0rd";
-        this.email = email;
-        this.type = type;
-        this.role = "ROLE_USER";
-    }
+    // public UserEntity(String userId, String email, String type) {
+    //     this.userId = userId;
+    //     // 의미 없으므로 그냥 아무거나
+    //     this.password = "Passw0rd";
+    //     this.email = email;
+    //     this.type = type;
+    //     this.role = "ROLE_USER";
+    // }
 
     // UserUpdateRequestDto 객체로부터 UserEntity 생성 - 회원업데이트 목적
     public UserEntity(UserUpdateRequestDto dto) {
