@@ -86,6 +86,7 @@ export default {
       code : '',
     };
   },
+<<<<<<< HEAD
   created() {
     // URL에서 인증 코드 추출
     const urlParams = new URLSearchParams(window.location.search);
@@ -97,10 +98,13 @@ export default {
     }
 
   },
+=======
+>>>>>>> 0744ca4989d3216047ed1b267fd5e9abe0e9a4b8
   methods: {
     toggleNavbar() {
       this.isNavbarOpen = !this.isNavbarOpen;
     }, 
+<<<<<<< HEAD
     kakaoLogin() {
     const redirect_uri = 'http://192.168.0.230:8081/join'; // redirect_uri 내가 정한거
     const clientId = '27be1209a5e94ef12e0e5d5a27ae9161'; // kakao developer 키
@@ -134,6 +138,18 @@ export default {
     }
         },
   
+=======
+        checkEmpty(){
+          if(!this.id){
+        alert("아이디를 입력하세요.");
+        return;
+      }
+      if(!this.password){
+        alert("비밀번호를 입력하세요.");
+        return;
+      }
+        },
+>>>>>>> 0744ca4989d3216047ed1b267fd5e9abe0e9a4b8
       submitLogin() {
         axios.post('http://192.168.0.230/project/api/v1/auth/sign-in', {
           id: this.id,
@@ -162,6 +178,9 @@ export default {
       });
 
   }
+<<<<<<< HEAD
     },
+=======
+>>>>>>> 0744ca4989d3216047ed1b267fd5e9abe0e9a4b8
 }
 </script>
