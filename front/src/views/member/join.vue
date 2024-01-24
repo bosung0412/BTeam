@@ -153,7 +153,7 @@ export default {
             alert("유효한 이메일 주소를 입력하세요.");
             return;
         }
-        axios.post('http://192.168.0.4/project/api/v1/auth/email-certification', { 
+        axios.post('http://192.168.0.230/project/api/v1/auth/email-certification', { 
           id : this.id,
           email: this.email,
         })
@@ -173,7 +173,7 @@ export default {
     },
     checkDuplicate() {
             // 서버로 아이디 중복성 체크 요청 보내기
-            axios.post('http://192.168.0.4/project/api/v1/auth/id-check', { 
+            axios.post('http://192.168.0.230/project/api/v1/auth/id-check', { 
               id: this.id 
             })
                 .then(response => {
@@ -196,7 +196,7 @@ export default {
     },
      verifyCertificationNumber() {
             // 서버로 인증 번호 확인 요청 보내기
-            axios.post('http://192.168.0.4/project/api/v1/auth/check-certification', { 
+            axios.post('http://192.168.0.230/project/api/v1/auth/check-certification', { 
 
               id : this.id,
               email : this.email,

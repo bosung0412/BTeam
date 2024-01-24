@@ -60,7 +60,7 @@ export default {
   },
   methods: {
     fetchData(ocategory){
-      axios.get(`http://192.168.0.4/project/api/v1/auth/faqDetail?ocategory=${ocategory}`)
+      axios.get(`http://192.168.0.230/project/api/v1/auth/faqDetail?ocategory=${ocategory}`)
       .then((resp) => {
         console.log(resp.data)
         this.faqlist = resp.data;

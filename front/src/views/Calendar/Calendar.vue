@@ -159,7 +159,7 @@ export default {
       };
     },
     loadDietData() { // 캘린더의 식단 정보 데이터
-      axios.get("http://192.168.0.4/project/api/v1/auth/selectdiet")
+      axios.get("http://192.168.0.230/project/api/v1/auth/selectdiet")
         .then((resp) => {
           console.log("-----dietList-----");
           console.log(resp.data);
@@ -182,7 +182,7 @@ export default {
       this.loadFoodData();
     },
     loadFoodData() { // 식단 클릭 시 음식 데이터
-      axios.get(`http://192.168.0.4/project/api/v1/auth/selectdietinfo?diet_id=${this.dietList.diet_id}`)
+      axios.get(`http://192.168.0.230/project/api/v1/auth/selectdietinfo?diet_id=${this.dietList.diet_id}`)
 
         .then((resp) => {
           console.log("-----foodList-----");
@@ -196,7 +196,7 @@ export default {
     },
     selectFood(nutrient_id, index) { // 음식 선택 시
       this.selectedFoodIndex = index; // 선택된 음식 인덱스 업데이트
-      axios.get(`http://192.168.0.4/project/api/v1/auth/selectfoodinfo?nutrient_id=${nutrient_id}`)
+      axios.get(`http://192.168.0.230/project/api/v1/auth/selectfoodinfo?nutrient_id=${nutrient_id}`)
         .then((resp) => {
           console.log("-----foodDetail-----");
           console.log(resp.data);

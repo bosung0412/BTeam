@@ -60,7 +60,7 @@ export default {
   methods: {
     fetchUserHeight() {
       // 백엔드에서 해당 API 엔드포인트로 요청 보내기
-      fetch("http://192.168.0.4/project/api/v1/auth/${this.userId}/height")
+      fetch("http://192.168.0.230/project/api/v1/auth/${this.userId}/height")
         .then(response => response.json())
         .then(data => {
           // 받아온 데이터 사용
@@ -69,7 +69,7 @@ export default {
         .catch(error => console.error('Error fetching user height:', error));
     },
   fetchRandomMeals() {
-    axios.get("http://192.168.0.4/project/api/v1/auth/randomMeals")
+    axios.get("http://192.168.0.230/project/api/v1/auth/randomMeals")
       .then((response) => {
         const mealsData = response.data;
         // 각 식사 시간에 맞춰서 데이터를 할당합니다.

@@ -68,7 +68,7 @@ export default {
   methods: {
     // 업로드이건 그냥 cors통신 확인용
     upload(){
-      axios.get("http://192.168.0.4/project/api/v1/auth/weightlist",{
+      axios.get("http://192.168.0.230/project/api/v1/auth/weightlist",{
         id : this.id,
         currentWeight: this.currentWeight,
         futureWeight: this.futureWeight,
@@ -85,7 +85,7 @@ export default {
     },
     // 여기까지 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     Save() {
-      axios.post('http://192.168.0.4/project/api/v1/auth/upweight', {
+      axios.post('http://192.168.0.230/project/api/v1/auth/upweight', {
         id : this.id,
         currentWeight: this.currentWeight,
         futureWeight: this.futureWeight,
@@ -104,7 +104,7 @@ export default {
       console.log('취소 버튼이 클릭되었습니다.');
     },
     getDataForm() {
-      axios.get('http://192.168.0.4/project/api/v1/auth/weightlist')
+      axios.get('http://192.168.0.230/project/api/v1/auth/weightlist')
       .then((res) => {
         this.currentWeight = res.data.currentWeight;
         this.futureWeight = res.data.futureWeight;
