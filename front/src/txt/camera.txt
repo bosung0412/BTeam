@@ -1,0 +1,5 @@
+chrome://flags
+
+ Insecure origins treated as secure
+
+ http://192.168.0.73:8081
