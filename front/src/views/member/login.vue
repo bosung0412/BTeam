@@ -32,7 +32,7 @@
               <div class="row mb-3">
                 <div class="col-sm-12">
                   <label for="password" class="form-label">비밀번호</label>
-                  <input type="password" class="form-control" id="password" name="password" v-model="password" placeholder="비밀번호를 입력해주세요!">
+                  <input type="password" class="form-control" id="password" name="password" v-model="password" placeholder="비밀번호를 입력해주세요!" >
                 </div>
               </div>
 
@@ -133,8 +133,18 @@ export default {
       // 에러 처리 로직
     }
         },
-  
+        checkEmpty(){
+          if(!this.id){
+        alert("아이디를 입력하세요.");
+        return;
+      }
+      if(!this.password){
+        alert("비밀번호를 입력하세요.");
+        return;
+      }
+        },
       submitLogin() {
+        this.checkEmpty();
         axios.post('http://localhost/project/api/v1/auth/sign-in', {
           id: this.id,
           password: this.password,
@@ -161,8 +171,9 @@ export default {
           sessionStorage.setItem('token', null); // 로그인 실패 시 토큰을 null로 설정
           // 로그인 실패 시 처리 (예: 에러 메시지 표시)
       });
-
+    },redirectToJoin(){
+      this.$router.push('/join');
+    }
   }
-    },
 }
 </script>

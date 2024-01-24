@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import kr.co.ict.project.login.dto.request.auth.SignUpRequestDto;
+import kr.co.ict.project.login.dto.request.auth.UserUpdateRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -62,6 +63,20 @@ public class UserEntity {
         this.password = "Passw0rd";
         this.email = email;
         this.type = type;
+        this.role = "ROLE_USER";
+    }
+
+    // UserUpdateRequestDto 객체로부터 UserEntity 생성 - 회원업데이트 목적
+    public UserEntity(UserUpdateRequestDto dto) {
+        this.userId = dto.getId();
+        this.password = dto.getPassword();
+        this.name = dto.getName();
+        this.address = dto.getAddress();
+        this.phoneno = dto.getPhoneno();
+        this.disease = dto.getDisease();
+        this.height = dto.getHeight();
+        this.weight = dto.getWeight();
+        this.type = "app";
         this.role = "ROLE_USER";
     }
 
