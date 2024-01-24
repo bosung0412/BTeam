@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-	<Navbar />
+	  <Navbar />
     <!-- Navbar End -->
 
     <!-- Page Header Start -->
@@ -12,46 +12,47 @@
     </div>
     <!-- Page Header End -->
 
-	<!-- Projects Start -->
-	<div class="container-xxl py-5">
-	  <div class="container">
-		<div class="row wow fadeInUp" data-wow-delay="0.3s">
-		  <div class="col-12 text-center">
-			<ul class="list-inline rounded mb-5" id="portfolio-flters">
-			  <li class="mx-2" @click="filterProjects('*')">전체</li>
-			  <li class="mx-2" @click="filterProjects('.first')">카테고리2</li>
-			  <li class="mx-2" @click="filterProjects('.second')">카테고리3</li>
-		      <button onclick="window.location.href='boardWrite'" type="button" class="btn btn-primary mx-2">글작성</button>
-			</ul>
-		  </div>
-		</div>
+    <!-- Projects Start -->
+    <div class="container-xxl py-5">
+      <div class="container">
+        <div class="row wow fadeInUp" data-wow-delay="0.3s">
+          <div class="col-12 text-center">
+            <ul class="list-inline rounded mb-5" id="portfolio-flters">
+              <li class="mx-5">공지사항</li>
+              <li class="mx-5">
+                <router-link to="/boardList/faqBoard">자주 묻는 질문(FAQ)</router-link>
+              </li>
+            </ul>
+          </div>
+          <div class="search-container">
+            <input type="text" id="bsearch" v-model="searchQuery" placeholder="Search..">
+          </div>
+        </div>
 
-		<table class="table">
-		  <thead>
-			<tr>
-			  <th>번호</th>
-			  <th>카테고리</th>
-			  <th>제목</th>
-			  <th>작성자</th>
-			  <th>작성일자</th>
-			  <th>조회수</th>
-			</tr>
-		  </thead>
-		  <tbody>
-			<tr v-for="project in paginatedProjects" :key="project.ono">
+        <table class="table">
+          <thead>
+          <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일자</th>
+            <th>조회수</th>
+          </tr>
+          </thead>
+          <tbody>
+            <tr v-for="project in paginatedProjects" :key="project.ono">
               <td>{{ project.ono }}</td>
-              <td>{{ project.ocategory }}</td>
               <td>
-                <a @click="$event => href(project)">{{ project.oname }}</a>
+                <a id="oname" @click="$event => href(project)">{{ project.oname }}</a>
               </td>
-              <td>{{ project.id }}</td>
+              <td v-if="project.member_no === 2">관리자</td>
               <td>{{ project.oregdate }}</td>
-              <td>100</td>
+              <td>{{ project.views }}</td>
             </tr>
-		  </tbody>
-		</table>
-        <nav aria-label="Page navigation example">
-          <ul class="pagination">
+          </tbody>
+        </table>
+        <nav aria-label="Page navigation" class="pagination-container">
+          <ul class="pagination justify-content-center">
             <li class="page-item" :class="{ 'disabled': currentPage === 1 }">
               <a class="page-link" href="#" aria-label="Previous" @click.prevent="prevPage">
                 <span aria-hidden="true">&laquo;</span>
@@ -67,9 +68,9 @@
             </li>
           </ul>
         </nav>
-	  </div>
-	</div>
-	<!-- Projects End -->
+      </div>
+    </div>
+    <!-- Projects End -->
 
     <!-- Footer Start -->
     <Footer /> 
@@ -87,9 +88,9 @@ export default{
   data() {
     return {
       projects: [], // 게시판 글 데이터
-      filteredProjects: [], // 필터링된 글 데이터
       itemsPerPage: 5, // 페이지당 보여줄 글의 수
-      currentPage: 1 // 현재 페이지
+      currentPage: 1, // 현재 페이지
+      searchQuery: '',
     }
   },
   mounted() {
@@ -102,6 +103,11 @@ export default{
     Footer,
   },
   computed: {
+    filteredProjects() {
+      return this.projects.filter(project =>
+        project.oname.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    },
     paginatedProjects() {
       const startIndex = (this.currentPage - 1) * this.itemsPerPage;
       const endIndex = startIndex + this.itemsPerPage;
@@ -110,25 +116,23 @@ export default{
     totalPages() {
       return Math.ceil(this.filteredProjects.length / this.itemsPerPage);
     },
-      pages() {
-        const pagesArray = [];
-        for (let i = 1; i <= this.totalPages; i++) {
-          pagesArray.push(i);
-        }
-        return pagesArray;
-      },
+    pages() {
+      const pagesArray = [];
+      for (let i = 1; i <= this.totalPages; i++) {
+        pagesArray.push(i);
+      }
+      return pagesArray;
+    },
   },
   methods: {
     fetchData(){
       axios.get("http://localhost/project/boardList")
       .then((resp) => {
         this.projects = resp.data;
-        this.filterProjects('*');
       })
-    },
-    filterProjects(category) {
-      this.filteredProjects = this.projects.filter(project => category === '*' || project.ocategory === category);
-      this.currentPage = 1;
+      .catch((error) => {
+        console.log(error);
+      })
     },
     changePage(page) {
       this.currentPage = page;
@@ -144,9 +148,15 @@ export default{
       }
     },
     href(project){
-        console.log(project)
-        this.$router.push({name:'boardDetail', params:project})
-    }
+      console.log(project)
+      this.$router.push({name:'boardDetail', params:project})
+    },
   }
 };
 </script>
+<style scoped>
+  #oname:hover {cursor: pointer; text-decoration: underline;}
+  .search-container { display: flex; align-items: center; justify-content: center;}
+  #bsearch { width: 25%; height: 40px; border: 2px solid #A5D299; border-radius: 10px; background: url(../../assets/img/search.png) no-repeat 5px center; background-size: 30px;
+  padding-left: 40px; margin-bottom: 3%;}
+</style>

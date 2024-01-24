@@ -1,5 +1,12 @@
 <template>
 	<div>
+	<div v-if="isLoadingImg" class="loading-container">
+		<div class="loading">
+			<pulse-loader :loading="loading" :color="color" :size="size"></pulse-loader>
+			<Fade-loader />
+		</div>
+	</div>
+
 		<!-- Navbar Start -->
 	   <Navbar/>
 	
@@ -19,24 +26,29 @@
 				   <!--<img class="img-fluid" data-wow-delay="0.1s" src="img/icon/cameraupload.png">-->
 				</div>
 				<div class="col-lg-6 col-md-7 wow fadeInUp" data-wow-delay="0.3s">
+					<div v-show="hasResult" id="result" class="web-camera-container">
+						<img id="img_res" ref="img_res" width="450" height="337.5"/>
+						<!-- <canvas ref="canvas" width="640" height="480">
+							<img id="img-res" width="640" height="480"/>
+						</canvas> -->
+					</div>
+
 					<div id="app" class="web-camera-container">
 						<!-- 카메라 열기닫기 -->
 						<div class="camera-button">
 							<!-- 버튼을 누르면 toggleCamera메소드 호출하여 카메라 전환-->
-							<button type="button" class="button is-rounded" :class="{ 'is-primary': !isCameraOpen, 'is-danger': isCameraOpen}" @click="toggleCamera">
+							<button v-if="!isMobile" type="button" class="button is-rounded" :class="{ 'is-primary': !isCameraOpen, 'is-danger': isCameraOpen}" @click="toggleCamera">
 							<span v-if="!isCameraOpen">Open Camera</span>
 							<span v-else>Close Camera</span>
 							</button>
-						</div>
-						<div class="app-camera-button">
-							<!--앱 전용 버튼-->
-							<button type="button" class="button is-rounded" @click="openNewActivity">
+							<button v-else type="button" class="button is-rounded" @click="openNewActivity">
 							<span>Open Camera app</span>
 							</button>
 						</div>
 
+
 						<!-- 카메라가 열리고 로딩중이면 로딩이미지 -->
-						<div v-show="isCameraOpen && isLoading" class="camera-loading">
+						<div v-if="isCameraOpen && isLoading" class="camera-loading">
 							<ul class="loader-circle">
 							<li></li>
 							<li></li>
@@ -46,51 +58,32 @@
 						<!-- 찍힐때 카메라 플래시 효과 -->
 						<div v-show="isCameraOpen && !isLoading" class="camera-box" :class="{ 'flash': isShotPhoto }">
 							<div class="camera-shutter" :class="{ 'flash': isShotPhoto }"></div>
-							<!-- 실시간 마케라 스트림 비디오 엘리먼트 (isPhotoTaken이 false경우에만 표시) --> 
-							<video v-show="!isPhotoTaken" ref="camera" width="450" height="337.5" autoplay></video>
-							<!-- 찍힌 후 표시되는 비디오 엘리먼트 (isPhotoTaken이 True경우에만 표시) -->
-							<canvas v-show="isPhotoTaken" id="photoTaken" ref="canvas" width="450" height="337.5"></canvas>
+							<!-- 실시간 카메라 스트림 비디오 엘리먼트 (isPhotoTaken이 false경우에만 표시) --> 
+							<video ref="camera" width="450" height="337.5" autoplay></video>
+							<!-- <video v-show="!isPhotoTaken" ref="camera" width="640" height="480" autoplay></video> -->
 						</div>
 						<!-- 카메라가 열려있고 로딩중이 아닌 경우, 사진버튼 -->
 						<div v-show="isCameraOpen && !isLoading" class="camera-shoot">
 							<!-- 사진찍는 버튼, takePhoto메소드 호출 -->
-							<button type="button" class="button" @click="takePhoto">
-							<img src="https://img.icons8.com/material-outlined/50/000000/camera--v2.png" alt="camera-icon">
+							<button type="button" class="button" id="sendingPhoto" @click="sendingToServer">
+								<img src="https://img.icons8.com/material-outlined/50/000000/camera--v2.png" alt="camera-icon">
+							</button>
+							<!-- 식단을 등록하는 버튼, 웹 saveToDB_web메소드 호출 -->
+							<button v-show="isCameraOpen && !isMobile" type="button" class="button" id="saveToDB_web" @click="saveToDB_web">
+								<img src="../../assets/img/camera/icons8-save-64.png" alt="saveToDB-icon">
+							</button>
+							<!-- 식단을 등록하는 버튼, 안드로이드 saveToDB메소드 호출 -->
+							<button v-show="isCameraOpen && isMobile" type="button" class="button" id="saveToDB" @click="saveToDB">
+								<img src="../../assets/img/camera/icons8-database-of-an-android-smartphone-operating-system-36.png" alt="saveToDB-icon">
 							</button>
 						</div>
-						<!-- downloadImage메소드를 호출하여 이미지 다운 -->
-						<div v-show="isPhotoTaken && isCameraOpen" class="camera-download">
-							<a id="downloadPhoto" download="my-photo.jpg" class="button" role="button" @click="downloadImage">
-							Download
-							</a>
+						<div v-show="isCameraOpen && !isLoading">
+							사진 버튼을 클릭하여 사진을 찍으시고 저장 버튼을 클릭하여 식단을 등록하세요.
 						</div>
-						</div>
-					<div class="row mb-3">
-						<div class="col">
-							<div class="form-check">
-								<input class="form-check-input" type="checkbox" value="" id="breakfast">
-								<label class="form-check-label" for="flexCheckDefault1">
-									아침
-								</label>
-							</div>
-						</div>
-						<div class="col">
-							<div class="form-check">
-								<input class="form-check-input" type="checkbox" value="" id="lunch" checked>
-								<label class="form-check-label" for="flexCheckChecked">
-									점심
-								</label>
-							</div>
-						</div>
-						<div class="col">
-							<div class="form-check">
-								<input class="form-check-input" type="checkbox" value="" id="dinner">
-								<label class="form-check-label" for="flexCheckChecked2">
-									저녁
-								</label>
-							</div>
-						</div>
+
 					</div>
+
+
 					<div class="row">
 						<div class="d-flex justify-content-center align-items-center">
 							
@@ -169,20 +162,26 @@
 				</div>
 			 </div>
 			 <!-- 아침, 점심, 저녁 공간 끝-->
+			 <canvas v-show=false id="canvas" ref="canvas" width="450" height="337.5"></canvas>
 		  </div>
 	   </div>
 	   <!-- Footer Start -->
 	   <Footer /> 
-	   </div>
+	</div>
+
 </template>
 
 <script>
 import Navbar from '@/components/Navbar/Navbar.vue';
 import Footer from '../../components/Footer/Footer.vue';
+import axios from "axios";
+import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
+
 export default {
     components:{
         Navbar,
         Footer,
+		PulseLoader,
     },
     data() {
     return {
@@ -190,6 +189,10 @@ export default {
       isPhotoTaken: false, // 사진활영 여부
       isShotPhoto: false, // 촬영 시, 플래시 효과
       isLoading: false, // 카메라 로딩 상태
+	  isLoadingImg: false,
+	  isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) || /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.platform),
+	  hasResult: false,	// 모델 예측 결과 존재 여부
+	  stream: null, // 웹캠 스트림
     };
   },
   methods: {
@@ -203,9 +206,11 @@ export default {
     async openCamera() {
       this.isLoading = true;
       try {
-        const constraints = { audio: false, video: true }; // 사용자미디어디바이스 video허용
-        const stream = await navigator.mediaDevices.getUserMedia(constraints); // 사용자의 미디어 디바이스 엑세스
-        this.$refs.camera.srcObject = stream; // 성공시 할당되어 화면에 출력
+        navigator.mediaDevices.getUserMedia({ audio: false, video: true }) // 사용자미디어디바이스 video허용 // 사용자의 미디어 디바이스 엑세스
+		.then((stream) => {
+			this.stream = stream;
+	        this.$refs.camera.srcObject = stream; // 성공시 할당되어 화면에 출력
+		})
       } catch (error) {	// 오류 시
         alert("카메라 권한 오류.");
       } finally {
@@ -213,6 +218,40 @@ export default {
         this.isCameraOpen = true;
       }
     },
+	async sendingToServer(){
+		this.isPhotoTaken = true; // ui에 사진 찍힌 상태 표시(캡쳐기능)
+		this.isShotPhoto = true; // 찍을 때 플래시
+		// 플래시 효과 일정시간 실행 후, false로 전환
+		setTimeout(() => {
+			this.isShotPhoto = false;
+		}, 50);
+
+		const context = this.$refs.canvas.getContext('2d');
+		// context.drawImage(this.$refs.camera, 0, 0, 640, 480);
+		context.drawImage(this.$refs.camera, 0, 0, 450, 337.5);
+		const canvas = this.$refs.canvas.toDataURL("image/jpeg")
+
+		// Send the video to the server
+		let formData = new FormData();
+		formData.append("org_img", canvas);
+		formData.append("member_id", "1");
+		try {
+        	this.isLoadingImg = true
+			await axios.post("http://192.168.0.8:9000/food_ai/detectFoodWeb", formData)
+			.then((res) => {
+				console.log("전송이 성공적으로 완료")
+				console.log(res.data);
+				this.$refs.img_res.src = res.data.diet_img_pred;
+				this.hasResult = true;
+			})
+			.catch((error) => {
+				console.log("Error sending stream:", error);
+			});
+        this.isLoadingImg = false
+		} catch (err) {
+			this.isLoadingImg = false
+		}
+	},
     closeCamera() {	// 카메라 닫을 때 메소드
       const tracks = this.$refs.camera.srcObject.getTracks();
       tracks.forEach(track => track.stop()); // 카메라 스트림의 트랙을 중지
@@ -221,33 +260,38 @@ export default {
       this.isPhotoTaken = false;
       this.isShotPhoto = false;
     },
-    takePhoto() { // 사진 찍을 때 메소드
-      this.isPhotoTaken = true; // ui에 사진 찍힌 상태 표시(캡쳐기능)
-      this.isShotPhoto = true; // 찍을 때 플래시
-	  // 플래시 효과 일정시간 실행 후, false로 전환
-      setTimeout(() => {
-        this.isShotPhoto = false;
-      }, 50);
-
-      const context = this.$refs.canvas.getContext('2d');
-      context.drawImage(this.$refs.camera, 0, 0, 450, 337.5);
-    },
-    downloadImage() { // 이미지 다운 메소드
-      const download = document.getElementById("downloadPhoto");
-      const canvas = document.getElementById("photoTaken").toDataURL("image/jpeg")
-        .replace("image/jpeg", "image/octet-stream");
-      download.setAttribute("href", canvas);
-    },
 	openNewActivity() {
-        // 안드로이드의 openNewActivity 메소드 호출
+      // 안드로이드의 openNewActivity 메소드 호출
+      if (typeof window.mobile !== 'undefined') {
+        window.mobile.openNewActivity();
+      } else {
+        console.error('Android object is not defined.');
+      }
+    },
+	saveToDB() {
+        // 안드로이드의 saveToDB 메소드 호출
         if (typeof window.mobile !== 'undefined') {
-			window.mobile.openNewActivity();
+			window.mobile.saveToDB();
         } else {
             console.error('Android object is not defined.');
         }
+    },	
+	saveToDB_web() {
+		let formData = new FormData();
+		formData.append("member_id", "1");
+		formData.append("meal_time", (new Date()).toString().slice(16,21).replace(/-/g,'/'))
+		axios.post("http://192.168.0.8:9000/food_ai/detectFoodWeb_save", formData)
+		.then((res) => {
+			console.log("웹 식단기록 저장이 성공적으로 완료")
+			//todo
+			//저장완료 화면 띄우기
+		})
+		.catch((error) => {
+			console.log("Error sending stream:", error);
+		});
     },
   },
-	}
+}
 </script>
 <style scoped>
 body {
@@ -286,6 +330,8 @@ body {
 
 .web-camera-container .camera-shoot {
   margin: 1rem 0;
+  display: flex;
+  position: relative;
 }
 
 .web-camera-container .camera-shoot button {
@@ -366,3 +412,33 @@ body {
   }
 }
 </style>
+<style scoped>  
+@media screen and (max-width: 1080px) and (max-height: 2220px) {
+  .web-camera-container {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 350px;
+  }
+}
+
+</style>
+<style>
+	.loading {
+	z-index: 2;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	box-shadow: rgba(0, 0, 0, 0.1) 0 0 0 9999px;
+	}
+
+
+</style>
+
