@@ -1,5 +1,7 @@
 package kr.co.ict.project.login.service;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 
 import kr.co.ict.project.login.dto.request.auth.CheckCertificationRequestDto;
@@ -14,6 +16,7 @@ import kr.co.ict.project.login.dto.response.auth.IdCheckResponseDto;
 import kr.co.ict.project.login.dto.response.auth.SignInResponseDto;
 import kr.co.ict.project.login.dto.response.auth.SignUpResponseDto;
 import kr.co.ict.project.login.dto.response.auth.UserUpdateResponseDto;
+import kr.co.ict.project.login.entity.UserEntity;
 
 // 인증관련 메소드
 public interface AuthService {
@@ -36,9 +39,8 @@ public interface AuthService {
     ResponseEntity<? super SignInResponseDto> signIn(SignInRequestDto dto);
 
     // 사용자 회원 정보 업데이트 처리 메서드 UserUpdateRequestDto를 받아서 시도
-    ResponseEntity<? super UserUpdateResponseDto> userUpdate(UserUpdateRequestDto dto);
+    ResponseEntity<? super UserUpdateResponseDto> userUpdate(UserUpdateRequestDto requestDto);
 
     // 사용자 회원 정보 가져오기
-    ResponseEntity<? super UserUpdateResponseDto> userSelect(UserUpdateRequestDto dto);
-
+    UserEntity userSelect(String userId);
 }

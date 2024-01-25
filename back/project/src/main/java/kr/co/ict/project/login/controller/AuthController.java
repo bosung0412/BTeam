@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,7 @@ import kr.co.ict.project.login.dto.response.auth.IdCheckResponseDto;
 import kr.co.ict.project.login.dto.response.auth.SignInResponseDto;
 import kr.co.ict.project.login.dto.response.auth.SignUpResponseDto;
 import kr.co.ict.project.login.dto.response.auth.UserUpdateResponseDto;
+import kr.co.ict.project.login.entity.UserEntity;
 import kr.co.ict.project.login.service.AuthService;
 import lombok.RequiredArgsConstructor;
 
@@ -87,24 +89,33 @@ public class AuthController {
 
     // 회원 업데이트
     @PatchMapping("/update/{userId}")
-    public ResponseEntity<? super UserUpdateResponseDto> update(@RequestBody @Valid UserUpdateRequestDto requestBody) {
+    public ResponseEntity<? super UserUpdateResponseDto> update(@PathVariable String userId,
+            @RequestBody UserUpdateRequestDto requestBody) {
         System.out.println("============여기 오니..AuthController update");
+        // userId를 requestBody에 설정
+        requestBody.setId(userId);
+
         ResponseEntity<? super UserUpdateResponseDto> response = authService.userUpdate(requestBody);
+
         return response;
     }
 
     // 회원 조회
     @GetMapping("/getMember/{userId}")
-    public ResponseEntity<? super UserUpdateResponseDto> getDate(@RequestBody @Valid UserUpdateRequestDto requestBody) {
-        System.out.println("==============여기 오니: AuthController getDate ");
-        ResponseEntity<? super UserUpdateResponseDto> response = authService.userSelect(requestBody);
-        return response;
+    public ResponseEntity<? super UserUpdateResponseDto> getDate(@PathVariable String userId) {
+        UserEntity userEntity = authService.userSelect(userId);
+        if (userEntity != null) {
+            return ResponseEntity.ok(userEntity);
+        } else {
+            // 사용자 정보가 존재하지 않는 경우
+            return ResponseEntity.notFound().build();
+        }
+
     }
 
     // 질문 형식
     @GetMapping("/getquestion")
     public List<QuestionItem> getQuestion() {
-        System.out.println("========여기 오니");
         return Arrays.asList(new QuestionItem(0, "내가 가장 빼고 싶은 곳은?"),
                 new QuestionItem(1, "내가 가장 자신있는 곳은?"),
                 new QuestionItem(2, "가장 좋아하는 음식은?"));
@@ -119,7 +130,6 @@ public class AuthController {
         public QuestionItem(int id, String question) {
             this.id = id;
             this.question = question;
-            System.out.println("========여기 question: " + question);
         }
     }
 
