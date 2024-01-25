@@ -14,4 +14,5 @@ public class DietVO {
     private String created_at;
     private String img_filename;
     private String mealtime;
+    private float total_calories;   // 총 칼로리
 }
