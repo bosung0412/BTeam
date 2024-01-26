@@ -51,7 +51,7 @@ export default {
       try {
         console.log('Submitting FAQ:', this.faqData);
 
-        const response = await axios.post('http://localhost/bteam_pro/api/admin/faqboard', this.faqData);
+        const response = await axios.post('http://localhost/project/api/admin/faqboard', this.faqData);
 
         console.log('FAQ created:', response.data);
 
