@@ -53,10 +53,6 @@
                   <button @click="redirectToFindAccount" type="button" class="btn btn-primary btnall w-100">아이디 or 비밀번호 찾기</button>
                 </div>
 
-                <div class="col-sm-12 text-center">
-                  <img src='@/assets/img/kakao.png' @click="kakaoLogin" alt="카카오 로그인" style="cursor: pointer;"/>
-                </div>
-
               </div>
             </form>
           </div>
