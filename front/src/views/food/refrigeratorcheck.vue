@@ -6,11 +6,10 @@
 
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-4 mb-2 wow fadeIn" data-wow-delay="0.1s">
-      <div class="container text-center py-5">
-        <h1 class="display-5 text-white mb-4 animated slideInDown">냉장고 식재료</h1>
-        <nav aria-label="breadcrumb" class="animated slideInDown"></nav>
-      </div>
-    </div>
+  <div class="container text-center py-3">
+    <h3 class="display-5 text-white mb-2 animated slideInDown">냉장고 식재료</h3>
+  </div>
+</div>
     <!-- Page Header End -->
 
     <!-- Projects Start -->

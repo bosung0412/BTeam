@@ -26,11 +26,8 @@
 				   <!--<img class="img-fluid" data-wow-delay="0.1s" src="img/icon/cameraupload.png">-->
 				</div>
 				<div class="col-lg-6 col-md-7 wow fadeInUp" data-wow-delay="0.3s">
-					<div v-show="hasResult" id="result" class="web-camera-container">
+					<div v-show="hasResult_webcam" id="result" class="web-camera-container">
 						<img id="img_res" ref="img_res" width="450" height="337.5"/>
-						<!-- <canvas ref="canvas" width="640" height="480">
-							<img id="img-res" width="640" height="480"/>
-						</canvas> -->
 					</div>
 
 					<div id="app" class="web-camera-container">
@@ -46,7 +43,6 @@
 							</button>
 						</div>
 
-
 						<!-- 카메라가 열리고 로딩중이면 로딩이미지 -->
 						<div v-if="isCameraOpen && isLoading" class="camera-loading">
 							<ul class="loader-circle">
@@ -58,7 +54,7 @@
 						<!-- 찍힐때 카메라 플래시 효과 -->
 						<div v-show="isCameraOpen && !isLoading" class="camera-box" :class="{ 'flash': isShotPhoto }">
 							<div class="camera-shutter" :class="{ 'flash': isShotPhoto }"></div>
-							<!-- 실시간 카메라 스트림 비디오 엘리먼트 (isPhotoTaken이 false경우에만 표시) --> 
+							<!-- 실시간 카메라 스트림 비디오 엘리먼트 (isPhotoTaken이 false경우에만 표시) -->
 							<video ref="camera" width="450" height="337.5" autoplay></video>
 							<!-- <video v-show="!isPhotoTaken" ref="camera" width="640" height="480" autoplay></video> -->
 						</div>
@@ -69,7 +65,7 @@
 								<img src="https://img.icons8.com/material-outlined/50/000000/camera--v2.png" alt="camera-icon">
 							</button>
 							<!-- 식단을 등록하는 버튼, 웹 saveToDB_web메소드 호출 -->
-							<button v-show="isCameraOpen && !isMobile" type="button" class="button" id="saveToDB_web" @click="saveToDB_web">
+							<button v-show="isCameraOpen && !isMobile && hasResult_webcam" type="button" class="button" id="saveToDB_web" @click="saveToDB_web">
 								<img src="../../assets/img/camera/icons8-save-64.png" alt="saveToDB-icon">
 							</button>
 							<!-- 식단을 등록하는 버튼, 안드로이드 saveToDB메소드 호출 -->
@@ -82,19 +78,28 @@
 						</div>
 					</div>
 
-
 					<div class="row">
 						<div class="file-upload-label d-flex justify-content-center align-items-center">
 							<button class="is-rounded btn btn-success mx-2 btnall">식단 이미지 파일 업로드</button>
 						</div>
-						<!-- 파일 업로드를 위한 input 추가 -->
-						
-						<div class="d-flex justify-content-center align-items-center">
-							<input class="form-control input-lg mt-2" type="file"  id="foodImage" name="foodImage" accept="image/*"/>
+
+						<div v-show="hasResult_upload" id="result" class="web-camera-container">
+							<img id="img_res_upload" ref="img_res_upload" width="450" height="337.5"/>
 						</div>
+
+						<!-- 파일 업로드를 위한 input 추가 -->
+						<div class="d-flex justify-content-center align-items-center">
+							<input class="form-control input-lg mt-2" type="file" ref="uploadFile" id="foodImage" name="foodImage" accept="image/*" @change="fileSelect_upload"/>
+						</div>
+
 						<div class="file-upload d-flex justify-content-center align-items-center mt-3">
-							<button v-show="!isMobile" type="button" class="button" id="uploadToDB_web" @click="uploadToDB_web">
-								<img src="../../assets/img/camera/icons8-upload.gif" alt="saveToDB-icon">
+							<!-- 이미지를 업로드하는 버튼, uploadToServer_web 메소드 호출 -->
+							<button type="button" class="button" id="uploadToServer_web" @click="uploadToServer_web">
+								<img src="../../assets/img/camera/icons8-upload.gif" alt="uploadToServer_web-icon">
+							</button>
+							<!-- 식단을 등록하는 버튼, uploadToDB_web 메소드 호출 -->
+							<button v-show="hasUpload" type="button" class="button" id="uploadToDB_web" @click="uploadToDB_web">
+								<img src="../../assets/img/camera/icons8-save-64.png" alt="uploadToDB_web-icon">
 							</button>
 						</div>
 					</div>
@@ -121,53 +126,8 @@
 			 </div>
 			 <!-- 첫번째 행 끝 -->
 			
-			 <!-- 아침, 점심, 저녁 공간 시작-->
-			 <div class="row g-5 align-items-stretch maincol mt-4 mb-5 pb-5" style="box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);">
-				<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-				   <div class="service-item rounded d-flex h-100">
-					  <div class="service-text rounded p-5">
-						 <div class="btn-square rounded-circle mx-auto mb-3">
-							<img class="img-fluid" src="img/icon/icon-3.png" alt="Icon">
-						 </div>
-						 <h4 class="mb-3">Breakfast</h4>
-						 <p class="mb-4">Calorie</p>
-					  </div>
-					  <div class="d-flex align-items-center">
-						 아침식단
-					  </div>
-				   </div>
-				</div>
-				<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-				   <div class="service-item rounded d-flex h-100">
-					  <div class="service-text rounded p-5">
-						 <div class="btn-square rounded-circle mx-auto mb-3">
-							<img class="img-fluid" src="img/icon/icon-3.png" alt="Icon">
-						 </div>
-						 <h4 class="mb-3">Lunch</h4>
-						 <p class="mb-4">Calorie</p>
-					  </div>
-					  <div class="d-flex align-items-center">
-						 점심식단
-					  </div>
-				   </div>
-				</div>
-				<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-				   <div class="service-item rounded d-flex h-100">
-					  <div class="service-text rounded p-5">
-						 <div class="btn-square rounded-circle mx-auto mb-3">
-							<img class="img-fluid" src="img/icon/icon-3.png" alt="Icon">
-						 </div>
-						 <h4 class="mb-3">Dinner</h4>
-						 <p class="mb-4">Calorie</p>
-					  </div>
-					  <div class="d-flex align-items-center">
-						 저녁식단
-					  </div>
-				   </div>
-				</div>
-			 </div>
-			 <!-- 아침, 점심, 저녁 공간 끝-->
-			 <canvas v-show=false id="canvas" ref="canvas" width="450" height="337.5"></canvas>
+
+			  <canvas v-show=false id="canvas" ref="canvas" width="450" height="337.5"></canvas>
 		  </div>
 	   </div>
 	   <!-- Footer Start -->
@@ -183,6 +143,7 @@ import axios from "axios";
 import store from '@/store/index.js';
 import RingLoader from 'vue-spinner/src/RingLoader.vue'
 import Swal from 'sweetalert2'
+import { toChildArray } from '@fullcalendar/core/preact';
 
 export default {
     components:{
@@ -199,21 +160,29 @@ export default {
       isLoading: false, // 카메라 로딩 상태
 	  isLoadingImg: false,
 	  isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) || /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.platform),
-	  hasResult: false,	// 모델 예측 결과 존재 여부
+	  uploadFile: null,		// upload 이미지 파일
+	  imagePreview: null,	// upload 이미지 프리뷰 URL
+	  hasResult_webcam: false,	// webcam을 사용한 모델 예측 결과 존재 여부
+	  hasResult_upload: false,	// upload를 사용한 모델 예측 결과 존재 여부
+	  hasUpload: false,		// upload 버튼
 	  stream: null, // 웹캠 스트림
 	  color: '#71CAA2',
 	  size: '300px',
-	  member_id: null,
+	  user_id: null,
     };
   },
-  created(){
-		// let jwt=store.getItem('authToken');
+  created() {
+    //메인 컴포넌트를 렌더링하면서 토큰체크
+    let token = store.state.authToken;
 
-		// const payloadBase64 = jwt.split('.')[1];
-		// const decodedPayload = JSON.parse(atob(payloadBase64));
-		// console.log('Decoded Token:', decodedPayload);
-		// console.log(this.$store.state.authToken);
-	},
+    if (token === null) {
+      this.$router.push({name: 'login'}).catch(() => {});
+    } else {
+		const payloadBase64 = token.split('.')[1];
+		const decodedPayload = JSON.parse(atob(payloadBase64));
+		this.user_id = decodedPayload['sub'];
+	}
+  },
   methods: {
   toggleCamera() { // 열기, 닫기 버튼클릭 시 호출 메소드
       if (this.isCameraOpen) {
@@ -250,25 +219,28 @@ export default {
 		context.drawImage(this.$refs.camera, 0, 0, 450, 337.5);
 		const canvas = this.$refs.canvas.toDataURL("image/jpeg")
 
-		// Send the video to the server
+		// Send the image to the server
 		let formData = new FormData();
 		formData.append("org_img", canvas);
-		formData.append("member_id", "1");
+		formData.append("user_id", this.user_id);
 		try {
-        	this.isLoadingImg = true
+        	this.isLoadingImg = true;
 			await axios.post("http://192.168.0.8:9000/food_ai/detectFoodWeb", formData)
 			.then((res) => {
 				console.log("전송이 성공적으로 완료")
 				console.log(res.data);
 				this.$refs.img_res.src = res.data.diet_img_pred;
-				this.hasResult = true;
+				this.hasResult_webcam = true;
 			})
 			.catch((error) => {
-				console.log("Error sending stream:", error);
+				console.log("Error sending image:", error);
 			});
-        this.isLoadingImg = false
+        	this.isLoadingImg = false;
 		} catch (err) {
-			this.isLoadingImg = false
+			console.log("Error sending image:", error);
+			this.isLoadingImg = false;
+		} finally {
+			this.isLoadingImg = false;
 		}
 	},
     closeCamera() {	// 카메라 닫을 때 메소드
@@ -297,32 +269,136 @@ export default {
     },	
 	saveToDB_web() {
 		let formData = new FormData();
-		formData.append("member_id", "1");
-		formData.append("meal_time", (new Date()).toString().slice(16,21).replace(/-/g,'/'))
+		formData.append("user_id", this.user_id);
+		formData.append("meal_time", (new Date()).toString().slice(16,21));
 		try {
-			this.isLoadingImg = true
+			this.isLoadingImg = true;
 			axios.post("http://192.168.0.8:9000/food_ai/detectFoodWeb_save", formData)
 			.then((res) => {
-				Swal.fire({
-					position: "top-end",
-					icon: "success",
-					title: "식단 등록 성공",
-					showConfirmButton: false,
-					timer: 1500
-				});
+				this.isLoadingImg = false;
+				if (res.data.res_code === "1"){
+					Swal.fire({
+						position: "top-end",
+						icon: "success",
+						title: res.data.text,
+						showConfirmButton: false,
+						timer: 1500
+					});
+				} else {
+					Swal.fire({
+						icon: "question",
+						title: "식단 등록 실패",
+						footer: "원인 : " + res.data.text,
+					});
+				}
 			})
 			.catch((error) => {
-				this.isLoadingImg = false
+				this.isLoadingImg = false;
 				Swal.fire({
-					icon: "question",
+					icon: "error",
 					title: "식단 등록 실패",
 					footer: "원인 : " + error
 				});
 			});
 		} catch (err) {
-			this.isLoadingImg = false
+			this.isLoadingImg = false;
+			Swal.fire({
+				icon: "error",
+				title: "식단 등록 실패",
+				footer: "원인 : " + err
+			});
+		} finally {
+			this.isLoadingImg = false;
 		}
     },
+	fileSelect_upload(){
+		this.uploadFile = this.$refs.uploadFile.files[0]; // 사용자가 올린 이미지
+		if(this.uploadFile !== undefined){
+			// URL.createObjectURL로 사용자가 올린 이미지를 URL로 만들어서 화면에 표시할 수 있게 한다. img 태그의 src값에 바인딩해준다
+			this.imagePreview = URL.createObjectURL(this.uploadFile);
+			this.$refs.img_res_upload.src = this.imagePreview;
+			this.hasResult_upload = true;
+		} else {
+			this.hasUpload = false;
+			this.hasResult_upload = false;
+		}
+	},
+	async uploadToServer_web(){
+		if(this.uploadFile !== null){
+			let formData = new FormData();
+			formData.append("mfile", this.uploadFile);
+			formData.append("user_id", this.user_id);
+			try {
+				this.isLoadingImg = true;
+				await axios.post("http://192.168.0.8:9000/food_ai/detectFoodWebUpload", formData, {headers:{'Content-Type':'multipart/form-data'}})
+				.then((res) => {
+					console.log("전송이 성공적으로 완료")
+					console.log(res.data);
+					this.$refs.img_res_upload.src = res.data.diet_img_upload_pred;
+					this.hasResult_upload = true;
+					this.hasUpload = true;
+				})
+				.catch((error) => {
+					console.log("Error sending image:", error);
+				});
+			this.isLoadingImg = false;
+			} catch (err) {
+				this.isLoadingImg = false;
+			} finally {
+				this.isLoadingImg = false;
+			}
+		} else {
+			Swal.fire({
+				icon: "question",
+				title: "이미지 전송 실패",
+				footer: "원인 : " + "먼저 업로드할 이미지를 선택해서 올려주세요",
+			});
+		}
+	},
+	uploadToDB_web(){
+		let formData = new FormData();
+		formData.append("user_id", this.user_id);
+		formData.append("meal_time", (new Date()).toString().slice(16,21));
+		try {
+			this.isLoadingImg = true;
+			axios.post("http://192.168.0.8:9000/food_ai/detectFoodWebUpload_save", formData)
+			.then((res) => {
+				this.isLoadingImg = false;
+				if (res.data.res_code === "1"){
+					Swal.fire({
+						position: "top-end",
+						icon: "success",
+						title: res.data.text,
+						showConfirmButton: false,
+						timer: 1500
+					});
+				} else {
+					Swal.fire({
+						icon: "question",
+						title: "식단 등록 실패",
+						footer: "원인 : " + res.data.text,
+					});
+				}
+			})
+			.catch((error) => {
+				this.isLoadingImg = false;
+				Swal.fire({
+					icon: "error",
+					title: "식단 등록 실패",
+					footer: "원인 : " + error
+				});
+			});
+		} catch (err) {
+			this.isLoadingImg = false;
+			Swal.fire({
+				icon: "error",
+				title: "식단 등록 실패",
+				footer: "원인 : " + err
+			});
+		} finally {
+			this.isLoadingImg = false;
+		}
+	}
   },
 }
 </script>

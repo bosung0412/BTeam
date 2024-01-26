@@ -18,4 +18,8 @@ public class UserUpdateResponseDto extends ResponseDto {
         return ResponseEntity.status(HttpStatus.OK).body(responseBody);
     }
 
+    public static ResponseEntity<UserUpdateResponseDto> error() {
+        UserUpdateResponseDto responseBody = new UserUpdateResponseDto();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
+    }
 }
