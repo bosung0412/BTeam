@@ -27,15 +27,15 @@ public class FoodService {
         return dao.selectFood(nutrient_id);
     }
 
-    public List<DietVO> selectDiet(){ // Calendar 식단 리스트와 식사타임별 총 칼로리
-        return dao.selectDiet();
+    public List<DietVO> selectDiet(String user_id){ // Calendar 식단 리스트와 식사타임별 총 칼로리
+        return dao.selectDiet(user_id);
     }
 
     public List<DietinfoVO> selectDietInfo(int diet_id){ // Calendar 식사 타임별 음식 정보 및 영양 정보
         return dao.selectDietInfo(diet_id);
     }
-    public DietinfoVO selectFoodInfo(int nutrient_id){ // Calendar 음식별 영양 정보
-        return dao.selectFoodInfo(nutrient_id);
+    public DietinfoVO selectFoodInfo(int nutrient_id, int diet_id){ // Calendar 음식별 영양 정보
+        return dao.selectFoodInfo(nutrient_id, diet_id);
     }
     
     public FoodVO FoodDetail(int nutrient_id) { // 음식 상세 보기
@@ -45,7 +45,7 @@ public class FoodService {
         return dao.selectRandomMeals();
     }
 
-    public DietVO totalCalbyId(DietVO vo){ // main 해당 회원의 총 칼로리
-        return dao.totalCalbyId(vo);
+    public List<DietVO> totalCalbyId(String user_id){ // main 해당 회원의 총 칼로리
+        return dao.totalCalbyId(user_id);
     }
 }

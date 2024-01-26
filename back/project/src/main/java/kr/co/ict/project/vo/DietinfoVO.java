@@ -21,7 +21,7 @@ public class DietinfoVO {
     private int sugars;             // 당류
     private int fat;                // 지방
     private int protein;            // 단백질
-    private int carcium;            // 칼슘
+    private int calcium;            // 칼슘
     private int phosphorus;         // 인
     private int sodium;             // 나트륨
     private int potassium;          // 칼륨

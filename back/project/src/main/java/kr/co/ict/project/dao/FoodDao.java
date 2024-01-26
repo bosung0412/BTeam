@@ -15,10 +15,10 @@ public interface FoodDao {
     public int addFood(FoodVO vo);
     public FoodVO selectFood(int nutrient_id);
 
-    public List<DietVO> selectDiet(); // Calendar 식단 리스트와 식사타임별 총 칼로리
+    public List<DietVO> selectDiet(String user_id); // Calendar 식단 리스트와 식사타임별 총 칼로리
 
     public List<DietinfoVO> selectDietInfo(int diet_id); // Calendar 식사 타임별 음식 정보 및 영양 정보
-    public DietinfoVO selectFoodInfo(int nutrient_id); // Calendar 음식별 영양 정보
+    public DietinfoVO selectFoodInfo(int nutrient_id, int diet_id); // Calendar 음식별 영양 정보
 
     // 추천 음식 상세 정보
     public FoodVO foodDetail(int nutrient_id);
@@ -26,5 +26,5 @@ public interface FoodDao {
     // 랜덤 음식 선택
     public List<FoodVO> selectRandomMeals();
 
-    public DietVO totalCalbyId(DietVO vo); // main 해당 회원의 총 칼로리
+    public List<DietVO> totalCalbyId(String user_id); // main 해당 회원의 총 칼로리
 }

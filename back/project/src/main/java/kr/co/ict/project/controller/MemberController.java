@@ -23,8 +23,12 @@ public class MemberController {
         int res = memberService.addMember(vo);
         return res;
     }
+    @GetMapping("/getmemberinfo")
+    public MemberVO getMemberInfo(@RequestParam String user_id) {
+        return memberService.getMemberInfo(user_id);
+    }
     @GetMapping("/getmemheight")
-    public MemberVO getMemHeight(@RequestParam int member_no) {
-        return memberService.getMemHeight(member_no);
+    public MemberVO getMemHeight(@RequestParam("user_id") String user_id) {
+        return memberService.getMemHeight(user_id);
     }
 }
