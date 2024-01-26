@@ -117,7 +117,7 @@
 						<div class="row food-activity activity-image">
 							<div class="foods align-items-center">
 								<template v-for="(info, index) in foodInfo">
-									<button type="button" :value="index" class="btn button btn-success" @click="selectFood($event)"><img :src="info.img" style="--i: 3" alt="" /></button>
+									<button typse="button" :value="index" class="btn button btn-success" @click="selectFood($event)"><img :src="info.img" style="--i: 3" alt="" /></button>
 								</template>
 							</div>
 						</div>
@@ -947,4 +947,3 @@ export default {
             .food_detail {}
         }    
 </style>
-
