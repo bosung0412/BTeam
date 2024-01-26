@@ -16,6 +16,7 @@ public interface WeightDao {
 
     // public int addWeight(WeightVO vo);
 
-    void upWeight(WeightVO vo);
+    public void upWeight(WeightVO vo);
 
+    public WeightVO getHistWeight(int member_no);
 }

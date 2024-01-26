@@ -17,4 +17,12 @@
     <update id="upWeight" parameterType="wvo">
         UPDATE weight_chk SET currentweight = #{currentweight}, futureweight = #{futureweight} WHERE id = #{id}
     </update>
+
+    <select id="getHistWeight" resultType="wvo" parameterType="int">
+        SELECT * 
+        FROM bteam.wt_chk_log
+        WHERE EXTRACT(MONTH FROM change_date) = EXTRACT(MONTH FROM sysdate)
+        AND EXTRACT(YEAR FROM change_date) = EXTRACT(YEAR FROM sysdate)
+        AND member_no = #{member_no}
+    </select>
 </mapper>

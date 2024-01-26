@@ -25,4 +25,7 @@ public class WeightService {
         dao.upWeight(vo);
     }
 
+    public WeightVO getHistWeight(int member_no) {
+        return dao.getHistWeight(member_no);
+    }
 }

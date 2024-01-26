@@ -8,4 +8,5 @@ import kr.co.ict.project.vo.MemberVO;
 public interface MemberDao {
 
     public int addMember(MemberVO vo);
+    public MemberVO getMemHeight(int member_no);
 }

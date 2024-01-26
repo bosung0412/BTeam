@@ -13,7 +13,7 @@
       select * from nutrient where nutrient_id = #{nutrient_id}
     </select>
 
-    <!-- 식단 리스트와 총 칼로리 -->
+    <!-- Calendar 식단 리스트와 식사타임별 총 칼로리 -->
     <select id="selectDiet" resultType="dvo"> 
       SELECT d.*, COALESCE(SUM(n.cal), 0) AS total_calories
       FROM bteam.diet d
@@ -23,7 +23,7 @@
       ORDER BY d.diet_id
     </select>
 
-    <!-- 식사 타임별 음식 정보 및 영양 정보 -->
+    <!-- Calendar 식사 타임별 음식 정보 및 영양 정보 -->
     <select id="selectDietInfo" resultType="divo" parameterType="int"> 
       SELECT
         d.diet_id, d.img_filename, d.mealtime,
@@ -37,7 +37,7 @@
       WHERE d.diet_id = #{diet_id}
     </select>
 
-    <!-- 음식별 영양 정보 -->
+    <!-- Calendar 음식별 영양 정보 -->
     <select id="selectFoodInfo" resultType="divo" parameterType="int"> 
       SELECT
         f.nutrient_id, f.frimg_filename,
@@ -82,5 +82,15 @@
                 SELECT * FROM NUTRIENT WHERE FOODTYPE = '반찬3' ORDER BY DBMS_RANDOM.VALUE
             ) WHERE ROWNUM <= 3
         ]]>
+    </select>
+
+    <!-- main 해당 회원의 총 칼로리 -->
+    <select id="totalCalbyId" resultType="dvo" parameterType="dvo">
+      SELECT SUM(N.Cal) as total_calories
+      FROM "BTEAM"."DIET" D
+      INNER JOIN "BTEAM"."FOOD_REC" FR ON D."DIET_ID" = FR."DIET_ID"
+      INNER JOIN "BTEAM"."NUTRIENT" N ON FR."NUTRIENT_ID" = N."NUTRIENT_ID"
+      WHERE D."MEMBER_NO" = #{member_no}
+      AND TO_CHAR(D."CREATED_AT", 'YYYY-MM-DD') = #{created_at}
     </select>
 </mapper>

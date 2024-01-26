@@ -8,5 +8,7 @@
         #{phoneno},#{email},#{gender}, 
         #{disease},#{height},#{weight})
     </insert>
-
+    <select id="getMemHeight" resultType="mvo" parameterType="int">
+        SELECT height FROM users WHERE member_no = #{member_no}
+    </select>
 </mapper>

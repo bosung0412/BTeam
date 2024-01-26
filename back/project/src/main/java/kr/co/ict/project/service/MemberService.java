@@ -14,4 +14,7 @@ public class MemberService {
     public int addMember(MemberVO vo) {
         return dao.addMember(vo);
     }
+    public MemberVO getMemHeight(int member_no) {
+        return dao.getMemHeight(member_no);
+    }
 }

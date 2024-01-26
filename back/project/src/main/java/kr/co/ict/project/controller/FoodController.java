@@ -38,17 +38,17 @@ public class FoodController {
         return service.selectFood(nutrient_id);
     }
 
-    @GetMapping("/selectdiet")
+    @GetMapping("/selectdiet") // Calendar 식단 리스트와 식사타임별 총 칼로리
     public List<DietVO> selectDiet(){
         return service.selectDiet();
     }
 
-    @GetMapping("/selectdietinfo")
+    @GetMapping("/selectdietinfo")  // Calendar 식사 타임별 음식 정보 및 영양 정보
     public List<DietinfoVO> selectDietInfo(@RequestParam int diet_id){
         return service.selectDietInfo(diet_id);
     }
-    @GetMapping("/selectfoodinfo")
-    public DietinfoVO selectFoodInfo(@RequestParam int nutrient_id){
+    @GetMapping("/selectfoodinfo") // Calendar 음식별 영양 정보
+    public DietinfoVO selectFoodInfo(@RequestParam int nutrient_id){ 
         return service.selectFoodInfo(nutrient_id);
     }
 
@@ -64,4 +64,8 @@ public class FoodController {
         return service.getRandomMeals();
     }
 
+    @GetMapping("/totalCalbyId")
+    public DietVO totalCalbyId(DietVO vo){ // main 해당 회원의 총 칼로리
+        return service.totalCalbyId(vo);
+    }
 }
