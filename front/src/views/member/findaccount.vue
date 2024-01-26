@@ -20,8 +20,8 @@
 						<div class="container my-5 text-center">
 							<button @click="findIdGo" type="button"
 								class="btn btn-primary mx-2 btnall">아이디 찾기</button>
-							<button @click="findPassGo" type="button"
-								class="btn btn-primary mx-2 btnall">비밀번호 찾기</button>
+							<!-- <button @click="findPassGo" type="button"
+								class="btn btn-primary mx-2 btnall">비밀번호 찾기</button> -->
 							<!-- <button onclick="window.location.href='findid.html'" type="button"
 								class="btn btn-primary mx-2 btnall">아이디 찾기</button>
 							<button onclick="window.location.href='findpassword.html'" type="button"

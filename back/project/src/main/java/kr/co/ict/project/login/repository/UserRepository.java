@@ -17,4 +17,9 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     // 사용자 삭제 메서드
     void deleteByUserId(String userId);
+
+    UserEntity findByEmail(String email);
+
+    // 표준 칼로리 계산용 키 조회
+    Integer getHeightByUserId(String userId);
 }

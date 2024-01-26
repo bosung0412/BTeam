@@ -188,10 +188,11 @@ public class AuthServiceImplement implements AuthService {
 
             // 입력된 비밀번호와 데이터베이스의 비밀번호를 비교하여 일치 여부를 확인
             boolean isMatched = passwordEncoder.matches(password, encodedPassword);
-            System.out.println("==========개떄린다 진짜....signIn password: " + password);
-            System.out.println("==========signIn encodePassword: " + encodedPassword);
-            if (!isMatched)
+
+            if (!isMatched) {
+
                 return SignInResponseDto.signInFail();
+            }
             // 로그인 성공시, JwtProvider를 사용해서 jwt토큰 생성(userId)
             token = jwtProvider.create(userId);
 
@@ -204,7 +205,7 @@ public class AuthServiceImplement implements AuthService {
     }
 
     // 사용자의 회원 정보 업데이트 메서드
-    // 전송된 UserUpdateRequestDto를 받아 인증번호 일치, db에 저장
+    // 전송된 UserUpdateRequestDto를 받아 db에 저장
     @Override
     public ResponseEntity<? super UserUpdateResponseDto> userUpdate(UserUpdateRequestDto dto) {
         try {
@@ -212,12 +213,9 @@ public class AuthServiceImplement implements AuthService {
             UserEntity userUpdateEntity = userRepository.findByUserId(dto.getId());
             if (userUpdateEntity != null) {
                 // 암호화된 코드로 저장
-                String password = dto.getPassword();
-                String encodePassword = passwordEncoder.encode(password);
-                userUpdateEntity.setPassword(encodePassword);
-
-                System.out.println("==========userUpdate password: " + password);
-                System.out.println("==========userUpdate encodePassword: " + encodePassword);
+                String password = dto.getPassword(); // 사용자로부터 입력받은 비번 가져옴
+                String encodePassword = passwordEncoder.encode(password); // 가져온 비번을 해시화함
+                userUpdateEntity.setPassword(encodePassword);// 해시화된 비밀번호를 저장
 
                 // 다른 필드들 업데이트
                 userUpdateEntity.setName(dto.getName());
@@ -226,10 +224,11 @@ public class AuthServiceImplement implements AuthService {
                 userUpdateEntity.setDisease(dto.getDisease());
                 userUpdateEntity.setHeight(dto.getHeight());
                 userUpdateEntity.setWeight(dto.getWeight());
+
                 userRepository.save(userUpdateEntity);
             } else {
                 UserUpdateResponseDto.databaseError();
-                System.out.println("==========에러다....");
+
             }
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -242,9 +241,7 @@ public class AuthServiceImplement implements AuthService {
     public UserEntity userSelect(String userId) {
         UserEntity userEntity = new UserEntity();
         try {
-
             userEntity = userRepository.findByUserId(userId);
-
         } catch (Exception exception) {
             exception.printStackTrace();
         }

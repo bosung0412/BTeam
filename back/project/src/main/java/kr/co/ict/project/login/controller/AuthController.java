@@ -3,6 +3,7 @@ package kr.co.ict.project.login.controller;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -29,6 +31,7 @@ import kr.co.ict.project.login.dto.response.auth.SignUpResponseDto;
 import kr.co.ict.project.login.dto.response.auth.UserUpdateResponseDto;
 import kr.co.ict.project.login.entity.UserEntity;
 import kr.co.ict.project.login.service.AuthService;
+import kr.co.ict.project.login.service.UserService;
 import lombok.RequiredArgsConstructor;
 
 // restful controller
@@ -39,6 +42,7 @@ import lombok.RequiredArgsConstructor;
 public class AuthController {
 
     private final AuthService authService;
+    private final UserService userservice;
 
     // id 중복성 체크
     @PostMapping("/id-check")
@@ -91,12 +95,9 @@ public class AuthController {
     @PatchMapping("/update/{userId}")
     public ResponseEntity<? super UserUpdateResponseDto> update(@PathVariable String userId,
             @RequestBody UserUpdateRequestDto requestBody) {
-        System.out.println("============여기 오니..AuthController update");
         // userId를 requestBody에 설정
         requestBody.setId(userId);
-
         ResponseEntity<? super UserUpdateResponseDto> response = authService.userUpdate(requestBody);
-
         return response;
     }
 
@@ -133,4 +134,21 @@ public class AuthController {
         }
     }
 
+    @GetMapping("/getuserheight/{userId}")
+    public ResponseEntity<Integer> getHeight(@PathVariable String userId) {
+        Integer height = userservice.getHeight(userId);
+        return new ResponseEntity<>(height, HttpStatus.OK);
+    }
+
+    @GetMapping("/findIdByEmail")
+    public ResponseEntity<String> findByEmail(@RequestParam String email) {
+        String userId = userservice.findByEmail(email);
+        System.out.println("sssssssssqoiwejiodwadjiofjadsiofjsdokfjlaksjfvas");
+
+        if (userId != null) {
+            return new ResponseEntity<>(userId, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        }
+    }
 }
