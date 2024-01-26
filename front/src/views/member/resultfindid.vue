@@ -5,13 +5,10 @@
 
     <!-- Page Header -->
     <div class="container-fluid page-header py-4 mb-2 wow fadeIn" data-wow-delay="0.1s">
-      <!-- Page Header content -->
-      <div class="container text-center py-5">
-        <h1 class="display-5 text-white mb-4 animated slideInDown">아이디 찾기 결과</h1>
-        <nav aria-label="breadcrumb animated slideInDown">
-        </nav>
-      </div>
-    </div>
+  <div class="container text-center py-3">
+    <h3 class="display-5 text-white mb-2 animated slideInDown">아이디 찾기 결과</h3>
+  </div>
+</div>
 
     <!-- Result Section -->
     <div class="container-fluid py-5">

@@ -128,6 +128,8 @@ export default {
       });
     },redirectToJoin(){
       this.$router.push('/join');
+    },redirectToFindAccount(){
+      this.$router.push('/findaccount');
     }
   }
 }

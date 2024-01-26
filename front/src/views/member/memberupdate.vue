@@ -2,8 +2,8 @@
   <div>
         <Navbar />
 		<div class="container-fluid page-header py-4 mb-2 wow fadeIn" data-wow-delay="0.1s">
-      <div class="container text-center py-5">
-		<h3 class="display-5 text-white mb-4 animated slideInDown">{{userId}}님의 정보를 수정해주세요</h3>
+      <div class="container text-center py-3">
+		<h3 class="display-5 text-white mb-2 animated slideInDown">{{userId}}님의 정보를 수정해주세요</h3>
     </div>
   </div>
    <!-- 인용구 시작 -->
@@ -20,19 +20,20 @@
 										<input type="text" class="form-control" id="id" name="id" readonly v-model="userId">
 									</div>
                     <label for="password" class="form-label mt-2">비밀번호</label>
-                    <input type="password" class="form-control" id="password" name="password" v-model="password">
+                
+                    <input type="password" class="form-control" id="password" name="password" v-model="member.password">
 
                     <label for="passwordchk" class="form-label mt-2">비밀번호 확인</label>
                     <input type="password" class="form-control" id="passwordchk" name="passwordchk" v-model="confirmPassword"  @input="validatePasswordForm">
                     <p v-if="errorMessage" style="color:red;margin: 0px;font-size: 1rem;">{{ errorMessage }}</p>
 
                     <label for="name" class="form-label mt-2">이름</label>
-                    <input type="text" class="form-control" id="name" name="name" v-model="name">
+                    <input type="text" class="form-control" id="name" v-model="member.name">
                     <label for="address" class="form-label mt-2">주소</label>
                     <div class="input-group">
-                      <input type="text" class="form-control" id="address" name="address" v-model="address" placeholder="주소를 입력하세요.">
+                      <input type="text" class="form-control" id="address" name="address" v-model="member.address" placeholder="주소를 입력하세요.">
                       <div class="input-group-append">
-                        <button type="button" class="btn btn-success btnall" @click="openAddressPopup" style="margin-bottom: 0px;">주소찾기</button>
+                        <button type="button" class="btn btn-success btnalls" @click="openAddressPopup" style="margin-bottom: 0px;">주소찾기</button>
                       </div>
                     </div>
                      <!-- 주소찾기 버튼 클릭 시 주소 검색 화면 -->
@@ -41,20 +42,20 @@
                     </div>
                     <div>
                       <label for="phoneNumber" class="form-label mt-2">휴대전화</label>
-                    <input type="text" class="form-control" id="phoneNumber" maxlength="13" @input="formatPhoneNumber" v-model="phoneno">
+                    <input type="text" class="form-control" id="phoneNumber" maxlength="13" @input="formatPhoneNumber" v-model="member.phoneno">
                   </div>
 
                   <p class="fs-5 fw-bold" style="color: rgb(77, 183, 91);">추가 정보</p>
                   <div class="col-sm-6">
                     <label for="allergy" class="form-label mt-2">질병</label>
-                    <input type="text" class="form-control border" id="allergy" name="allergy" v-model="disease">
+                    <input type="text" class="form-control border" id="allergy" name="allergy" v-model="member.disease">
                     </div>
                     <label for="height" class="form-label mt-2">키(cm)</label>
-                    <input type="text" class="form-control border" id="height" name="height" v-model="height">
+                    <input type="text" class="form-control border" id="height" name="height" v-model="member.height">
                     <label for="weight" class="form-label mt-2">몸무게(kg)</label>
-                    <input type="text" class="form-control border" id="weight" name="weight" v-model="weight">
+                    <input type="text" class="form-control border" id="weight" name="weight" v-model="member.weight">
                   <div class="col-12 text-center mt-4">
-                    <button @click="memberUpdate" type="button" class="btn btn-success mx-2 btnall">회원가입</button>
+                    <button @click="memberUpdate" type="button" class="btn btn-success mx-2 btnall">정보수정</button>
                     <button @click="cancel" type="button" class="btn btn-primary mx-2 btnall">취소</button>
                   </div>
                     </div>
@@ -80,35 +81,36 @@ export default {
   },
 data(){
   return{
-    member:null,
+    member:{
+      name:'',
+	    address:'',
+      phoneno:'',
+      disease:'',
+      height:'',
+      weight:'',
+      password:'',
+    },
+    userId:'',//id를 나타냄
     ishidden:'none',
-	userId:'',//id를 나타냄
-	password:'',
-	name:'',
-	address:'',
-	phoneno:'',
-	disease:'',
-	height:'',
-	weight:'',
       confirmPassword:'',
       errorMessage:'',
   }
 },
-mounted(){
-	const token = this.$store.getters.getAuthToken;
-	console.log("=======token:  "+token);//토큰값 가져옴
-	
-	const payloadBase64 = token.split('.')[1];
-    const decodedToken = JSON.parse(atob(payloadBase64));
-	this.userId=decodedToken.sub
-},
 created() {
-  axios.get('http://localhost/project/api/v1/auth/${userId}')
-  .then((response=>{
-    this.member = response.data;
-  })).catch((err)=>{
-    console.error("========error!!!: " ,err);
-  });
+  const token = this.$store.getters.getAuthToken;
+  console.log("=======token: " + token); // 토큰값 가져옴
+	
+  const payloadBase64 = token.split('.')[1];
+  const decodedToken = JSON.parse(atob(payloadBase64));
+  this.userId = decodedToken.sub;
+
+  axios.get(`http://localhost/project/api/v1/auth/getMember/${this.userId}`)
+    .then((response) => {
+      this.member = response.data;
+    })
+    .catch((err) => {
+      console.error("========error!!!: ", err);
+    });
 },
 methods:{
    //주소창 닫기(x)표시
@@ -132,7 +134,7 @@ methods:{
     },
 	  //패스워드 일치 여부 확인
 	validatePasswordForm(){
-      if(this.password!==this.confirmPassword){
+      if(this.member.password!==this.confirmPassword){
         this.errorMessage = '패스워드가 일치하지 않습니다.';
         return false;
       }
@@ -151,36 +153,21 @@ methods:{
       }
       input.value = phoneNumber;
     },
-	//대충 넣은 빈값 확인
-    checkEmpty(){
-      if(!this.password){
-        alert("비밀번호를 입력하세요.");
-        return;
-      }
-      if(!this.name){
-        alert("이름을 입력하세요.");
-        return;
-      }
-      if(!this.address){
-        alert("주소를 입력하세요.");
-        return;
-      }
-      if(!this.phoneno){
-        alert("휴대전화를 입력하세요.");
-        return;
-      }
-	},
-	 memberUpdate(){
-		axios.patch('http://localhost/project/api/v1/user/update/{this.userId}').then(response=>{
-			console.log("====this.userId" ,this.userId);
+    memberUpdate(){
+      axios.patch(`http://localhost/project/api/v1/auth/update/${this.userId}`,this.member)
+    .then(response=>{
+      alert("회원 정보 수정이 완료되었습니다.");
+      this.$router.push('/login');
 		}).catch(error=>{
-			console.log("errrrrrrrrrrrrr");
+      alert("회원 정보 수정이 실패되었습니다.")
+			console.log("진짜 ....");
 		})
 	},
 	cancel() {
-      this.$router.push('/login');
+      this.$router.push('/');
     },
-  },
+	},
 
-};
+  };
+
 </script>
