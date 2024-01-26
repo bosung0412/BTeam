@@ -25,7 +25,7 @@ repositories {
 dependencies {
 	implementation 'commons-fileupload:commons-fileupload:1.4'
 
-	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc:3.1.4'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'

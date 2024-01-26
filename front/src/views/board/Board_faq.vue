@@ -37,7 +37,7 @@
             </div>
             <div class="faq-item">
               <div class="img-container">
-                <img src="#" alt="Image Description">
+                <img src="../../assets/img/faq2.png" alt="Image Description" width="100px;">
               </div>
               <div class="title">
                 <h4>홈페이지 관련</h4>
@@ -49,7 +49,7 @@
           <div class="faq-list">
             <div class="faq-item">
               <div class="img-container">
-                <img src="#" alt="Image Description">
+                <img src="../../assets/img/faq3.png" alt="Image Description" width="100px;">
               </div>
               <div class="title">
                 <h4>앱 관련</h4>
@@ -59,7 +59,7 @@
             </div>
             <div class="faq-item">
               <div class="img-container">
-                <img src="#" alt="Image Description">
+                <img src="../../assets/img/faq4.png" alt="Image Description" width="100px;">
               </div>
               <div class="title">
                 <h4>기능 관련</h4>

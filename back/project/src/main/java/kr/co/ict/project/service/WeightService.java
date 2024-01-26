@@ -21,6 +21,10 @@ public class WeightService {
         return dao.weightuser(member_no);
     }
 
+    public WeightVO getHistWeight(int member_no) {
+        return dao.getHistWeight(member_no);
+    } 
+    
     public WeightVO weightFuture(int member_no) {
         return dao.weightfuture(member_no);
     }
