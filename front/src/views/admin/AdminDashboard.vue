@@ -46,7 +46,7 @@
     <table class="data-table">
       <thead>
         <!-- 새로운 공지사항 작성 버튼 -->
-    <button @click="faqwriteGo">새로운 공지사항 작성</button>
+    <button @click="faqwriteGo">공지사항 작성</button>
         <tr>
           <th>공지사항 번호</th>
           <th>공지사항 제목</th>
