@@ -352,6 +352,48 @@ export default {
         // 안드로이드의 saveToDB 메소드 호출
         if (typeof window.mobile !== 'undefined') {
 			window.mobile.saveToDB();
+			let formData = new FormData();
+		formData.append("user_id", this.user_id);
+		formData.append("meal_time", (new Date()).toString().slice(16,21));
+		try {
+			this.isLoadingImg = true;
+			axios.post("http://192.168.0.115:9000/food_ai/detectFoodWeb_save", formData)
+			.then((res) => {
+				this.isLoadingImg = false;
+				if (res.data.res_code === "1"){
+					Swal.fire({
+						position: "top-end",
+						icon: "success",
+						title: res.data.text,
+						showConfirmButton: false,
+						timer: 1500
+					});
+				} else {
+					Swal.fire({
+						icon: "question",
+						title: "식단 등록 실패",
+						footer: "원인 : " + res.data.text,
+					});
+				}
+			})
+			.catch((error) => {
+				this.isLoadingImg = false;
+				Swal.fire({
+					icon: "error",
+					title: "식단 등록 실패",
+					footer: "원인 : " + error
+				});
+			});
+		} catch (err) {
+			this.isLoadingImg = false;
+			Swal.fire({
+				icon: "error",
+				title: "식단 등록 실패",
+				footer: "원인 : " + err
+			});
+		} finally {
+			this.isLoadingImg = false;
+		}
         } else {
             console.error('Android object is not defined.');
         }
