@@ -26,13 +26,13 @@
           <h4 style="width:70%; margin-bottom: 15%;">음식 정보를 확인하세요.</h4>
         </div>
 
-        <input class="foodtitle" type="text" v-model="dietList.created_at" :placeholder="'Today : '+currentDate" readonly>
+        <input class="foodtitle" type="text" v-model="getFirstDietCreatedAt" :placeholder="'Today : '+currentDate" readonly>
         <input class="foodtitle" type="text" v-model="dietList.mealtime" readonly>
 
         <div class="foodList" v-if="foodList.length > 0">
           <p>아래의 음식을 선택하세요!</p>
           <div v-for="(food, index) in foodList" :key="index">
-            <a class="food" @click="selectFood(food.nutrient_id, index)">{{ food.name }}</a>
+            <a class="food" @click="selectFood(food.nutrient_id, food.diet_id, index)">{{ food.name }}</a>
           </div>
         </div>
         <div class="foodList" v-else>캘린더의 식단을 선택하세요!</div>
@@ -63,6 +63,7 @@ export default {
   },
   data() {
     return {
+      userId: '',
       dietList: [], // 캘린더 이벤트
       foodList: {}, // 식단 정보
       foodDetail: {}, // 영양 정보
@@ -126,11 +127,30 @@ export default {
 
       return `${year}-${month}-${day}`;
     },
+    getFirstDietCreatedAt() {
+    // dietList 배열이 비어 있는 경우 빈 문자열 반환
+    return this.dietList.length > 0 ? this.dietList[0].created_at : '';
+    },
   },
   mounted() {
+    const storedToken = localStorage.getItem('authToken');
+    if (storedToken) {
+      this.$store.commit('setAuthToken', storedToken);
+    }
+    if(this.hasToken()){
+      console.log("토큰: " +this.$store.state.authToken);
+    }else{
+      this.$router.push('/');
+    }
+    const payloadBase64 = storedToken.split('.')[1];
+    const decodedPayload = JSON.parse(atob(payloadBase64));
+    this.userId = decodedPayload.sub;
     this.loadDietData();
   },
   methods: {
+    hasToken(){ // store에 토큰 여부 확인
+      return this.$store.state.authToken !==null;
+    },
     getCombinedEntries(foodList) { // 각 식단마다 영양정보 합함
       const totalCalories = foodList.reduce((sum, food) => sum + food.cal, 0.0);
       const totalCarbo = foodList.reduce((sum, food) => sum + food.carbo, 0.0);
@@ -178,7 +198,7 @@ export default {
       }
     },
     loadDietData() {
-      axios.get("http://localhost/project/api/v1/auth/selectdiet")
+      axios.get(`http://localhost/project/api/v1/auth/selectdiet?user_id=${this.userId}`)
         .then((resp) => {
           console.log("-----dietList-----");
           console.log(resp.data);
@@ -232,9 +252,10 @@ export default {
           console.log(error);
         });
     },
-    selectFood(nutrient_id, index) { // 음식 선택 시
+    selectFood(nutrient_id, diet_id, index) { // 음식 선택 시
       this.selectedFoodIndex = index; // 선택된 음식 인덱스 업데이트
-      axios.get(`http://localhost/project/api/v1/auth/selectfoodinfo?nutrient_id=${nutrient_id}`)
+      console.log(diet_id);
+      axios.get(`http://localhost/project/api/v1/auth/selectfoodinfo?nutrient_id=${nutrient_id}&diet_id=${diet_id}`)
         .then((resp) => {
           console.log("-----foodDetail-----");
           console.log(resp.data);
@@ -265,7 +286,7 @@ export default {
         if (this.foodDetail && this.foodDetail.frimg_filename) {
           const img = document.createElement('img');
           img.id = 'foodimg';
-          img.src = require(`../../assets/img/${this.foodDetail.frimg_filename}`);
+          img.src = this.foodDetail.frimg_filename;
           div.appendChild(img);
         }
 
@@ -310,7 +331,7 @@ export default {
         if (this.foodList && this.foodList.length > 0 && this.foodList[0].img_filename) {
           const img = document.createElement('img');
           img.id = 'foodimg';
-          img.src = require(`../../assets/img/${this.foodList[0].img_filename}`);
+          img.src = this.foodList[0].img_filename;
           div.appendChild(img);
         }
 
@@ -381,7 +402,7 @@ export default {
   .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {background-color: #f0768b; border-radius: 20px; height: 25px; }
   .fc-daygrid-event-dot {color:#f0768b;}
   .celestial-calories {cursor: none; pointer-events: none; font-size: 0.9rem; background-color: transparent;}
-  .fc-content {font-size: 0.9rem; width: 100%;} .fc-title {padding-left: 3%;}
+  .fc-content {font-size: 0.9rem; width: 100%;} .fc-title {padding-left: 3%; overflow: hidden; text-overflow: ellipsis;}
   a {cursor: pointer;}
   
   /* Food info CSS */
