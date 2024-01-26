@@ -2,8 +2,8 @@
   <div>
         <Navbar />
 		<div class="container-fluid page-header py-4 mb-2 wow fadeIn" data-wow-delay="0.1s">
-      <div class="container text-center py-5">
-		<h3 class="display-5 text-white mb-4 animated slideInDown">{{userId}}님의 정보를 수정해주세요</h3>
+      <div class="container text-center py-3">
+		<h3 class="display-5 text-white mb-2 animated slideInDown">{{userId}}님의 정보를 수정해주세요</h3>
     </div>
   </div>
    <!-- 인용구 시작 -->
@@ -20,7 +20,8 @@
 										<input type="text" class="form-control" id="id" name="id" readonly v-model="userId">
 									</div>
                     <label for="password" class="form-label mt-2">비밀번호</label>
-                    <input type="password" class="form-control" id="password" name="password" v-model="password">
+                
+                    <input type="password" class="form-control" id="password" name="password" v-model="member.password">
 
                     <label for="passwordchk" class="form-label mt-2">비밀번호 확인</label>
                     <input type="password" class="form-control" id="passwordchk" name="passwordchk" v-model="confirmPassword"  @input="validatePasswordForm">
@@ -32,7 +33,7 @@
                     <div class="input-group">
                       <input type="text" class="form-control" id="address" name="address" v-model="member.address" placeholder="주소를 입력하세요.">
                       <div class="input-group-append">
-                        <button type="button" class="btn btn-success btnall" @click="openAddressPopup" style="margin-bottom: 0px;">주소찾기</button>
+                        <button type="button" class="btn btn-success btnalls" @click="openAddressPopup" style="margin-bottom: 0px;">주소찾기</button>
                       </div>
                     </div>
                      <!-- 주소찾기 버튼 클릭 시 주소 검색 화면 -->
@@ -87,11 +88,10 @@ data(){
       disease:'',
       height:'',
       weight:'',
-      userId:'',//id를 나타냄
+      password:'',
     },
-    password:'',
+    userId:'',//id를 나타냄
     ishidden:'none',
-    
       confirmPassword:'',
       errorMessage:'',
   }
@@ -134,7 +134,7 @@ methods:{
     },
 	  //패스워드 일치 여부 확인
 	validatePasswordForm(){
-      if(this.password!==this.confirmPassword){
+      if(this.member.password!==this.confirmPassword){
         this.errorMessage = '패스워드가 일치하지 않습니다.';
         return false;
       }
