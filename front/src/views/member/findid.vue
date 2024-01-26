@@ -61,7 +61,7 @@ data(){
 methods:{
   findUserIdByEmail() {
       const email = this.email; // 사용자가 입력한 이메일
-      axios.get(`http://localhost/bteam_pro/api/v1/auth/findIdByEmail?email=${email}`)
+      axios.get(`http://localhost/project/api/v1/auth/findIdByEmail?email=${email}`)
           .then(response => {
               const userId = response.data;
               console.log('아이디:', userId);

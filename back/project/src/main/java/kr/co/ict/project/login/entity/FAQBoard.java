@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +18,8 @@ import lombok.Setter;
 @Table(name = "FAQBoard")
 public class FAQBoard {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "faqboard_seq")
+    @SequenceGenerator(name = "faqboard_seq", sequenceName = "FAQBOARD_SEQ", allocationSize = 1)
     private Long ONO;
 
     @Column(nullable = false)
@@ -25,7 +27,7 @@ public class FAQBoard {
 
     private String oname;
     private String ocontent;
-    private LocalDateTime oregdate;
+    private LocalDateTime oregdate = LocalDateTime.now(); // 여기 내가 추가했음
     private String ocategory;
     private String ocentent;
 }
