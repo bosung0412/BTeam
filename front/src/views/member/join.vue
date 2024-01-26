@@ -67,7 +67,7 @@
                         </div>
                     </div>
                     <label for="question" class="form-label mt-2">비밀번호찾기 질문</label>
-                    <select class="form-select" v-model="selectedQuestion" @click="questionCheck">
+                    <select class="form-select" v-model="question" @click="questionCheck">
                       <option disabled value="" v-if="questions.length === 0">선택해주세요</option>
                       <option v-for="item in questions" :key="item.id" >{{ item.question }}</option>
                     </select>
@@ -134,7 +134,7 @@ export default {
     return {
       // question:'',
       questions:[],
-      selectedQuestion:'',
+      question:'',
       ishidden:'none',
       id:'', 
       password:'',
@@ -157,18 +157,18 @@ export default {
   methods: {
     //비밀번호 질문 
     questionCheck(){
-      // if(this.questions.length===0){
-       
-      // }else{
-      //   console.log("seleced: "+this.selectedQuestion);
-      // }
-      console.log("=============여기 오는거니");
+      if(this.questions.length===0){
+        console.log("=============여기 오는거니");
         axios.get('http://localhost/project/api/v1/auth/getquestion')
         .then(response=>{
           this.questions=response.data;
         }).catch(error=>{
           console.error('error: '+error);
         });
+      }else{
+        console.log("seleced: "+this.question);
+      }
+     
     },
     //패스워드 일치 여부 확인
     validatePasswordForm(){

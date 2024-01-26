@@ -12,10 +12,18 @@ import kr.co.ict.project.vo.WeightVO;
 @Mapper
 public interface WeightDao {
     // mapper.xml에 추상메서드 이름 => id="find"
-    public List<WeightVO> find();
+    // public List<WeightVO> find();
 
-    // public int addWeight(WeightVO vo);
+    public WeightVO weightuser(int member_no);
 
-    void upWeight(WeightVO vo);
+    public WeightVO weightfuture(int member_no);
+
+    public int addweight(WeightVO vo);
+
+    public int upweight(WeightVO vo);
+
+    public WeightVO weightlast(int member_no);
+
+    public List<WeightVO> getWeightLogs(int member_no);
 
 }
