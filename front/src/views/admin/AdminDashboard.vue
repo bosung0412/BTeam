@@ -113,7 +113,7 @@ export default {
   methods: {
     async fetchMembers() {
       try {
-        const response = await axios.get('http://localhost/bteam_pro/api/admin/userList');
+        const response = await axios.get('http://localhost/project/api/admin/userList');
         this.users = response.data;
       } catch (error) {
         console.error('Error fetching members:', error);
@@ -121,7 +121,7 @@ export default {
     },
     async deleteMember(userId) {
       try {
-        await axios.delete(`http://localhost/bteam_pro/api/admin/deleteUser/${userId}`);
+        await axios.delete(`http://localhost/project/api/admin/deleteUser/${userId}`);
         // 삭제 후 목록 다시 불러오기
         this.fetchMembers();
       } catch (error) {
@@ -130,7 +130,7 @@ export default {
     },
     async fetchFAQBoards() {
       try {
-        const response = await axios.get('http://localhost/bteam_pro/api/admin/faqboard');
+        const response = await axios.get('http://localhost/project/api/admin/faqboard');
         this.faqBoards = response.data;
       } catch (error) {
         console.error('Error fetching FAQ boards:', error);
@@ -138,7 +138,7 @@ export default {
     },
     async deleteFAQBoard(ono) {
     try {
-      await axios.delete(`http://localhost/bteam_pro/api/admin/faqboard/${ono}`);
+      await axios.delete(`http://localhost/project/api/admin/faqboard/${ono}`);
       // 삭제 후 목록 다시 불러오기
       this.fetchFAQBoards();
     } catch (error) {
