@@ -112,6 +112,60 @@
 							</button>
 						</div>
 					</div>
+
+					<div v-show="hasFoodInfo">
+						<div class="row food-activity activity-image">
+							<div class="foods align-items-center">
+								<template v-for="(info, index) in foodInfo">
+									<button typse="button" :value="index" class="btn button btn-success" @click="selectFood($event)"><img :src="info.img" style="--i: 3" alt="" /></button>
+								</template>
+							</div>
+						</div>
+						<div class="food-activity activity-totalCal">
+							<div class="foods justify-content-center align-items-center">
+								<h3>총 칼로리 : {{totalCal}}kcal</h3>
+							</div>
+						</div>
+
+						<div class="row food-activity activity-info">
+							<div v-show="isSelectFoods" id="food_wrapper">
+								<div class="food_item">
+									<div class="food_text">1. 음식명</div>
+									<div class="food_detail">{{name}}</div>            
+									<div class="food_text">2. 중량</div>
+									<div class="food_detail">{{weight}}g</div>            
+									<div class="food_text">3. 칼로리</div>
+									<div class="food_detail">{{cal}}kcal</div>            
+									<div class="food_text">4. 탄수화물</div>
+									<div class="food_detail">{{carbo}}g</div>            
+									<div class="food_text">5. 당류</div>
+									<div class="food_detail">{{sugars}}g</div>            
+									<div class="food_text">6. 지방</div>
+									<div class="food_detail">{{fat}}g</div>            
+									<div class="food_text">7. 단백질</div>
+									<div class="food_detail">{{protein}}g</div>            
+									<div class="food_text">8. 칼슘</div>
+									<div class="food_detail">{{calcium}}mg</div>            
+									<div class="food_text">9. 인</div>
+									<div class="food_detail">{{phosphorus}}mg</div>            
+									<div class="food_text">10. 나트륨</div>
+									<div class="food_detail">{{sodium}}mg</div>            
+									<div class="food_text">11. 칼륨</div>
+									<div class="food_detail">{{potassium}}mg</div>            
+									<div class="food_text">12. 마그네슘</div>
+									<div class="food_detail">{{magnesium}}mg</div>            
+									<div class="food_text">13. 철</div>
+									<div class="food_detail">{{iron}}mg</div>            
+									<div class="food_text">14. 아연</div>
+									<div class="food_detail">{{zinc}}mg</div>            
+									<div class="food_text">15. 콜레스테롤</div>
+									<div class="food_detail">{{cholesterol}}mg</div>            
+									<div class="food_text">16. 트랜스지방</div>
+									<div class="food_detail">{{transfat}}g</div>            
+								</div>
+							</div>       
+						</div>
+					</div>
 				</div>
 
 
@@ -656,7 +710,117 @@ export default {
 		transform: translate(-50%, -50%);
 		/* box-shadow: rgba(0, 0, 0, 0.1) 0 0 0 9999px; */
 	}
+</style>
 
+
+<style scoped>
+
+	.food-activity {
+		/* display: grid;
+		grid-template-columns: 15% 60% 25%; */
+		align-items: center;
+		border-radius: 14px;
+		margin-bottom: 5px;
+		color: #484d53;
+		box-shadow: rgba(0, 0, 0, 0.16) 0px 4px 8px;
+	}
+
+	.activity-image {
+		background-color: rgb(124, 136, 224, 0.5);
+		background-image: linear-gradient(
+			240deg,
+			rgb(124, 136, 224) 0%,
+			#c3f4fc 100%
+		);
+	}
+
+	.activity-info {
+		background-color: #ecfcc376;
+		background-image: linear-gradient(240deg, #97e7d1 0%, #ecfcc3 100%);
+	}
+
+	.activity-totalCal {
+		background-color: #e6a7c3b5;
+		background-image: linear-gradient(240deg, #fc8ebe 0%, #fce5c3 100%);
+	}
+
+	.activity {
+		border-left: 3px solid #484d53;
+	}
+
+	.foods {
+		display: flex;
+		margin-left: 20px;
+	}
+
+	.foods img {
+		width: 70px;
+		height: 70px;
+		border-radius: 50%;
+		z-index: calc(2 * var(--i));
+		margin-left: -13px;
+		margin-top: -8px;
+		box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 3px;
+	}
+
+	.foods button {
+		width: 70px;
+		height: 70px;
+		border-radius: 50%;
+		z-index: calc(2 * var(--i));
+		margin-left: -10px;
+		box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 3px;
+	}
+
+
+	.activity h2 {
+		margin-left: 10px;
+		font-size: 1.25rem;
+		font-weight: 600;
+		border-radius: 12px;
+	}
+
+	.btn {
+		display: block;
+		font-size: 1.1rem;
+		font-weight: 500;
+		outline: none;
+		text-decoration: none;
+		color: #484b57;
+		background: rgba(255, 255, 255, 0.9);
+		box-shadow: 0 6px 30px rgba(0, 0, 0, 0.1);
+		border: 1px solid rgba(255, 255, 255, 0.3);
+		border-radius: 25px;
+		cursor: pointer;
+	}
+	.btn:hover{
+		background: #3d7c59;
+		color: white;
+	}
+
+	.btn:hover,
+	.btn:focus,
+	.btn:active,
+	.btn:visited {
+		transition-timing-function: cubic-bezier(0.6, 4, 0.3, 0.8);
+		animation: gelatine 0.5s 1;
+	}
+
+	@keyframes gelatine {
+	0%,
+	100% {
+		transform: scale(1, 1);
+	}
+	25% {
+		transform: scale(0.9, 1.1);
+	}
+	50% {
+		transform: scale(1.1, 0.9);
+	}
+	75% {
+		transform: scale(0.95, 1.05);
+	}
+}
 
 </style>
 
