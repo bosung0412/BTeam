@@ -116,7 +116,7 @@
 					<div v-show="hasFoodInfo">
 						<div class="row food-activity activity-image">
 							<div class="foods align-items-center">
-								<template v-for="(info, index) in foodInfo">
+								<template v-for="(info, index) in foodInfo" :key="index">
 									<button typse="button" :value="index" class="btn button btn-success" @click="selectFood($event)"><img :src="info.img" style="--i: 3" alt="" /></button>
 								</template>
 							</div>
