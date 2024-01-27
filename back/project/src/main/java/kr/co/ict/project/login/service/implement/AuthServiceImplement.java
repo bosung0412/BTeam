@@ -1,5 +1,8 @@
 package kr.co.ict.project.login.service.implement;
 
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -97,9 +100,7 @@ public class AuthServiceImplement implements AuthService {
     // 전송된 CheckCertificationRequestDto를 받아 이메일과 인증번호가 일치하는지 확인
     @Override
     public ResponseEntity<? super CheckCertificationResponseDto> checkCertification(CheckCertificationRequestDto dto) {
-
         try {
-
             String userId = dto.getId();
             String email = dto.getEmail();
             String certificationNumber = dto.getCertificationNumber();
@@ -181,12 +182,17 @@ public class AuthServiceImplement implements AuthService {
 
             // 전송된 로그인 요청에서 비밀번호를 추출
             String password = dto.getPassword();
+
             // 데이터베이스에서 조회한 사용자의 암호화된 비밀번호를 가져옴
             String encodedPassword = userEntity.getPassword();
+
             // 입력된 비밀번호와 데이터베이스의 비밀번호를 비교하여 일치 여부를 확인
             boolean isMatched = passwordEncoder.matches(password, encodedPassword);
-            if (!isMatched)
+
+            if (!isMatched) {
+
                 return SignInResponseDto.signInFail();
+            }
             // 로그인 성공시, JwtProvider를 사용해서 jwt토큰 생성(userId)
             token = jwtProvider.create(userId);
 
@@ -199,24 +205,30 @@ public class AuthServiceImplement implements AuthService {
     }
 
     // 사용자의 회원 정보 업데이트 메서드
-    // 전송된 UserUpdateRequestDto를 받아 인증번호 일치, db에 저장
+    // 전송된 UserUpdateRequestDto를 받아 db에 저장
     @Override
     public ResponseEntity<? super UserUpdateResponseDto> userUpdate(UserUpdateRequestDto dto) {
         try {
             // String userId = dto.getId();
-
-            // 암호화된 코드로 저장
-            String password = dto.getPassword();
-            String encodePassword = passwordEncoder.encode(password);
-            dto.setPassword(encodePassword);
-
-            // db 저장
             UserEntity userUpdateEntity = userRepository.findByUserId(dto.getId());
             if (userUpdateEntity != null) {
+                // 암호화된 코드로 저장
+                String password = dto.getPassword(); // 사용자로부터 입력받은 비번 가져옴
+                String encodePassword = passwordEncoder.encode(password); // 가져온 비번을 해시화함
+                userUpdateEntity.setPassword(encodePassword);// 해시화된 비밀번호를 저장
+
+                // 다른 필드들 업데이트
+                userUpdateEntity.setName(dto.getName());
+                userUpdateEntity.setAddress(dto.getAddress());
+                userUpdateEntity.setPhoneno(dto.getPhoneno());
+                userUpdateEntity.setDisease(dto.getDisease());
+                userUpdateEntity.setHeight(dto.getHeight());
+                userUpdateEntity.setWeight(dto.getWeight());
+
                 userRepository.save(userUpdateEntity);
             } else {
                 UserUpdateResponseDto.databaseError();
-                System.out.println("==========에러다....");
+
             }
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -226,20 +238,14 @@ public class AuthServiceImplement implements AuthService {
 
     // 회원 정보 조회
     @Override
-    public ResponseEntity<? super UserUpdateResponseDto> userSelect(UserUpdateRequestDto dto) {
+    public UserEntity userSelect(String userId) {
+        UserEntity userEntity = new UserEntity();
         try {
-            UserEntity userEntity = userRepository.findByUserId(dto.getId());
-            if (userEntity != null) {
-                userRepository.save(userEntity);
-            } else {
-                UserUpdateResponseDto.databaseError();
-                System.out.println("==========에러다....");
-            }
+            userEntity = userRepository.findByUserId(userId);
         } catch (Exception exception) {
             exception.printStackTrace();
         }
-        return UserUpdateResponseDto.success();
-
+        return userEntity;
     }
 
 }

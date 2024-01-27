@@ -17,17 +17,8 @@ public class UserUpdateRequestDto {
     private String id;
     // pwd이며 pattern을 사용하여 영문자와 숫자를 최소 하나 이상 포함, 길이가 1에서 13문자를 허용
     @NotBlank
-    @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]{1,13}$")
+    // @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]{1,13}$")
     private String password;
-
-    // 사용자 email
-    // @NotBlank
-    // @Email
-    // private String email;
-
-    // 인증번호
-    // @NotBlank
-    // private String certificationNumber;
 
     private String name;
     private String address;

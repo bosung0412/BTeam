@@ -53,10 +53,6 @@
                   <button @click="redirectToFindAccount" type="button" class="btn btn-primary btnall w-100">아이디 or 비밀번호 찾기</button>
                 </div>
 
-                <div class="col-sm-12 text-center">
-                  <img src='@/assets/img/kakao.png' @click="kakaoLogin" alt="카카오 로그인" style="cursor: pointer;"/>
-                </div>
-
               </div>
             </form>
           </div>
@@ -100,34 +96,41 @@ export default {
         return;
       }
         },
-      submitLogin() {
-        this.checkEmpty();
-        axios.post('http://localhost/project/api/v1/auth/sign-in', {
-          id: this.id,
-          password: this.password,
-          
+        submitLogin() {
+    this.checkEmpty();
+    axios.post('http://localhost/project/api/v1/auth/sign-in', {
+      id: this.id,
+      password: this.password,
     })
-          .then(response => {
-          const token = response.data.token;
-          console.log('로그인 성공', response);
+      .then(response => {
+        const token = response.data.token;
+        console.log('로그인 성공', response);
        
-          //Vuex 스토어에 토큰 저장
-          this.$store.commit('setAuthToken', token);
+        // Vuex 스토어에 토큰 저장
+        this.$store.commit('setAuthToken', token);
 
-          const payloadBase64 = token.split('.')[1];
-          const decodedPayload = JSON.parse(atob(payloadBase64));
-          console.log('Decoded Token:', decodedPayload);
-          console.log(this.$store.state.authToken);
+        const payloadBase64 = token.split('.')[1];
+        const decodedPayload = JSON.parse(atob(payloadBase64));
+        console.log('Decoded Token:', decodedPayload);
+        console.log(this.$store.state.authToken);
+
+        // 특정 아이디인 경우에만 리다이렉션 처리
+        if (this.id === 'admin1') {
+          this.$router.push('/adminpage');
+        } else {
           this.$router.push('/main');
+        }
 
       })
-          .catch(error => {
-          console.error('로그인 실패', error);
-          sessionStorage.setItem('token', null); // 로그인 실패 시 토큰을 null로 설정
-          // 로그인 실패 시 처리 (예: 에러 메시지 표시)
+      .catch(error => {
+        console.error('로그인 실패', error);
+        sessionStorage.setItem('token', null); // 로그인 실패 시 토큰을 null로 설정
+        // 로그인 실패 시 처리 (예: 에러 메시지 표시)
       });
     },redirectToJoin(){
       this.$router.push('/join');
+    },redirectToFindAccount(){
+      this.$router.push('/findaccount');
     }
   }
 }

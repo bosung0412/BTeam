@@ -51,7 +51,8 @@ public class SecurityConfig {
                                 // 권한
                                 .authorizeHttpRequests(request -> request
                                                 // 이패턴에 대해서는 모두 허용하겠다라는뜻.
-                                                .requestMatchers("/", "/api/v1/auth/**", "/oauth2/**", "/api/admin/**").permitAll()
+                                                .requestMatchers("/", "/api/v1/auth/**", "/oauth2/**", "/api/admin/**")
+                                                .permitAll()
                                                 // hasRole을 사용해 권한부여
                                                 .requestMatchers("/api/v1/user/**").hasRole("USER")
                                                 .requestMatchers("/api/admin/**").hasRole("ADMIN")

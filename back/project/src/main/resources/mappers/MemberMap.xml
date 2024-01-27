@@ -8,5 +8,10 @@
         #{phoneno},#{email},#{gender}, 
         #{disease},#{height},#{weight})
     </insert>
-
+    <select id="getMemberInfo" resultType="mvo" parameterType="String">
+        SELECT * FROM users WHERE user_id = #{user_id}
+    </select>
+    <select id="getMemHeight" resultType="mvo" parameterType="String">
+        SELECT height FROM users WHERE user_id = #{user_id}
+    </select>
 </mapper>

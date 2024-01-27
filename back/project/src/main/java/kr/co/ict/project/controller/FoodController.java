@@ -15,7 +15,6 @@ import kr.co.ict.project.vo.DietVO;
 import kr.co.ict.project.vo.DietinfoVO;
 import kr.co.ict.project.vo.FoodVO;
 
-
 @RestController
 @RequestMapping("/api/v1/auth")
 public class FoodController {
@@ -34,22 +33,22 @@ public class FoodController {
         return res;
     }
     @GetMapping("/selectfood")
-    public FoodVO selectFood(@RequestParam int nutrient_id){
+    public FoodVO selectFood(@RequestParam("nutrient_id") int nutrient_id){
         return service.selectFood(nutrient_id);
     }
 
-    @GetMapping("/selectdiet")
-    public List<DietVO> selectDiet(){
-        return service.selectDiet();
+    @GetMapping("/selectdiet") // Calendar 식단 리스트와 식사타임별 총 칼로리
+    public List<DietVO> selectDiet(@RequestParam("user_id") String user_id){
+        return service.selectDiet(user_id);
     }
 
-    @GetMapping("/selectdietinfo")
-    public List<DietinfoVO> selectDietInfo(@RequestParam int diet_id){
+    @GetMapping("/selectdietinfo")  // Calendar 식사 타임별 음식 정보 및 영양 정보
+    public List<DietinfoVO> selectDietInfo(@RequestParam("diet_id") int diet_id){
         return service.selectDietInfo(diet_id);
     }
-    @GetMapping("/selectfoodinfo")
-    public DietinfoVO selectFoodInfo(@RequestParam int nutrient_id){
-        return service.selectFoodInfo(nutrient_id);
+    @GetMapping("/selectfoodinfo") // Calendar 음식별 영양 정보
+    public DietinfoVO selectFoodInfo(@RequestParam int nutrient_id, @RequestParam int diet_id){ 
+        return service.selectFoodInfo(nutrient_id, diet_id);
     }
 
     // 식단 상세 정보
@@ -64,4 +63,8 @@ public class FoodController {
         return service.getRandomMeals();
     }
 
+    @GetMapping("/totalCalbyId")
+    public List<DietVO> totalCalbyId(@RequestParam("user_id") String user_id){ // main 해당 회원의 총 칼로리
+        return service.totalCalbyId(user_id);
+    }
 }
