@@ -13,16 +13,35 @@ public class WeightService {
     @Autowired
     private WeightDao dao;
 
-    public List<WeightVO> find() {
-        return dao.find();
-    }
-
-    // public int insertWeight(WeightVO vo) {
-    // return dao.addWeight(vo);
+    // public List<WeightVO> find() {
+    // return dao.find();
     // }
 
-    public void updateWeight(WeightVO vo) {
-        dao.upWeight(vo);
+    public WeightVO weightFirst(int member_no) {
+        return dao.weightuser(member_no);
     }
 
+    public WeightVO getHistWeight(int member_no) {
+        return dao.getHistWeight(member_no);
+    } 
+    
+    public WeightVO weightFuture(int member_no) {
+        return dao.weightfuture(member_no);
+    }
+
+    public int insertWeight(WeightVO vo) {
+        return dao.addweight(vo);
+    }
+
+    public int updateWeight(WeightVO vo) {
+        return dao.upweight(vo);
+    }
+
+    public WeightVO lastweight(int member_no) {
+        return dao.weightlast(member_no);
+    }
+
+    public List<WeightVO> getWeightLogs(int member_no) {
+        return dao.getWeightLogs(member_no);
+    }
 }

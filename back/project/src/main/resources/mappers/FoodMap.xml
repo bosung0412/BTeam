@@ -13,20 +13,24 @@
       select * from nutrient where nutrient_id = #{nutrient_id}
     </select>
 
-    <!-- 식단 리스트와 총 칼로리 -->
-    <select id="selectDiet" resultType="dvo"> 
-      SELECT d.*, COALESCE(SUM(n.cal), 0) AS total_calories
-      FROM bteam.diet d
-      LEFT JOIN bteam.food_rec f ON d.diet_id = f.diet_id
-      LEFT JOIN bteam.nutrient n ON f.nutrient_id = n.nutrient_id
-      GROUP BY d.diet_id, d.member_no, d.created_at, d.img_filename, d.mealtime
+    <!-- Calendar 식단 리스트와 식사타임별 총 칼로리 -->
+    <select id="selectDiet" resultType="dvo" parameterType="String"> 
+      SELECT u.MEMBER_NO, u.USER_ID, d.diet_id, d.created_at, d.img_filename, d.mealtime,
+        COALESCE(SUM(n.cal), 0) AS total_calories
+      FROM BTEAM.USERS u
+      LEFT JOIN BTEAM.diet d ON u.MEMBER_NO = d.member_no
+      LEFT JOIN BTEAM.food_rec f ON d.diet_id = f.diet_id
+      LEFT JOIN BTEAM.nutrient n ON f.nutrient_id = n.nutrient_id
+      WHERE u.USER_ID = #{USER_ID}
+      GROUP BY u.MEMBER_NO, u.USER_ID, 
+        d.diet_id, d.created_at, d.img_filename, d.mealtime
       ORDER BY d.diet_id
     </select>
 
-    <!-- 식사 타임별 음식 정보 및 영양 정보 -->
+    <!-- Calendar 식사 타임별 음식 정보 및 영양 정보 -->
     <select id="selectDietInfo" resultType="divo" parameterType="int"> 
       SELECT
-        d.diet_id, d.img_filename, d.mealtime,
+        d.diet_id, d.img_filename, d.mealtime, d.created_at,
         f.frimg_filename, f.nutrient_id,
         n.name, n.weight, n.cal, n.carbo, n.sugars, n.fat, n.protein,
         n.calcium, n.phosphorus, n.sodium, n.potassium,
@@ -37,16 +41,18 @@
       WHERE d.diet_id = #{diet_id}
     </select>
 
-    <!-- 음식별 영양 정보 -->
+    <!-- Calendar 음식별 영양 정보 -->
     <select id="selectFoodInfo" resultType="divo" parameterType="int"> 
       SELECT
-        f.nutrient_id, f.frimg_filename,
+        f.nutrient_id, f.frimg_filename, d.diet_id,
         n.name, n.weight, n.cal, n.carbo, n.sugars, n.fat, n.protein,
         n.calcium, n.phosphorus, n.sodium, n.potassium,
         n.magnesium, n.iron, n.zinc, n.cholesterol, n.transfat, n.foodtype
       FROM bteam.food_rec f 
+      JOIN bteam.diet d ON f.diet_id = d.diet_id
       JOIN bteam.nutrient n ON f.nutrient_id = n.nutrient_id
       WHERE f.nutrient_id = #{nutrient_id}
+      AND d.diet_id = #{diet_id}
     </select>
 
     <select id="selectList" resultType = "Fvo">
@@ -82,5 +88,20 @@
                 SELECT * FROM NUTRIENT WHERE FOODTYPE = '반찬3' ORDER BY DBMS_RANDOM.VALUE
             ) WHERE ROWNUM <= 3
         ]]>
+    </select>
+
+    <!-- main 해당 회원의 총 칼로리 -->
+    <select id="totalCalbyId" resultType="dvo" parameterType="String">
+      SELECT
+          U.USER_ID,
+          TRUNC(D.CREATED_AT) AS CREATED_AT,
+          SUM(N.CAL) AS TOTAL_CALORIES
+      FROM BTEAM.USERS U
+      JOIN BTEAM.DIET D ON U.MEMBER_NO = D.MEMBER_NO
+      JOIN BTEAM.FOOD_REC FR ON D.DIET_ID = FR.DIET_ID
+      JOIN BTEAM.NUTRIENT N ON FR.NUTRIENT_ID = N.NUTRIENT_ID
+      WHERE U.USER_ID = #{user_id}
+      GROUP BY U.USER_ID, TRUNC(D.CREATED_AT)
+      ORDER BY TRUNC(D.CREATED_AT)
     </select>
 </mapper>
